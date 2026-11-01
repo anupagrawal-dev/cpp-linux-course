@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="Throw signals an error; catch handles it; uncaught = abort."><title>22 Exceptions &amp; try/catch — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=8f762b8c8a"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
+<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="`throw` reports an error, the nearest matching `catch` up the call chain handles it, and destructors clean up on the way. Uncaught means `std::terminate`."><title>22 Exceptions &amp; try/catch — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=c3e831d229"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
 <a class="sb-home" href="../index.html">Course home</a>
 <details class="sb-group"><summary><span>C++ Core</span><span class="sb-count" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static">0/28</span></summary><ul>
 <li><a class="sb-link" data-slug="control-flow" href="../html/01-control-flow.html"><span class="sb-num">01</span><span class="sb-title-text">Control Flow</span><span class="sb-check" aria-hidden="true"></span></a></li>
@@ -47,29 +47,268 @@
 <li><a class="sb-link" data-slug="memory-allocation-and-fragmentation" href="../html/26-memory-allocation-and-fragmentation.html"><span class="sb-num">26</span><span class="sb-title-text">Allocation Methods &amp; Fragmentation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="demand-paging-and-swapping" href="../html/27-demand-paging-and-swapping.html"><span class="sb-num">27</span><span class="sb-title-text">Demand Paging, Page Faults &amp; Swapping</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership">0/4</span></summary><ul>
+<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership libraries">0/5</span></summary><ul>
 <li><a class="sb-link" data-slug="linux-filesystem-navigation" href="../html/28-linux-filesystem-navigation.html"><span class="sb-num">28</span><span class="sb-title-text">Filesystem &amp; Navigation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="linux-permissions" href="../html/29-linux-permissions.html"><span class="sb-num">29</span><span class="sb-title-text">Permissions (rwx)</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chmod" href="../html/30-chmod.html"><span class="sb-num">30</span><span class="sb-title-text">chmod</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chown-ownership" href="../html/31-chown-ownership.html"><span class="sb-num">31</span><span class="sb-title-text">chown &amp; Ownership</span><span class="sb-check" aria-hidden="true"></span></a></li>
+<li><a class="sb-link" data-slug="libraries" href="../html/45-libraries.html"><span class="sb-num">45</span><span class="sb-title-text">Libraries: Static and Shared</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">293</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
+<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">524</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
 <div class="sb-section"><div class="sb-label">Deep dives</div>
 <a class="sb-plain" href="../extras/heap-layout-new-malloc.html">Heap layout — new / delete / malloc / free</a>
 <a class="sb-plain" href="../extras/shared-ptr-cycle.html">shared_ptr circular reference — why it leaks</a>
 <a class="sb-plain" href="../extras/code-to-execution-road.html">From written code to execution</a>
 </div></nav><div class="scrim" id="scrim" hidden></div><main id="main" tabindex="-1"><div class="lesson-wrap"><article class="page lesson" data-slug="exceptions-try-catch" data-order="22">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Course</a><span aria-hidden="true">&rsaquo;</span><a href="../index.html#module-c-language-safety">C++ Language &amp; Safety</a><span aria-hidden="true">&rsaquo;</span><span aria-current="page">Exceptions &amp; try/catch</span></nav>
-<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Language &amp; Safety</span><span class="meta-item">Lesson 22 of 44</span><span class="meta-item">1 min read</span><span class="meta-item">6 questions</span></div><h1>Exceptions &amp; try/catch</h1><p class="lead">Throw signals an error; catch handles it; uncaught = abort.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
+<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Language &amp; Safety</span><span class="meta-item">Lesson 22 of 45</span><span class="meta-item">12 min read</span><span class="meta-item">12 questions</span></div><h1>Exceptions &amp; try/catch</h1><p class="lead">`throw` reports an error, the nearest matching `catch` up the call chain handles it, and destructors clean up on the way. Uncaught means `std::terminate`.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
 <p class="legend-inline"><span class="chip chip-concept"><span aria-hidden="true">&#9670;</span> Concept</span> core idea<span class="chip chip-watch"><span aria-hidden="true">&#9650;</span> Watch out</span> easy to get wrong</p>
-<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li><code>throw</code> raises an exception; a matching <code>catch</code> handles it. <code>.at()</code> throws <code>std::out_of_range</code> on a bad index.</li><li>An <strong>uncaught</strong> exception propagates to <code>std::terminate</code> → 'Aborted (core dumped)'. That crash means nobody handled it.</li><li>Wrap risky code in <code>try { ... } catch (const std::exception&amp; e) { ... }</code>; <code>e.what()</code> gives the message.</li><li>Catch by <code>const</code> reference (avoids slicing and copies).</li></ol></section>
-<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#handle-vs-abort">Handle vs abort</a><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
-<section class="section" aria-labelledby="handle-vs-abort"><h2 id="handle-vs-abort">Handle vs abort</h2><figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-kw">try</span> { a.<span class="tk-fn">at</span>(<span class="tk-num">10</span>) = <span class="tk-num">4</span>; }              <span class="tk-com">// throws</span>
-<span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::out_of_range</span>&amp; e){
-  <span class="tk-std">std::cout</span> &lt;&lt; e.<span class="tk-fn">what</span>();           <span class="tk-com">// handled — program continues</span>
-}</code></pre></figure></section>
-<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">uncaught throw vs bug in .at()</div><div class="d">The abort is from nobody catching the exception — <code>.at()</code> did its job by detecting the bad index.</div></div><div class="pair"><div class="vs">catch by value vs by reference</div><div class="d">Catch by <code>const&amp;</code> — catching by value can slice the exception object and copies it.</div></div></div></section>
-<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>6 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#exceptions-try-catch">Start the 6 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
+<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li><code>throw</code> raises an exception; control jumps to the nearest matching <code>catch</code> <strong>up the call chain</strong>, skipping the rest of the <code>try</code> block. <code>.at()</code> throws <code>std::out_of_range</code> on a bad index.</li><li>An <strong>uncaught</strong> exception calls <code>std::terminate</code>: "terminate called after throwing an instance of ...", then the program aborts. The crash means nobody handled the error.</li><li>Standard hierarchy: everything derives from <strong><code>std::exception</code></strong> (<code>what()</code> gives the message). <strong><code>logic_error</code></strong> (<code>out_of_range</code>, <code>invalid_argument</code>, <code>length_error</code>) = bugs in the program's logic; <strong><code>runtime_error</code></strong> = conditions only known at run time; <strong><code>bad_alloc</code></strong> = <code>new</code> failed.</li><li>Write your own exception by deriving from <strong><code>std::runtime_error</code></strong> (or <code>logic_error</code>) and passing the message to its constructor; add fields for extra details.</li><li><strong>Catch by <code>const&amp;</code></strong> (no copy, no slicing). Order handlers <strong>most-derived first</strong>; <code>catch (...)</code> catches anything. Inside a handler, <strong><code>throw;</code></strong> rethrows the same object.</li><li><strong>Stack unwinding</strong>: while the exception travels up, every local object in the frames it leaves is <strong>destroyed</strong>. That is why RAII cleanup works with exceptions (lesson 12).</li><li>A throwing <strong>constructor</strong> means the object never existed: its destructor doesn't run, but members already built are destroyed. <strong>Destructors must not throw</strong> (they are <code>noexcept</code>; a throw calls <code>terminate</code>). <code>noexcept</code> marks functions that never throw.</li><li><strong>Exceptions</strong> for rare errors the direct caller can't handle; <strong>error codes / <code>std::optional</code></strong> for expected failures, hot paths and code built without exceptions.</li></ol></section>
+<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#throw-try-and-catch">throw, try and catch</a><a href="#the-standard-exception-hierarchy">The standard exception hierarchy</a><a href="#your-own-exception-class">Your own exception class</a><a href="#several-handlers-catch-and-rethrow">Several handlers, catch (...) and rethrow</a><a href="#stack-unwinding-destructors-still-run">Stack unwinding: destructors still run</a><a href="#constructors-destructors-and-noexcept">Constructors, destructors and noexcept</a><a href="#exceptions-vs-error-codes">Exceptions vs error codes</a><a href="#common-mistakes">Common mistakes</a><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
+<section class="section" aria-labelledby="throw-try-and-catch"><h2 id="throw-try-and-catch">throw, try and catch</h2><p><strong>Meaning:</strong> when a function hits an error it can't handle, it <strong>throws</strong> an exception object. The program stops running normal code and goes back up the call chain until it finds a <code>try</code> block with a matching <code>catch</code> handler. Code after the <code>throw</code> inside the <code>try</code> is skipped; after the handler, execution continues below the <code>try</code>/<code>catch</code>.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;stdexcept&gt;</span>
+<span class="tk-pre">#include &lt;vector&gt;</span>
+
+<span class="tk-kw">int</span> <span class="tk-fn">readItem</span>(<span class="tk-kw">const</span> <span class="tk-std">std::vector</span>&lt;<span class="tk-kw">int</span>&gt;&amp; v, <span class="tk-std">std::size_t</span> i) {
+    <span class="tk-kw">return</span> v.<span class="tk-fn">at</span>(i);                              <span class="tk-com">// throws std::out_of_range if i is too big</span>
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-std">std::vector</span>&lt;<span class="tk-kw">int</span>&gt; v = {<span class="tk-num">10</span>, <span class="tk-num">20</span>, <span class="tk-num">30</span>};
+    <span class="tk-kw">try</span> {
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-fn">readItem</span>(v, <span class="tk-num">1</span>) &lt;&lt; <span class="tk-str">"\n"</span>;
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-fn">readItem</span>(v, <span class="tk-num">10</span>) &lt;&lt; <span class="tk-str">"\n"</span>;    <span class="tk-com">// throws: the rest of the try block is skipped</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"not printed\n"</span>;
+    } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::out_of_range</span>&amp; e) {
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"error: "</span> &lt;&lt; e.<span class="tk-fn">what</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+    }
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"still running\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>20
+error: vector::_M_range_check: __n (which is 10) &gt;= this-&gt;size() (which is 3)
+still running</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>readItem(v, 10)</code> calls <code>v.at(10)</code>, which throws. <code>readItem</code> ends immediately, without returning a value.</li><li>The exception lands in the <code>catch</code> for <code>std::out_of_range</code>. <code>e.what()</code> returns the message (this one comes from libstdc++).</li><li>The program then continues after the handler.</li></ol>
+<p>Without the <code>try</code>/<code>catch</code>, nothing handles it, and the program ends:</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Bash</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">$</span> ./uncaught
+<span class="tk-fn">terminate</span> called after throwing an instance of <span class="tk-str">'std::out_of_range'</span>
+  what():  vector::_M_range_check: __n (which is 10) &gt;= this-&gt;size() (which is 3)
+<span class="tk-fn">Aborted</span>
+<span class="tk-pre">$</span> <span class="tk-fn">echo</span> $?
+134</code></pre></figure>
+<p>The abort is not a bug in <code>.at()</code>: it did its job by reporting the bad index. The bug is that no code handled it.</p></section>
+<section class="section" aria-labelledby="the-standard-exception-hierarchy"><h2 id="the-standard-exception-hierarchy">The standard exception hierarchy</h2><p><strong>Meaning:</strong> the library's exceptions all derive from <code>std::exception</code>, so one <code>catch (const std::exception&amp; e)</code> handles any of them. The two main branches say what kind of error it is.</p>
+<div class="table-wrap"><table class="md-table"><thead><tr><th scope="col">Class</th><th scope="col">Meaning</th><th scope="col">Thrown by (examples)</th></tr></thead><tbody><tr><td><code>std::logic_error</code></td><td>a mistake the program could have avoided</td><td>base of the next four</td></tr><tr><td><code>std::out_of_range</code></td><td>index or value outside the allowed range</td><td><code>vector::at</code>, <code>string::at</code>, <code>std::stoi</code> on a huge number</td></tr><tr><td><code>std::invalid_argument</code></td><td>argument makes no sense</td><td><code>std::stoi("abc")</code></td></tr><tr><td><code>std::length_error</code></td><td>a size above the maximum</td><td><code>vector::reserve(v.max_size() + 1)</code></td></tr><tr><td><code>std::runtime_error</code></td><td>a problem only detectable at run time</td><td>base for your own errors (file, network, config)</td></tr><tr><td><code>std::system_error</code></td><td>an OS error with an error code</td><td><code>std::thread</code>, <code>std::filesystem</code></td></tr><tr><td><code>std::bad_alloc</code></td><td>memory allocation failed</td><td><code>new</code>, any container growing</td></tr></tbody></table></div>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;new&gt;</span>
+<span class="tk-pre">#include &lt;stdexcept&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+<span class="tk-pre">#include &lt;vector&gt;</span>
+
+<span class="tk-kw">void</span> <span class="tk-fn">fail</span>(<span class="tk-kw">int</span> which) {
+    <span class="tk-std">std::vector</span>&lt;<span class="tk-kw">int</span>&gt; <span class="tk-fn">v</span>(<span class="tk-num">3</span>);
+    <span class="tk-kw">switch</span> (which) {
+        <span class="tk-kw">case</span> <span class="tk-num">0</span>: v.<span class="tk-fn">at</span>(<span class="tk-num">5</span>) = <span class="tk-num">1</span>; <span class="tk-kw">break</span>;                       <span class="tk-com">// std::out_of_range</span>
+        <span class="tk-kw">case</span> <span class="tk-num">1</span>: v[<span class="tk-num">0</span>] = <span class="tk-std">std::stoi</span>(<span class="tk-str">"abc"</span>); <span class="tk-kw">break</span>;           <span class="tk-com">// std::invalid_argument</span>
+        <span class="tk-kw">case</span> <span class="tk-num">2</span>: v.<span class="tk-fn">reserve</span>(v.<span class="tk-fn">max_size</span>() + <span class="tk-num">1</span>); <span class="tk-kw">break</span>;       <span class="tk-com">// std::length_error</span>
+        <span class="tk-kw">case</span> <span class="tk-num">3</span>: <span class="tk-kw">throw</span> <span class="tk-std">std::runtime_error</span>(<span class="tk-str">"disk full"</span>);    <span class="tk-com">// std::runtime_error</span>
+        <span class="tk-kw">case</span> <span class="tk-num">4</span>: { <span class="tk-std">std::vector</span>&lt;<span class="tk-kw">char</span>&gt; <span class="tk-fn">big</span>(<span class="tk-num">1ULL</span> &lt;&lt; <span class="tk-num">50</span>); }    <span class="tk-com">// std::bad_alloc: asks for 1 PiB</span>
+    }
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">for</span> (<span class="tk-kw">int</span> i = <span class="tk-num">0</span>; i &lt; <span class="tk-num">5</span>; i++) {
+        <span class="tk-kw">try</span> {
+            <span class="tk-fn">fail</span>(i);
+        } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::logic_error</span>&amp; e) {
+            <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"logic_error:   "</span> &lt;&lt; e.<span class="tk-fn">what</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+        } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::runtime_error</span>&amp; e) {
+            <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"runtime_error: "</span> &lt;&lt; e.<span class="tk-fn">what</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+        } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::bad_alloc</span>&amp; e) {
+            <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"bad_alloc:     "</span> &lt;&lt; e.<span class="tk-fn">what</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+        }
+    }
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>logic_error:   vector::_M_range_check: __n (which is 5) &gt;= this-&gt;size() (which is 3)
+logic_error:   stoi
+logic_error:   vector::reserve
+runtime_error: disk full
+bad_alloc:     std::bad_alloc</code></pre></figure>
+<p><strong>How it works:</strong> the first three all derive from <code>logic_error</code>, so one handler catches them: a base-class handler catches every derived class.</p></section>
+<section class="section" aria-labelledby="your-own-exception-class"><h2 id="your-own-exception-class">Your own exception class</h2><p><strong>Meaning:</strong> to report errors of your own, derive a class from <code>std::runtime_error</code> (or <code>std::logic_error</code>). Pass the message to the base constructor, so <code>what()</code> works, and add members for details the handler may need. Callers can then catch your specific type, or just <code>std::exception</code>.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;stdexcept&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-kw">class</span> ConfigError : <span class="tk-kw">public</span> <span class="tk-std">std::runtime_error</span> {
+<span class="tk-kw">public</span>:
+    <span class="tk-fn">ConfigError</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; key, <span class="tk-kw">int</span> line)
+        : <span class="tk-std">std::runtime_error</span>(<span class="tk-str">"bad value for '"</span> + key + <span class="tk-str">"'"</span>), <span class="tk-fn">line_</span>(line) {}
+    <span class="tk-kw">int</span> <span class="tk-fn">line</span>() <span class="tk-kw">const</span> { <span class="tk-kw">return</span> line_; }               <span class="tk-com">// extra information for the handler</span>
+<span class="tk-kw">private</span>:
+    <span class="tk-kw">int</span> line_;
+};
+
+<span class="tk-kw">void</span> <span class="tk-fn">loadConfig</span>() { <span class="tk-kw">throw</span> <span class="tk-fn">ConfigError</span>(<span class="tk-str">"port"</span>, <span class="tk-num">12</span>); }
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">try</span> {
+        <span class="tk-fn">loadConfig</span>();
+    } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> ConfigError&amp; e) {                  <span class="tk-com">// the specific type: can read line()</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; e.<span class="tk-fn">what</span>() &lt;&lt; <span class="tk-str">" on line "</span> &lt;&lt; e.<span class="tk-fn">line</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+    } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::exception</span>&amp; e) {               <span class="tk-com">// everything else in the standard family</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"other error: "</span> &lt;&lt; e.<span class="tk-fn">what</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+    }
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>bad value for 'port' on line 12</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li>The first handler matches the exact type and can call <code>line()</code>.</li><li>Code that knows nothing about <code>ConfigError</code> can still catch it as <code>std::exception</code>.</li><li>Throw <strong>by value</strong> and catch <strong>by <code>const&amp;</code></strong>. Never <code>throw new ConfigError(...)</code>: then someone must <code>delete</code> it, and handlers for <code>ConfigError&amp;</code> don't match a pointer.</li></ol></section>
+<section class="section" aria-labelledby="several-handlers-catch-and-rethrow"><h2 id="several-handlers-catch-and-rethrow">Several handlers, catch (...) and rethrow</h2><p><strong>Meaning:</strong> handlers are tried <strong>in order</strong>, and the first one that matches wins. So put the <strong>most derived</strong> class first and its bases after it. <code>catch (...)</code> matches anything, including non-class types. Inside a handler, a bare <strong><code>throw;</code></strong> sends the <strong>same</strong> exception object on up the chain, for example after logging it.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;stdexcept&gt;</span>
+
+<span class="tk-kw">void</span> <span class="tk-fn">parse</span>(<span class="tk-kw">int</span> kind) {
+    <span class="tk-kw">if</span> (kind == <span class="tk-num">0</span>) <span class="tk-kw">throw</span> <span class="tk-std">std::invalid_argument</span>(<span class="tk-str">"not a number"</span>);
+    <span class="tk-kw">if</span> (kind == <span class="tk-num">1</span>) <span class="tk-kw">throw</span> <span class="tk-std">std::runtime_error</span>(<span class="tk-str">"file missing"</span>);
+    <span class="tk-kw">throw</span> <span class="tk-num">42</span>;                                         <span class="tk-com">// anything can be thrown, even an int</span>
+}
+
+<span class="tk-kw">void</span> <span class="tk-fn">parseLogged</span>(<span class="tk-kw">int</span> kind) {
+    <span class="tk-kw">try</span> {
+        <span class="tk-fn">parse</span>(kind);
+    } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::exception</span>&amp; e) {
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"log: "</span> &lt;&lt; e.<span class="tk-fn">what</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+        <span class="tk-kw">throw</span>;                                        <span class="tk-com">// rethrow the same object, real type kept</span>
+    }
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">for</span> (<span class="tk-kw">int</span> k = <span class="tk-num">0</span>; k &lt; <span class="tk-num">3</span>; k++) {
+        <span class="tk-kw">try</span> {
+            <span class="tk-fn">parseLogged</span>(k);
+        } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::invalid_argument</span>&amp;) {      <span class="tk-com">// most derived first</span>
+            <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"bad input\n"</span>;
+        } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::exception</span>&amp; e) {           <span class="tk-com">// then its base</span>
+            <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"failed: "</span> &lt;&lt; e.<span class="tk-fn">what</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+        } <span class="tk-kw">catch</span> (...) {                               <span class="tk-com">// anything else</span>
+            <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"unknown exception\n"</span>;
+        }
+    }
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>log: not a number
+bad input
+log: file missing
+failed: file missing
+unknown exception</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>parseLogged</code> logs and rethrows. <code>throw;</code> rethrows the original object, so <code>main</code> still sees an <code>invalid_argument</code>.</li><li><code>throw e;</code> instead would throw a <strong>copy of the static type</strong> <code>std::exception</code> (sliced), and <code>main</code> would print <code>failed:</code>.</li><li>The <code>int</code> is not a <code>std::exception</code>, so only <code>catch (...)</code> matches it.</li><li>With a base handler first, the derived one could never run; g++ warns: <code>exception of type 'std::out_of_range' will be caught by earlier handler [-Wexceptions]</code>.</li></ol></section>
+<section class="section" aria-labelledby="stack-unwinding-destructors-still-run"><h2 id="stack-unwinding-destructors-still-run">Stack unwinding: destructors still run</h2><p><strong>Meaning:</strong> while an exception travels up to its handler, the runtime leaves each function on the way, and <strong>destroys every local object</strong> in those frames, in reverse order of construction. This is <strong>stack unwinding</strong>. Resources held by objects with destructors (locks, files, smart pointers) are released even though the normal path never finished. Tying cleanup to destructors is RAII (lesson 12).</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;stdexcept&gt;</span>
+
+<span class="tk-kw">struct</span> Guard {                                   <span class="tk-com">// stands for a lock, a file, a buffer...</span>
+    <span class="tk-kw">const</span> <span class="tk-kw">char</span>* name;
+    <span class="tk-kw">explicit</span> <span class="tk-fn">Guard</span>(<span class="tk-kw">const</span> <span class="tk-kw">char</span>* n) : <span class="tk-fn">name</span>(n) { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"acquire "</span> &lt;&lt; name &lt;&lt; <span class="tk-str">"\n"</span>; }
+    ~<span class="tk-fn">Guard</span>() { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"release "</span> &lt;&lt; name &lt;&lt; <span class="tk-str">"\n"</span>; }
+};
+
+<span class="tk-kw">void</span> <span class="tk-fn">inner</span>() {
+    Guard <span class="tk-fn">g</span>(<span class="tk-str">"lock"</span>);
+    <span class="tk-kw">throw</span> <span class="tk-std">std::runtime_error</span>(<span class="tk-str">"inner failed"</span>);
+}
+
+<span class="tk-kw">void</span> <span class="tk-fn">outer</span>() {
+    Guard <span class="tk-fn">g</span>(<span class="tk-str">"file"</span>);
+    <span class="tk-fn">inner</span>();
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"never printed\n"</span>;
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">try</span> {
+        <span class="tk-fn">outer</span>();
+    } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::exception</span>&amp; e) {
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"caught: "</span> &lt;&lt; e.<span class="tk-fn">what</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+    }
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>acquire file
+acquire lock
+release lock
+release file
+caught: inner failed</code></pre></figure>
+<p><strong>How it works:</strong> the throw leaves <code>inner</code> (destroying <code>lock</code>), then <code>outer</code> (destroying <code>file</code>), and only then runs the handler. A raw <code>new</code> with a <code>delete</code> further down would leak: the <code>delete</code> line is skipped.</p></section>
+<section class="section" aria-labelledby="constructors-destructors-and-noexcept"><h2 id="constructors-destructors-and-noexcept">Constructors, destructors and noexcept</h2><p><strong>Meaning:</strong></p>
+<ul><li>A constructor has no return value, so <strong>throwing is how it reports failure</strong>. The object never existed: its destructor does <strong>not</strong> run, but members and bases already built <strong>are</strong> destroyed.</li><li><strong>Destructors must not throw.</strong> They are <code>noexcept</code> by default, so an exception leaving one calls <code>std::terminate</code>.</li><li><strong><code>noexcept</code></strong> promises a function never throws (if it does, <code>std::terminate</code> is called). The operator <code>noexcept(expr)</code> asks whether an expression can throw.</li></ul>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;stdexcept&gt;</span>
+
+<span class="tk-kw">struct</span> Part {
+    <span class="tk-fn">Part</span>()  { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Part built\n"</span>; }
+    ~<span class="tk-fn">Part</span>() { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Part destroyed\n"</span>; }
+};
+
+<span class="tk-kw">class</span> Widget {
+    Part part;                                        <span class="tk-com">// built before the constructor body runs</span>
+<span class="tk-kw">public</span>:
+    <span class="tk-kw">explicit</span> <span class="tk-fn">Widget</span>(<span class="tk-kw">int</span> size) {
+        <span class="tk-kw">if</span> (size &lt; <span class="tk-num">0</span>) <span class="tk-kw">throw</span> <span class="tk-std">std::invalid_argument</span>(<span class="tk-str">"negative size"</span>);
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Widget built\n"</span>;
+    }
+    ~<span class="tk-fn">Widget</span>() { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Widget destroyed\n"</span>; }
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">add</span>(<span class="tk-kw">int</span> a, <span class="tk-kw">int</span> b) <span class="tk-kw">noexcept</span> { <span class="tk-kw">return</span> a + b; }       <span class="tk-com">// promise: never throws</span>
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">try</span> {
+        Widget <span class="tk-fn">w</span>(-<span class="tk-num">1</span>);
+    } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::exception</span>&amp; e) {
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"caught: "</span> &lt;&lt; e.<span class="tk-fn">what</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+    }
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-fn">add</span>(<span class="tk-num">2</span>, <span class="tk-num">3</span>) &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; <span class="tk-kw">noexcept</span>(<span class="tk-fn">add</span>(<span class="tk-num">2</span>, <span class="tk-num">3</span>)) &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; <span class="tk-kw">noexcept</span>(<span class="tk-fn">Widget</span>(<span class="tk-num">1</span>)) &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>Part built
+Part destroyed
+caught: negative size
+5 1 0</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>part</code> is fully built, then the constructor body throws. <code>part</code> is destroyed; <code>~Widget</code> never runs, because no <code>Widget</code> was completed.</li><li><code>noexcept(add(2, 3))</code> is 1 (true); <code>noexcept(Widget(1))</code> is 0, because the constructor may throw.</li><li>A <code>throw</code> inside a destructor gets the warning <code>'throw' will always call 'terminate' [-Wterminate]</code>, with the note <code>in C++11 destructors default to 'noexcept'</code>.</li><li><code>noexcept</code> matters for performance too: <code>std::vector</code> moves elements during reallocation only if their move constructor is <code>noexcept</code>; otherwise it copies them (lesson 43).</li></ol></section>
+<section class="section" aria-labelledby="exceptions-vs-error-codes"><h2 id="exceptions-vs-error-codes">Exceptions vs error codes</h2><p><strong>Meaning:</strong> an <strong>exception</strong> can't be ignored and travels up automatically. An <strong>error value</strong> (a status code, <code>bool</code>, <code>std::optional</code>, C++23 <code>std::expected</code>) is returned normally and the caller must check it. C APIs and Linux system calls use error codes: they return <code>-1</code> and set <code>errno</code>.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;charconv&gt;</span>
+<span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;optional&gt;</span>
+<span class="tk-pre">#include &lt;stdexcept&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-std">std::optional</span>&lt;<span class="tk-kw">int</span>&gt; <span class="tk-fn">tryParse</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; s) {      <span class="tk-com">// error-value style: empty = failed</span>
+    <span class="tk-kw">int</span> v = <span class="tk-num">0</span>;
+    <span class="tk-kw">auto</span> [end, ec] = <span class="tk-std">std::from_chars</span>(s.<span class="tk-fn">data</span>(), s.<span class="tk-fn">data</span>() + s.<span class="tk-fn">size</span>(), v);
+    <span class="tk-kw">if</span> (ec != <span class="tk-std">std::errc</span>() || end != s.<span class="tk-fn">data</span>() + s.<span class="tk-fn">size</span>()) <span class="tk-kw">return</span> <span class="tk-std">std::nullopt</span>;
+    <span class="tk-kw">return</span> v;
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">parseOrThrow</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; s) {                 <span class="tk-com">// exception style, built on top</span>
+    <span class="tk-kw">if</span> (<span class="tk-kw">auto</span> v = <span class="tk-fn">tryParse</span>(s)) <span class="tk-kw">return</span> *v;
+    <span class="tk-kw">throw</span> <span class="tk-std">std::invalid_argument</span>(<span class="tk-str">"not a number: "</span> + s);
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">try</span> {
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-fn">parseOrThrow</span>(<span class="tk-str">"40"</span>) + <span class="tk-fn">parseOrThrow</span>(<span class="tk-str">"2x"</span>) &lt;&lt; <span class="tk-str">"\n"</span>;   <span class="tk-com">// no checks on the happy path</span>
+    } <span class="tk-kw">catch</span> (<span class="tk-kw">const</span> <span class="tk-std">std::invalid_argument</span>&amp; e) {
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"exception: "</span> &lt;&lt; e.<span class="tk-fn">what</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+    }
+    <span class="tk-kw">if</span> (<span class="tk-kw">auto</span> v = <span class="tk-fn">tryParse</span>(<span class="tk-str">"2x"</span>)) <span class="tk-std">std::cout</span> &lt;&lt; *v &lt;&lt; <span class="tk-str">"\n"</span>;               <span class="tk-com">// the caller must check</span>
+    <span class="tk-kw">else</span>                         <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"optional: empty\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>exception: not a number: 2x
+optional: empty</code></pre></figure>
+<div class="table-wrap"><table class="md-table"><thead><tr><th scope="col"></th><th scope="col">Exceptions</th><th scope="col">Error codes / <code>std::optional</code></th></tr></thead><tbody><tr><td>Can be ignored by mistake</td><td>no: unhandled, the program stops</td><td>yes, unless checked (<code>[[nodiscard]]</code> helps)</td></tr><tr><td>Happy-path code</td><td>clean, no checks</td><td>an <code>if</code> after every call</td></tr><tr><td>Passing the error up several levels</td><td>automatic</td><td>every level must forward it</td></tr><tr><td>Cost when nothing fails</td><td>almost none with g++ (handlers are found through tables)</td><td>a check per call</td></tr><tr><td>Cost when it fails</td><td>high: unwinding and table lookups</td><td>cheap</td></tr><tr><td>Works in constructors and operators</td><td>yes</td><td>no return value to use</td></tr><tr><td>Visible in the signature</td><td>no</td><td>yes</td></tr></tbody></table></div>
+<p><strong>When to use which:</strong></p>
+<ul><li><strong>Exceptions</strong> for errors that are rare and that the direct caller can't fix: a constructor that can't build its object, a missing file deep inside a loader, out of memory.</li><li><strong>Error values</strong> for outcomes that are normal (lookup not found, user typed bad input), in hot loops, and in code built with <code>-fno-exceptions</code> (common in embedded systems and some game engines).</li></ul></section>
+<section class="callout watch" aria-labelledby="common-mistakes"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="common-mistakes">Common mistakes</h2><ul><li><strong>Catching by value.</strong> <code>catch (std::exception e)</code> copies and slices: a derived exception loses its type and its <code>what()</code>. Catch <code>const&amp;</code>.</li><li><strong>Base handler before derived.</strong> The derived handler never runs. Order: most derived first, <code>std::exception</code> next, <code>...</code> last.</li><li><strong><code>throw e;</code> instead of <code>throw;</code></strong> when rethrowing. It throws a sliced copy.</li><li><strong>Throwing pointers.</strong> <code>throw new MyError</code> leaks and doesn't match <code>catch (const MyError&amp;)</code>. Throw by value.</li><li><strong>Swallowing errors.</strong> <code>catch (...) {}</code> hides every failure, including bugs. Log or rethrow.</li><li><strong>Throwing from a destructor.</strong> It calls <code>std::terminate</code>. Report errors another way (a <code>close()</code> function that can throw).</li><li><strong>Manual cleanup between <code>new</code> and <code>delete</code>.</strong> A throw in between skips the <code>delete</code>. Use smart pointers and other RAII types (lessons 12, 40).</li><li><strong>Exceptions for normal control flow</strong> (ending a loop, "not found"). They are slow when thrown and hide the real flow. Return a value instead.</li></ul></section>
+<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">uncaught throw vs bug in .at()</div><div class="d">The abort comes from nobody catching the exception. <code>.at()</code> did its job by detecting the bad index.</div></div><div class="pair"><div class="vs">catch by value vs by reference</div><div class="d">Catch by <code>const&amp;</code>. Catching by value copies the exception and slices it to the handler's type.</div></div><div class="pair"><div class="vs">throw; vs throw e;</div><div class="d"><code>throw;</code> rethrows the original object with its real type. <code>throw e;</code> throws a new copy of <code>e</code>'s static type (sliced).</div></div><div class="pair"><div class="vs">logic_error vs runtime_error</div><div class="d"><code>logic_error</code>: a mistake the program could have avoided (bad index, bad argument). <code>runtime_error</code>: a problem only visible at run time (file missing, network down).</div></div><div class="pair"><div class="vs">noexcept specifier vs noexcept operator</div><div class="d"><code>void f() noexcept</code> promises f never throws (a throw calls <code>terminate</code>). <code>noexcept(expr)</code> asks at compile time whether <code>expr</code> can throw, giving true or false.</div></div></div></section>
+<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>12 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#exceptions-try-catch">Start the 12 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
 <div class="pager pager-bottom" aria-label="Lesson navigation"><a href="21-array-vs-vector.html" rel="prev"><span class="pg-dir">&larr; Previous</span><span class="pg-title">21. std::array vs std::vector</span></a><a href="23-sanitizers-and-debugging.html" rel="next" class="pg-next"><span class="pg-dir">Next &rarr;</span><span class="pg-title">23. AddressSanitizer &amp; Debugging Tools</span></a></div>
 </article>
-<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-plain" href="#handle-vs-abort">Handle vs abort</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="const-constexpr-volatile compile-time-constants-and-vla arrays-and-contiguity endianness undefined-behavior-and-bounds array-vs-vector exceptions-try-catch sanitizers-and-debugging"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=8f762b8c8a"></script><script src="../assets/app.js?v=8f762b8c8a" defer></script></body></html>
+<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-plain" href="#throw-try-and-catch">throw, try and catch</a></li><li><a class="otp-plain" href="#the-standard-exception-hierarchy">The standard exception hierarchy</a></li><li><a class="otp-plain" href="#your-own-exception-class">Your own exception class</a></li><li><a class="otp-plain" href="#several-handlers-catch-and-rethrow">Several handlers, catch (...) and rethrow</a></li><li><a class="otp-plain" href="#stack-unwinding-destructors-still-run">Stack unwinding: destructors still run</a></li><li><a class="otp-plain" href="#constructors-destructors-and-noexcept">Constructors, destructors and noexcept</a></li><li><a class="otp-plain" href="#exceptions-vs-error-codes">Exceptions vs error codes</a></li><li><a class="otp-watch" href="#common-mistakes">Common mistakes</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="const-constexpr-volatile compile-time-constants-and-vla arrays-and-contiguity endianness undefined-behavior-and-bounds array-vs-vector exceptions-try-catch sanitizers-and-debugging"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=c3e831d229"></script><script src="../assets/app.js?v=c3e831d229" defer></script></body></html>

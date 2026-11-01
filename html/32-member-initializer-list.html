@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="Initialize class members directly, once — and the only way to reach a base ctor."><title>32 Member Initializer List — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=8f762b8c8a"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
+<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="The member initializer list creates each member directly with its value, once, before the constructor body runs; it is also the only way to call a base-class constructor."><title>32 Member Initializer List — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=c3e831d229"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
 <a class="sb-home" href="../index.html">Course home</a>
 <details class="sb-group" open><summary><span>C++ Core</span><span class="sb-count" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static">0/28</span></summary><ul>
 <li><a class="sb-link" data-slug="control-flow" href="../html/01-control-flow.html"><span class="sb-num">01</span><span class="sb-title-text">Control Flow</span><span class="sb-check" aria-hidden="true"></span></a></li>
@@ -47,43 +47,201 @@
 <li><a class="sb-link" data-slug="memory-allocation-and-fragmentation" href="../html/26-memory-allocation-and-fragmentation.html"><span class="sb-num">26</span><span class="sb-title-text">Allocation Methods &amp; Fragmentation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="demand-paging-and-swapping" href="../html/27-demand-paging-and-swapping.html"><span class="sb-num">27</span><span class="sb-title-text">Demand Paging, Page Faults &amp; Swapping</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership">0/4</span></summary><ul>
+<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership libraries">0/5</span></summary><ul>
 <li><a class="sb-link" data-slug="linux-filesystem-navigation" href="../html/28-linux-filesystem-navigation.html"><span class="sb-num">28</span><span class="sb-title-text">Filesystem &amp; Navigation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="linux-permissions" href="../html/29-linux-permissions.html"><span class="sb-num">29</span><span class="sb-title-text">Permissions (rwx)</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chmod" href="../html/30-chmod.html"><span class="sb-num">30</span><span class="sb-title-text">chmod</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chown-ownership" href="../html/31-chown-ownership.html"><span class="sb-num">31</span><span class="sb-title-text">chown &amp; Ownership</span><span class="sb-check" aria-hidden="true"></span></a></li>
+<li><a class="sb-link" data-slug="libraries" href="../html/45-libraries.html"><span class="sb-num">45</span><span class="sb-title-text">Libraries: Static and Shared</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">293</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
+<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">524</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
 <div class="sb-section"><div class="sb-label">Deep dives</div>
 <a class="sb-plain" href="../extras/heap-layout-new-malloc.html">Heap layout — new / delete / malloc / free</a>
 <a class="sb-plain" href="../extras/shared-ptr-cycle.html">shared_ptr circular reference — why it leaks</a>
 <a class="sb-plain" href="../extras/code-to-execution-road.html">From written code to execution</a>
 </div></nav><div class="scrim" id="scrim" hidden></div><main id="main" tabindex="-1"><div class="lesson-wrap"><article class="page lesson" data-slug="member-initializer-list" data-order="32">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Course</a><span aria-hidden="true">&rsaquo;</span><a href="../index.html#module-c-core">C++ Core</a><span aria-hidden="true">&rsaquo;</span><span aria-current="page">Member Initializer List</span></nav>
-<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Core</span><span class="meta-item">Lesson 32 of 44</span><span class="meta-item">2 min read</span><span class="meta-item">8 questions</span></div><h1>Member Initializer List</h1><p class="lead">Initialize class members directly, once — and the only way to reach a base ctor.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
+<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Core</span><span class="meta-item">Lesson 32 of 45</span><span class="meta-item">9 min read</span><span class="meta-item">12 questions</span></div><h1>Member Initializer List</h1><p class="lead">The member initializer list creates each member directly with its value, once, before the constructor body runs; it is also the only way to call a base-class constructor.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
 <p class="legend-inline"><span class="chip chip-concept"><span aria-hidden="true">&#9670;</span> Concept</span> core idea<span class="chip chip-watch"><span aria-hidden="true">&#9650;</span> Watch out</span> easy to get wrong</p>
-<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li>Written after the constructor's <code>:</code> and before <code>{}</code>; initializes members <strong>directly, once</strong> (vs default-then-assign in the body).</li><li>Mandatory for <code>const</code> members, reference members, and members whose type has no default constructor.</li><li>The only way to pass arguments to a <strong>base class</strong> constructor — even inside a default constructor.</li><li>Members initialize in <strong>declaration order</strong>, NOT the order written in the list.</li><li>Delegating constructor (C++11): one ctor calls another; it must be the <strong>only</strong> item in the list.</li><li>Default member initializer (C++11, <code>int a = 0;</code>) is a fallback; the list <strong>takes precedence</strong> over it (default simply not used, not overridden). Body can assign later, but never to const/reference members.</li></ol></section>
-<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#one-example-that-shows-every-point">One example that shows every point</a><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
-<section class="section" aria-labelledby="one-example-that-shows-every-point"><h2 id="one-example-that-shows-every-point">One example that shows every point</h2><figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-kw">class</span> Base {
+<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li>Written after the constructor's <code>:</code> and before <code>{</code>. It <strong>initializes</strong> each member <strong>directly, once</strong>, as the object is built. In the body the members already exist, so <code>a = x;</code> there is only an <strong>assignment</strong> (default-construct first, then overwrite).</li><li><strong>Mandatory</strong> for <code>const</code> members, <strong>reference</strong> members, and members whose type has <strong>no default constructor</strong>.</li><li>The only way to pass arguments to a <strong>base class</strong> constructor: <code>Derived(int x) : Base(x) {}</code>. The base is always built first.</li><li>Members are initialized in <strong>declaration order</strong>, not the order written in the list (g++ warns with <code>-Wreorder</code>). Never initialize a member from one declared after it.</li><li><strong>Delegating constructor</strong> (C++11): <code>Account(o) : Account(o, 0.0) {}</code> reuses another constructor. It must be the <strong>only</strong> item in the list, and the target's body runs first.</li><li>A <strong>default member initializer</strong> (<code>int seats = 1;</code>) is a fallback, used only by constructors that don't list that member. When the list sets it, the default is <strong>not used at all</strong> (not even evaluated).</li><li>Rule of thumb: set <strong>every</strong> member in the list (or with a default initializer). Keep the body for work that needs the finished members: checks, logging, registration.</li></ol></section>
+<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#initialize-don-t-assign-the-list-runs-once">Initialize, don't assign: the list runs once</a><a href="#members-that-must-use-the-list">Members that must use the list</a><a href="#initialization-order-is-declaration-order">Initialization order is declaration order</a><a href="#delegating-constructors">Delegating constructors</a><a href="#default-member-initializers-and-the-list">Default member initializers and the list</a><a href="#common-mistakes">Common mistakes</a><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
+<section class="section" aria-labelledby="initialize-don-t-assign-the-list-runs-once"><h2 id="initialize-don-t-assign-the-list-runs-once">Initialize, don't assign: the list runs once</h2><p><strong>Meaning:</strong> every member is created <strong>before</strong> the constructor body starts. The list is where you say <em>how</em> each one is created. If a member is not in the list (and has no default initializer), it is default-constructed, and a line like <code>name = n;</code> in the body is a <strong>second</strong> step: an assignment to an object that already exists.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-kw">struct</span> Name {                                   <span class="tk-com">// prints what happens to it</span>
+    <span class="tk-std">std::string</span> text;
+    <span class="tk-fn">Name</span>()                     { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  default-construct\n"</span>; }
+    <span class="tk-fn">Name</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; t) : <span class="tk-fn">text</span>(t) { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  construct from \""</span> &lt;&lt; t &lt;&lt; <span class="tk-str">"\"\n"</span>; }
+    Name&amp; <span class="tk-kw">operator</span>=(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; t) { text = t; <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  assign \""</span> &lt;&lt; t &lt;&lt; <span class="tk-str">"\"\n"</span>; <span class="tk-kw">return</span> *<span class="tk-kw">this</span>; }
+};
+
+<span class="tk-kw">struct</span> InBody {
+    Name name;
+    <span class="tk-fn">InBody</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; n) { name = n; }  <span class="tk-com">// name already exists here: this is an assignment</span>
+};
+
+<span class="tk-kw">struct</span> InList {
+    Name name;
+    <span class="tk-fn">InList</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; n) : <span class="tk-fn">name</span>(n) {}   <span class="tk-com">// name is created with its value</span>
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"InBody:\n"</span>;
+    InBody <span class="tk-fn">a</span>(<span class="tk-str">"Ana"</span>);
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"InList:\n"</span>;
+    InList <span class="tk-fn">b</span>(<span class="tk-str">"Ben"</span>);
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>InBody:
+  default-construct
+  assign "Ana"
+InList:
+  construct from "Ben"</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>InBody</code> doesn't list <code>name</code>, so <code>name</code> is default-constructed before the body runs. The body then assigns to it: two operations.</li><li><code>InList</code> creates <code>name</code> directly from <code>n</code>: one operation.</li><li>For an <code>int</code> the difference is tiny. For a <code>std::string</code>, a <code>std::vector</code> or any class with real work in its constructors, the body version wastes a construction. For some members it is not possible at all (next section).</li></ol></section>
+<section class="section" aria-labelledby="members-that-must-use-the-list"><h2 id="members-that-must-use-the-list">Members that must use the list</h2><p><strong>Meaning:</strong> some things can only get a value at the moment they are created, so assigning in the body is too late:</p>
+<ul><li>a <code>const</code> member can't be assigned;</li><li>a reference member must be bound when it is created and can't be re-bound;</li><li>a member whose class has <strong>no default constructor</strong> can't be created without arguments;</li><li>a <strong>base class</strong> with no default constructor needs its arguments, and the list is the only place to pass them.</li></ul>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">class</span> Base {
 <span class="tk-kw">public</span>:
-    <span class="tk-fn">Base</span>(<span class="tk-kw">int</span> x) {}                 <span class="tk-com">// no default ctor -&gt; base MUST be in the list</span>
+    <span class="tk-kw">explicit</span> <span class="tk-fn">Base</span>(<span class="tk-kw">int</span> x) { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Base("</span> &lt;&lt; x &lt;&lt; <span class="tk-str">")\n"</span>; }   <span class="tk-com">// no default constructor</span>
+};
+
+<span class="tk-kw">struct</span> Sensor {
+    <span class="tk-kw">int</span> pin;
+    <span class="tk-kw">explicit</span> <span class="tk-fn">Sensor</span>(<span class="tk-kw">int</span> p) : <span class="tk-fn">pin</span>(p) {}                            <span class="tk-com">// no default constructor</span>
 };
 
 <span class="tk-kw">class</span> Entity : <span class="tk-kw">public</span> Base {
-    <span class="tk-kw">int</span> a = <span class="tk-num">0</span>;                     <span class="tk-com">// default member initializer (fallback)</span>
-    <span class="tk-kw">const</span> <span class="tk-kw">int</span> id;                  <span class="tk-com">// const     -&gt; must use the list</span>
-    <span class="tk-kw">int</span>&amp; ref;                      <span class="tk-com">// reference -&gt; must use the list</span>
+    <span class="tk-kw">const</span> <span class="tk-kw">int</span> id;              <span class="tk-com">// const: can't be assigned later</span>
+    <span class="tk-kw">int</span>&amp; counter;              <span class="tk-com">// reference: must be bound when created</span>
+    Sensor sensor;             <span class="tk-com">// has no default constructor</span>
 <span class="tk-kw">public</span>:
-    <span class="tk-com">// members init in DECLARATION order (a, id, ref), not list order</span>
-    <span class="tk-fn">Entity</span>(<span class="tk-kw">int</span> x, <span class="tk-kw">int</span>&amp; r)
-        : <span class="tk-fn">Base</span>(x), <span class="tk-fn">a</span>(x), <span class="tk-fn">id</span>(x), <span class="tk-fn">ref</span>(r)   <span class="tk-com">// base first, then members, all once</span>
-    {
-        a = <span class="tk-num">5</span>;                     <span class="tk-com">// body can ASSIGN a (never id/ref)</span>
+    <span class="tk-fn">Entity</span>(<span class="tk-kw">int</span> i, <span class="tk-kw">int</span>&amp; c) : <span class="tk-fn">Base</span>(i), <span class="tk-fn">id</span>(i), <span class="tk-fn">counter</span>(c), <span class="tk-fn">sensor</span>(i * <span class="tk-num">10</span>) {
+        ++counter;             <span class="tk-com">// the body can use them: they all exist now</span>
     }
-    <span class="tk-fn">Entity</span>(<span class="tk-kw">int</span>&amp; r) : <span class="tk-fn">Entity</span>(<span class="tk-num">1</span>, r) {}     <span class="tk-com">// delegating ctor: only item in the list</span>
-};</code></pre></figure></section>
-<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">initialize (list) vs assign (body)</div><div class="d">List initializes the member directly, once. Body assigns after it already exists (default-then-overwrite for class types).</div></div><div class="pair"><div class="vs">declaration order vs list order</div><div class="d">Members init in the order they are DECLARED, not the order written in the list.</div></div><div class="pair"><div class="vs">default member initializer vs MIL</div><div class="d">Default init = fixed fallback. When a member is also in the list, the list takes precedence — the default isn't used (not overridden or reassigned). MIL is also the only way to init a base class.</div></div></div></section>
-<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>8 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#member-initializer-list">Start the 8 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
+    <span class="tk-kw">void</span> <span class="tk-fn">print</span>() <span class="tk-kw">const</span> {
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"id="</span> &lt;&lt; id &lt;&lt; <span class="tk-str">" pin="</span> &lt;&lt; sensor.pin &lt;&lt; <span class="tk-str">" counter="</span> &lt;&lt; counter &lt;&lt; <span class="tk-str">"\n"</span>;
+    }
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">int</span> created = <span class="tk-num">0</span>;
+    Entity <span class="tk-fn">e</span>(<span class="tk-num">3</span>, created);
+    e.<span class="tk-fn">print</span>();
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"created = "</span> &lt;&lt; created &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>Base(3)
+id=3 pin=30 counter=1
+created = 1</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>Base(i)</code> runs first: base classes are always built before members.</li><li><code>id</code>, <code>counter</code> and <code>sensor</code> are created with their values. <code>counter</code> refers to <code>main</code>'s <code>created</code>, so <code>++counter</code> in the body changes <code>created</code>.</li><li>With an empty list, g++ stops with <code>error: uninitialized const member in 'const int'</code>, <code>error: uninitialized reference member in 'int&amp;'</code> and <code>error: no matching function for call to 'Sensor::Sensor()'</code>.</li></ol></section>
+<section class="section" aria-labelledby="initialization-order-is-declaration-order"><h2 id="initialization-order-is-declaration-order">Initialization order is declaration order</h2><p><strong>Meaning:</strong> members are always initialized in the order they are <strong>declared in the class</strong>, whatever order you write in the list. (Base classes come before all members.) The order in the list is ignored, and g++ warns when the two differ.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">struct</span> Tracer {
+    <span class="tk-fn">Tracer</span>(<span class="tk-kw">const</span> <span class="tk-kw">char</span>* name) { <span class="tk-std">std::cout</span> &lt;&lt; name &lt;&lt; <span class="tk-str">" "</span>; }
+};
+
+<span class="tk-kw">class</span> Widget {
+    Tracer first;                                  <span class="tk-com">// declared 1st</span>
+    Tracer second;                                 <span class="tk-com">// declared 2nd</span>
+<span class="tk-kw">public</span>:
+    <span class="tk-fn">Widget</span>() : <span class="tk-fn">second</span>(<span class="tk-str">"second"</span>), <span class="tk-fn">first</span>(<span class="tk-str">"first"</span>) {} <span class="tk-com">// written in the other order</span>
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    Widget w;
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>first second</code></pre></figure>
+<p>g++ with <code>-Wall</code> says: <code>warning: 'Widget::second' will be initialized after [-Wreorder]</code>.</p>
+<p>This becomes a real bug when one member is initialized from another that is declared <strong>later</strong>:</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">class</span> Buffer {
+    <span class="tk-kw">int</span>* data;                                     <span class="tk-com">// declared first, so initialized first</span>
+    <span class="tk-kw">int</span> size;
+<span class="tk-kw">public</span>:
+    <span class="tk-fn">Buffer</span>(<span class="tk-kw">int</span> n) : <span class="tk-fn">size</span>(n), <span class="tk-fn">data</span>(<span class="tk-kw">new</span> <span class="tk-kw">int</span>[size]) {}   <span class="tk-com">// undefined behaviour: size is not set yet</span>
+    ~<span class="tk-fn">Buffer</span>() { <span class="tk-kw">delete</span>[] data; }
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() { Buffer <span class="tk-fn">b</span>(<span class="tk-num">10</span>); }</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>data</code> is declared first, so <code>new int[size]</code> runs first, while <code>size</code> still holds garbage. The array can have any size.</li><li>g++ warns twice: the <code>-Wreorder</code> warning, and <code>warning: '*this.Buffer::size' is used uninitialized [-Wuninitialized]</code>.</li><li>Fix: initialize from the parameter, <code>data(new int[n])</code>, or declare <code>size</code> before <code>data</code>. Simplest rule: write the list in declaration order, and treat <code>-Wreorder</code> as an error.</li></ol></section>
+<section class="section" aria-labelledby="delegating-constructors"><h2 id="delegating-constructors">Delegating constructors</h2><p><strong>Meaning:</strong> a constructor can hand the whole job to another constructor of the same class, by naming it in its list (C++11). The shared setup is written once. The delegation must be the <strong>only</strong> item in the list, because the target constructor already initializes every member.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-kw">class</span> Account {
+    <span class="tk-std">std::string</span> owner;
+    <span class="tk-kw">double</span> balance;
+<span class="tk-kw">public</span>:
+    <span class="tk-fn">Account</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; o, <span class="tk-kw">double</span> b) : <span class="tk-fn">owner</span>(o), <span class="tk-fn">balance</span>(b) {      <span class="tk-com">// the one that does the work</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  main constructor: "</span> &lt;&lt; owner &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; balance &lt;&lt; <span class="tk-str">"\n"</span>;
+    }
+    <span class="tk-fn">Account</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; o) : <span class="tk-fn">Account</span>(o, <span class="tk-num">0.0</span>) {                     <span class="tk-com">// delegates</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  delegating constructor body\n"</span>;
+    }
+    <span class="tk-fn">Account</span>() : <span class="tk-fn">Account</span>(<span class="tk-str">"guest"</span>) {}                                       <span class="tk-com">// delegates twice</span>
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Account a(\"Ana\", 50):\n"</span>;
+    Account <span class="tk-fn">a</span>(<span class="tk-str">"Ana"</span>, <span class="tk-num">50</span>);
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Account b(\"Ben\"):\n"</span>;
+    Account <span class="tk-fn">b</span>(<span class="tk-str">"Ben"</span>);
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Account c:\n"</span>;
+    Account c;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>Account a("Ana", 50):
+  main constructor: Ana 50
+Account b("Ben"):
+  main constructor: Ben 0
+  delegating constructor body
+Account c:
+  main constructor: guest 0
+  delegating constructor body</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>Account b("Ben")</code> calls <code>Account(o, 0.0)</code> first. That target constructor runs completely (list <strong>and</strong> body), then the delegating constructor's own body runs.</li><li><code>Account c</code> delegates to <code>Account("guest")</code>, which delegates again. Chains are fine; a cycle (two constructors delegating to each other) is a bug.</li><li>Adding another item, <code>A() : A(1), y(2) {}</code>, is rejected: <code>error: mem-initializer for 'A::y' follows constructor delegation</code>.</li><li>Default arguments (lesson 11) are an alternative when the constructors differ only by default values.</li></ol></section>
+<section class="section" aria-labelledby="default-member-initializers-and-the-list"><h2 id="default-member-initializers-and-the-list">Default member initializers and the list</h2><p><strong>Meaning:</strong> since C++11 a member can have a default right where it is declared: <code>int seats = 1;</code>. It is used by every constructor that <strong>doesn't</strong> list that member. A constructor that lists the member uses the list's value instead, and the default is skipped completely: it is not evaluated first and then overwritten.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">int</span> <span class="tk-fn">defaultId</span>() {
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  defaultId() called\n"</span>;
+    <span class="tk-kw">return</span> <span class="tk-num">7</span>;
+}
+
+<span class="tk-kw">class</span> Ticket {
+    <span class="tk-kw">int</span> id = <span class="tk-fn">defaultId</span>();                 <span class="tk-com">// default member initializer: a fallback</span>
+    <span class="tk-kw">int</span> seats = <span class="tk-num">1</span>;
+<span class="tk-kw">public</span>:
+    <span class="tk-fn">Ticket</span>() {}                           <span class="tk-com">// doesn't mention id: the fallback is used</span>
+    <span class="tk-fn">Ticket</span>(<span class="tk-kw">int</span> i) : <span class="tk-fn">id</span>(i) {}              <span class="tk-com">// the list wins: defaultId() is not even called</span>
+    <span class="tk-kw">void</span> <span class="tk-fn">print</span>() <span class="tk-kw">const</span> { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  id="</span> &lt;&lt; id &lt;&lt; <span class="tk-str">" seats="</span> &lt;&lt; seats &lt;&lt; <span class="tk-str">"\n"</span>; }
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Ticket t1:\n"</span>;
+    Ticket t1;
+    t1.<span class="tk-fn">print</span>();
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Ticket t2(42):\n"</span>;
+    Ticket <span class="tk-fn">t2</span>(<span class="tk-num">42</span>);
+    t2.<span class="tk-fn">print</span>();
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>Ticket t1:
+  defaultId() called
+  id=7 seats=1
+Ticket t2(42):
+  id=42 seats=1</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>Ticket t1</code> uses a constructor that doesn't list <code>id</code>, so <code>defaultId()</code> runs and <code>id</code> is 7.</li><li><code>Ticket t2(42)</code> lists <code>id(42)</code>: <code>defaultId()</code> is never called. Each member is initialized exactly once.</li><li><code>seats</code> is listed by neither constructor, so both use its default 1.</li></ol>
+<div class="table-wrap"><table class="md-table"><thead><tr><th scope="col"></th><th scope="col">Default member initializer</th><th scope="col">Member initializer list</th></tr></thead><tbody><tr><td>Written</td><td>at the declaration: <code>int seats = 1;</code></td><td>in a constructor: <code>: seats(n)</code></td></tr><tr><td>Value</td><td>the same for every constructor</td><td>can use the constructor's arguments</td></tr><tr><td>Applies to</td><td>every constructor that doesn't list the member</td><td>only that constructor</td></tr><tr><td>Base classes</td><td>not possible</td><td>the only way</td></tr><tr><td>Best for</td><td>sensible defaults, so no member is ever left uninitialized</td><td>values that come from the arguments</td></tr></tbody></table></div></section>
+<section class="callout watch" aria-labelledby="common-mistakes"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="common-mistakes">Common mistakes</h2><ul><li><strong>Assigning in the body</strong> what could be initialized in the list: wasted work for class types, and a compile error for <code>const</code>, reference and no-default-constructor members.</li><li><strong>Writing the list in a different order</strong> from the declarations, then initializing one member from another declared later: it reads garbage. Keep both orders the same and heed <code>-Wreorder</code>.</li><li><strong>Expecting the list order to matter.</strong> It doesn't: declaration order always wins.</li><li><strong>Delegating and initializing in the same list.</strong> <code>A() : A(1), y(2) {}</code> doesn't compile; set <code>y</code> in the target constructor or in the body.</li><li><strong>Forgetting the base class.</strong> If the base has no default constructor and the derived list doesn't name it, the code doesn't compile.</li><li><strong>Using a member's name for the parameter and getting confused.</strong> <code>Sensor(int pin) : pin(pin) {}</code> is legal: outside the parentheses <code>pin</code> is the member, inside it is the parameter. In the <strong>body</strong>, though, <code>pin</code> means the parameter (use <code>this-&gt;pin</code>, lesson 38).</li></ul></section>
+<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">initialize (list) vs assign (body)</div><div class="d">The list creates the member with its value, once. The body assigns to a member that already exists (default-construct, then overwrite for class types).</div></div><div class="pair"><div class="vs">declaration order vs list order</div><div class="d">Members are initialized in the order they are DECLARED, not the order written in the list.</div></div><div class="pair"><div class="vs">default member initializer vs list</div><div class="d">The default is a fixed fallback for constructors that don't list the member. When the member is in the list, the default is not used (not evaluated, not overwritten). Only the list can initialize a base class.</div></div><div class="pair"><div class="vs">delegating vs normal list</div><div class="d">A delegating list names another constructor of the same class and nothing else. A normal list names the base classes and members.</div></div></div></section>
+<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>12 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#member-initializer-list">Start the 12 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
 <div class="pager pager-bottom" aria-label="Lesson navigation"><a href="31-chown-ownership.html" rel="prev"><span class="pg-dir">&larr; Previous</span><span class="pg-title">31. chown &amp; Ownership</span></a><a href="33-ternary-operator.html" rel="next" class="pg-next"><span class="pg-dir">Next &rarr;</span><span class="pg-title">33. Ternary Operator</span></a></div>
 </article>
-<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-plain" href="#one-example-that-shows-every-point">One example that shows every point</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=8f762b8c8a"></script><script src="../assets/app.js?v=8f762b8c8a" defer></script></body></html>
+<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-plain" href="#initialize-don-t-assign-the-list-runs-once">Initialize, don't assign: the list runs once</a></li><li><a class="otp-plain" href="#members-that-must-use-the-list">Members that must use the list</a></li><li><a class="otp-plain" href="#initialization-order-is-declaration-order">Initialization order is declaration order</a></li><li><a class="otp-plain" href="#delegating-constructors">Delegating constructors</a></li><li><a class="otp-plain" href="#default-member-initializers-and-the-list">Default member initializers and the list</a></li><li><a class="otp-watch" href="#common-mistakes">Common mistakes</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=c3e831d229"></script><script src="../assets/app.js?v=c3e831d229" defer></script></body></html>

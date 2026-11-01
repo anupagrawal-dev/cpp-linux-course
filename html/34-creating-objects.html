@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="An object lives on the stack or the heap — and that choice sets its lifetime."><title>34 Creating / Instantiating Objects — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=8f762b8c8a"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
+<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="An object is created in one of three places (the stack, the heap, or static storage), and where you create it decides how long it lives and who destroys it."><title>34 Creating / Instantiating Objects — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=c3e831d229"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
 <a class="sb-home" href="../index.html">Course home</a>
 <details class="sb-group" open><summary><span>C++ Core</span><span class="sb-count" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static">0/28</span></summary><ul>
 <li><a class="sb-link" data-slug="control-flow" href="../html/01-control-flow.html"><span class="sb-num">01</span><span class="sb-title-text">Control Flow</span><span class="sb-check" aria-hidden="true"></span></a></li>
@@ -47,42 +47,234 @@
 <li><a class="sb-link" data-slug="memory-allocation-and-fragmentation" href="../html/26-memory-allocation-and-fragmentation.html"><span class="sb-num">26</span><span class="sb-title-text">Allocation Methods &amp; Fragmentation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="demand-paging-and-swapping" href="../html/27-demand-paging-and-swapping.html"><span class="sb-num">27</span><span class="sb-title-text">Demand Paging, Page Faults &amp; Swapping</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership">0/4</span></summary><ul>
+<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership libraries">0/5</span></summary><ul>
 <li><a class="sb-link" data-slug="linux-filesystem-navigation" href="../html/28-linux-filesystem-navigation.html"><span class="sb-num">28</span><span class="sb-title-text">Filesystem &amp; Navigation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="linux-permissions" href="../html/29-linux-permissions.html"><span class="sb-num">29</span><span class="sb-title-text">Permissions (rwx)</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chmod" href="../html/30-chmod.html"><span class="sb-num">30</span><span class="sb-title-text">chmod</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chown-ownership" href="../html/31-chown-ownership.html"><span class="sb-num">31</span><span class="sb-title-text">chown &amp; Ownership</span><span class="sb-check" aria-hidden="true"></span></a></li>
+<li><a class="sb-link" data-slug="libraries" href="../html/45-libraries.html"><span class="sb-num">45</span><span class="sb-title-text">Libraries: Static and Shared</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">293</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
+<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">524</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
 <div class="sb-section"><div class="sb-label">Deep dives</div>
 <a class="sb-plain" href="../extras/heap-layout-new-malloc.html">Heap layout — new / delete / malloc / free</a>
 <a class="sb-plain" href="../extras/shared-ptr-cycle.html">shared_ptr circular reference — why it leaks</a>
 <a class="sb-plain" href="../extras/code-to-execution-road.html">From written code to execution</a>
 </div></nav><div class="scrim" id="scrim" hidden></div><main id="main" tabindex="-1"><div class="lesson-wrap"><article class="page lesson" data-slug="creating-objects" data-order="34">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Course</a><span aria-hidden="true">&rsaquo;</span><a href="../index.html#module-c-core">C++ Core</a><span aria-hidden="true">&rsaquo;</span><span aria-current="page">Creating / Instantiating Objects</span></nav>
-<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Core</span><span class="meta-item">Lesson 34 of 44</span><span class="meta-item">2 min read</span><span class="meta-item">8 questions</span></div><h1>Creating / Instantiating Objects</h1><p class="lead">An object lives on the stack or the heap — and that choice sets its lifetime.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
+<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Core</span><span class="meta-item">Lesson 34 of 45</span><span class="meta-item">12 min read</span><span class="meta-item">12 questions</span></div><h1>Creating / Instantiating Objects</h1><p class="lead">An object is created in one of three places (the stack, the heap, or static storage), and where you create it decides how long it lives and who destroys it.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
 <p class="legend-inline"><span class="chip chip-concept"><span aria-hidden="true">&#9670;</span> Concept</span> core idea<span class="chip chip-watch"><span aria-hidden="true">&#9650;</span> Watch out</span> easy to get wrong</p>
-<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li>An object lives on the <strong>stack</strong> or the <strong>heap</strong>; that choice decides its lifetime.</li><li>Stack: <code>Entity e;</code> — <strong>automatic</strong> lifetime (destroyed at end of scope, dtor runs), fast, small; access with <code>.</code>.</li><li>Heap: <code>Entity* e = new Entity;</code> — <code>new</code> returns a <strong>pointer</strong>; the object lives until you <code>delete</code> it (else <strong>memory leak</strong>); access with <code>-&gt;</code>.</li><li>Use the heap when the object must <strong>outlive its scope</strong>, is too big for the stack, is sized at runtime, or needs polymorphism (<code>Base* b = new Derived;</code>).</li><li>Traps: <strong>dangling</strong> pointer (points to a destroyed/ freed object), <strong>leak</strong> (never deleted), <strong>double-delete</strong>. Set the pointer to <code>nullptr</code> after delete (<code>delete nullptr;</code> is safe).</li><li><code>Entity e();</code> is a function declaration (most vexing parse) — use <code>Entity e;</code> or <code>Entity e{};</code>.</li></ol></section>
-<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#one-example-stack-heap-and-a-dangling-pointer">One example: stack, heap, and a dangling pointer</a><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
-<section class="section" aria-labelledby="one-example-stack-heap-and-a-dangling-pointer"><h2 id="one-example-stack-heap-and-a-dangling-pointer">One example: stack, heap, and a dangling pointer</h2><figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-kw">class</span> Entity { <span class="tk-kw">public</span>: <span class="tk-kw">int</span> x; <span class="tk-fn">Entity</span>(){} };
+<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li>An object lives in one of <strong>three places</strong>: the <strong>stack</strong> (local variables), the <strong>heap</strong> (<code>new</code>, <code>make_unique</code>) or <strong>static storage</strong> (globals, <code>static</code> locals, static members: created before <code>main</code> or on first use, destroyed after <code>main</code> returns). The place decides its lifetime (lesson 39).</li><li><strong>Stack:</strong> <code>Entity e;</code> is destroyed automatically at the end of its scope. Fast, but limited in size. Access members with <code>.</code>.</li><li><strong>Heap:</strong> <code>new Entity</code> returns a <strong>pointer</strong>; the object lives until <code>delete</code> (forget it and you <strong>leak</strong>). Access members with <code>-&gt;</code>. Today, prefer <code>auto p = std::make_unique&lt;Entity&gt;();</code>, which deletes for you.</li><li>Use the heap only when needed: the object must <strong>outlive its scope</strong>, is <strong>too big</strong> for the stack, its size is known only <strong>at run time</strong>, or it is used <strong>polymorphically</strong>.</li><li>Initialization forms: <code>Entity e(1, 2);</code>, <code>Entity e{1, 2};</code> (no narrowing), <code>Entity e = {1, 2};</code>, <code>Entity e = Entity(1, 2);</code> (C++17: no copy). <code>Entity e();</code> declares a <strong>function</strong> (most vexing parse): write <code>Entity e;</code> or <code>Entity e{};</code>.</li><li><code>Entity(1, 2)</code> used as an expression creates a <strong>temporary</strong>: an object with no name that dies at the end of the full expression.</li><li>Arrays of objects: <code>Entity a[3];</code> needs a <strong>default constructor</strong>; <code>std::vector&lt;Entity&gt;</code> with <code>emplace_back</code> builds elements whose count is known only at run time.</li><li>Traps: a <strong>dangling</strong> pointer (to an object already destroyed), a <strong>leak</strong> (never deleted), a <strong>double delete</strong>. Set raw pointers to <code>nullptr</code> after <code>delete</code>, or better, don't own objects through raw pointers.</li></ol></section>
+<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#three-places-an-object-can-live">Three places an object can live</a><a href="#initialization-forms">Initialization forms</a><a href="#temporaries-objects-without-a-name">Temporaries: objects without a name</a><a href="#arrays-of-objects">Arrays of objects</a><a href="#creating-on-the-heap-new-vs-make-unique">Creating on the heap: new vs make_unique</a><a href="#common-mistakes">Common mistakes</a><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
+<section class="section" aria-labelledby="three-places-an-object-can-live"><h2 id="three-places-an-object-can-live">Three places an object can live</h2><p><strong>Meaning:</strong> where you create an object decides when it is destroyed. A local (<code>Entity e;</code>) lives on the <strong>stack</strong> until the end of its scope; an object from <code>new</code> lives on the <strong>heap</strong> until it is deleted; a global or <code>static</code> object lives in <strong>static storage</strong> until the program ends.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
 
-<span class="tk-kw">void</span> <span class="tk-fn">f</span>() {
-    Entity a;                 <span class="tk-com">// STACK: auto lifetime, access with .</span>
-    a.x = <span class="tk-num">1</span>;
+<span class="tk-kw">class</span> Entity {
+    <span class="tk-std">std::string</span> name;
+<span class="tk-kw">public</span>:
+    <span class="tk-fn">Entity</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; n) : <span class="tk-fn">name</span>(n) { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  create "</span> &lt;&lt; name &lt;&lt; <span class="tk-str">"\n"</span>; }
+    ~<span class="tk-fn">Entity</span>()                              { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  destroy "</span> &lt;&lt; name &lt;&lt; <span class="tk-str">"\n"</span>; }
+    <span class="tk-kw">void</span> <span class="tk-fn">hello</span>() <span class="tk-kw">const</span>                     { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  hello from "</span> &lt;&lt; name &lt;&lt; <span class="tk-str">"\n"</span>; }
+};
 
-    Entity* p = <span class="tk-kw">new</span> Entity;   <span class="tk-com">// HEAP: pointer on stack, object on heap</span>
-    p-&gt;x = <span class="tk-num">2</span>;                 <span class="tk-com">// access with -&gt;  (same as (*p).x)</span>
-    <span class="tk-kw">delete</span> p;                 <span class="tk-com">// manual free — or it leaks</span>
-    p = <span class="tk-kw">nullptr</span>;              <span class="tk-com">// habit: avoids dangling / double-delete</span>
+Entity <span class="tk-fn">global</span>(<span class="tk-str">"global"</span>);                     <span class="tk-com">// static storage: before main, until the program ends</span>
 
+Entity* <span class="tk-fn">makeOnHeap</span>() {
+    Entity <span class="tk-fn">local</span>(<span class="tk-str">"local"</span>);                   <span class="tk-com">// stack: dies when this function returns</span>
+    <span class="tk-kw">return</span> <span class="tk-kw">new</span> <span class="tk-fn">Entity</span>(<span class="tk-str">"heap"</span>);               <span class="tk-com">// heap: lives until delete</span>
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"main starts\n"</span>;
+    Entity* p = <span class="tk-fn">makeOnHeap</span>();
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"back in main\n"</span>;
+    p-&gt;<span class="tk-fn">hello</span>();                              <span class="tk-com">// pointer: use -&gt;</span>
+    <span class="tk-kw">delete</span> p;
+    <span class="tk-kw">static</span> Entity <span class="tk-fn">counter</span>(<span class="tk-str">"static local"</span>);   <span class="tk-com">// static storage too: lives to the end of the program</span>
+    global.<span class="tk-fn">hello</span>();                          <span class="tk-com">// object: use .</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"main ends\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>  create global
+main starts
+  create local
+  create heap
+  destroy local
+back in main
+  hello from heap
+  destroy heap
+  create static local
+  hello from global
+main ends
+  destroy static local
+  destroy global</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>global</code> is created before <code>main</code> starts and destroyed after it ends.</li><li><code>local</code> dies when <code>makeOnHeap</code> returns. The heap object survives the return because only <code>delete</code> ends its life.</li><li><code>new</code> gives back a <strong>pointer</strong>, so members are reached with <code>p-&gt;hello()</code> (short for <code>(*p).hello()</code>). <code>global</code> is an object, so it uses <code>.</code>.</li><li>The <code>static</code> local is created when its line first runs, and destroyed after <code>main</code> before <code>global</code> (reverse order).</li></ol>
+<div class="table-wrap"><table class="md-table"><thead><tr><th scope="col"></th><th scope="col">Stack</th><th scope="col">Heap</th><th scope="col">Static storage</th></tr></thead><tbody><tr><td>Written as</td><td><code>Entity e;</code> inside a function</td><td><code>new Entity</code> / <code>std::make_unique&lt;Entity&gt;()</code></td><td>a global, <code>static Entity e;</code>, a static member</td></tr><tr><td>Created</td><td>when the line runs</td><td>when <code>new</code> runs</td><td>before <code>main</code> (globals) or on first use (<code>static</code> locals)</td></tr><tr><td>Destroyed</td><td>automatically, at the end of the scope</td><td>by <code>delete</code> (or the smart pointer)</td><td>automatically, after <code>main</code> returns</td></tr><tr><td>You hold</td><td>the object itself (<code>.</code>)</td><td>a pointer to it (<code>-&gt;</code>)</td><td>the object itself (<code>.</code>)</td></tr><tr><td>Typical size limit</td><td>a few MB for the whole stack</td><td>most of the RAM</td><td>fixed when the program is built</td></tr></tbody></table></div>
+<p>Why the stack is faster and how memory is laid out is lesson 3; lifetimes in detail are lesson 39.</p></section>
+<section class="section" aria-labelledby="initialization-forms"><h2 id="initialization-forms">Initialization forms</h2><p><strong>Meaning:</strong> a stack object can be written in several ways. They all call a constructor; they differ in what they allow.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;vector&gt;</span>
+
+<span class="tk-kw">struct</span> Point {                           <span class="tk-com">// an aggregate: public members, no constructors</span>
+    <span class="tk-kw">int</span> x, y;
+};
+
+<span class="tk-kw">class</span> Entity {
+    <span class="tk-kw">int</span> x, y;
+<span class="tk-kw">public</span>:
+    <span class="tk-fn">Entity</span>() : <span class="tk-fn">x</span>(<span class="tk-num">0</span>), <span class="tk-fn">y</span>(<span class="tk-num">0</span>) {}
+    <span class="tk-fn">Entity</span>(<span class="tk-kw">int</span> px, <span class="tk-kw">int</span> py) : <span class="tk-fn">x</span>(px), <span class="tk-fn">y</span>(py) {}
+    <span class="tk-kw">void</span> <span class="tk-fn">print</span>() <span class="tk-kw">const</span> { <span class="tk-std">std::cout</span> &lt;&lt; x &lt;&lt; <span class="tk-str">","</span> &lt;&lt; y &lt;&lt; <span class="tk-str">" "</span>; }
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    Entity a;                    <span class="tk-com">// default constructor</span>
+    Entity <span class="tk-fn">b</span>(<span class="tk-num">1</span>, <span class="tk-num">2</span>);              <span class="tk-com">// parentheses</span>
+    Entity c{<span class="tk-num">3</span>, <span class="tk-num">4</span>};              <span class="tk-com">// braces: same constructor, but no narrowing allowed</span>
+    Entity d = {<span class="tk-num">5</span>, <span class="tk-num">6</span>};           <span class="tk-com">// copy-list-initialization (not allowed if the constructor is explicit)</span>
+    Entity e = <span class="tk-fn">Entity</span>(<span class="tk-num">7</span>, <span class="tk-num">8</span>);     <span class="tk-com">// C++17: no temporary and no copy, same as Entity e(7, 8)</span>
+    <span class="tk-kw">auto</span> f = Entity{<span class="tk-num">9</span>, <span class="tk-num">9</span>};       <span class="tk-com">// the same, with auto</span>
+    Entity g{};                  <span class="tk-com">// empty braces: default constructor (Entity g(); would declare a function)</span>
+    a.<span class="tk-fn">print</span>(); b.<span class="tk-fn">print</span>(); c.<span class="tk-fn">print</span>(); d.<span class="tk-fn">print</span>(); e.<span class="tk-fn">print</span>(); f.<span class="tk-fn">print</span>(); g.<span class="tk-fn">print</span>();
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    Point p{<span class="tk-num">1</span>, <span class="tk-num">2</span>};               <span class="tk-com">// aggregate: members in declaration order</span>
+    Point q{};                   <span class="tk-com">// all members zero</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; p.x &lt;&lt; <span class="tk-str">","</span> &lt;&lt; p.y &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; q.x &lt;&lt; <span class="tk-str">","</span> &lt;&lt; q.y &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    <span class="tk-std">std::vector</span>&lt;<span class="tk-kw">int</span>&gt; <span class="tk-fn">v1</span>(<span class="tk-num">3</span>, <span class="tk-num">7</span>);   <span class="tk-com">// parentheses: 3 elements, each 7</span>
+    <span class="tk-std">std::vector</span>&lt;<span class="tk-kw">int</span>&gt; v2{<span class="tk-num">3</span>, <span class="tk-num">7</span>};   <span class="tk-com">// braces: the 2 elements 3 and 7</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; v1.<span class="tk-fn">size</span>() &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; v2.<span class="tk-fn">size</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>0,0 1,2 3,4 5,6 7,8 9,9 0,0
+1,2 0,0
+3 2</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>a</code> to <code>g</code> all call <code>Entity()</code> or <code>Entity(int, int)</code>. Braces forbid narrowing conversions (lesson 11).</li><li>With an <code>explicit</code> constructor, <code>Entity d = {5, 6};</code> fails: <code>error: converting to 'Entity' from initializer list would use explicit constructor 'Entity::Entity(int, int)'</code>.</li><li>Since C++17, <code>Entity e = Entity(7, 8);</code> creates <code>e</code> directly: no temporary, no copy. It compiles even if the class can't be copied or moved.</li><li><code>Point</code> has no constructors, so braces fill its members in order (aggregate initialization). <code>Point q{};</code> sets them all to zero, while <code>Point q;</code> would leave them uninitialized.</li><li><strong>The brace surprise:</strong> braces prefer a constructor taking <code>std::initializer_list</code>, which containers have. <code>v1(3, 7)</code> is "3 copies of 7"; <code>v2{3, 7}</code> is "the list 3, 7".</li></ol>
+<div class="table-wrap"><table class="md-table"><thead><tr><th scope="col">Form</th><th scope="col">Narrowing</th><th scope="col"><code>explicit</code> constructor</th><th scope="col">Note</th></tr></thead><tbody><tr><td><code>Entity e(1, 2);</code></td><td>allowed silently</td><td>allowed</td><td><code>Entity e();</code> declares a function</td></tr><tr><td><code>Entity e{1, 2};</code></td><td>error</td><td>allowed</td><td>prefers an <code>initializer_list</code> constructor</td></tr><tr><td><code>Entity e = {1, 2};</code></td><td>error</td><td>not allowed</td><td>same <code>initializer_list</code> preference</td></tr><tr><td><code>Entity e = Entity(1, 2);</code></td><td>allowed silently</td><td>allowed</td><td>C++17: no copy made</td></tr></tbody></table></div></section>
+<section class="section" aria-labelledby="temporaries-objects-without-a-name"><h2 id="temporaries-objects-without-a-name">Temporaries: objects without a name</h2><p><strong>Meaning:</strong> the class name with arguments used <strong>as an expression</strong>, <code>Entity("arg")</code>, creates a <strong>temporary</strong>: an object with no name, destroyed at the end of the <strong>full expression</strong> (normally the <code>;</code>). Use it to pass an object to a function, call one function on it, or return a new object. Lesson 39 shows how a <code>const&amp;</code> can extend its life.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-kw">class</span> Entity {
+    <span class="tk-std">std::string</span> name;
+<span class="tk-kw">public</span>:
+    <span class="tk-fn">Entity</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; n) : <span class="tk-fn">name</span>(n) { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"+"</span> &lt;&lt; name &lt;&lt; <span class="tk-str">" "</span>; }
+    ~<span class="tk-fn">Entity</span>()                              { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"-"</span> &lt;&lt; name &lt;&lt; <span class="tk-str">" "</span>; }
+    <span class="tk-kw">void</span> <span class="tk-fn">hello</span>() <span class="tk-kw">const</span>                     { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"hello("</span> &lt;&lt; name &lt;&lt; <span class="tk-str">") "</span>; }
+};
+
+<span class="tk-kw">void</span> <span class="tk-fn">greet</span>(<span class="tk-kw">const</span> Entity&amp; e) { e.<span class="tk-fn">hello</span>(); }
+
+Entity <span class="tk-fn">make</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; n) { <span class="tk-kw">return</span> <span class="tk-fn">Entity</span>(n); }   <span class="tk-com">// returns a new object</span>
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-fn">greet</span>(<span class="tk-fn">Entity</span>(<span class="tk-str">"arg"</span>));             <span class="tk-com">// a temporary passed to a function</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"| end of statement 1\n"</span>;
+    <span class="tk-fn">Entity</span>(<span class="tk-str">"call"</span>).<span class="tk-fn">hello</span>();           <span class="tk-com">// a temporary used for one call</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"| end of statement 2\n"</span>;
+    Entity kept = <span class="tk-fn">make</span>(<span class="tk-str">"kept"</span>);       <span class="tk-com">// the returned object gets a name: it lives on</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"| end of statement 3\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>+arg hello(arg) -arg | end of statement 1
++call hello(call) -call | end of statement 2
++kept | end of statement 3
+-kept</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>Entity("arg")</code> lives long enough for <code>greet</code> to use it, then dies at the <code>;</code>, before the next statement prints.</li><li><code>Entity("call").hello()</code> builds, uses and destroys an object in one statement.</li><li><code>make</code> returns a new object straight into <code>kept</code> (no copy in C++17), so it lives until the end of <code>main</code>.</li><li>A temporary can bind to a <code>const Entity&amp;</code> parameter but not to a plain <code>Entity&amp;</code>: <code>greet</code> takes <code>const Entity&amp;</code> for that reason.</li></ol></section>
+<section class="section" aria-labelledby="arrays-of-objects"><h2 id="arrays-of-objects">Arrays of objects</h2><p><strong>Meaning:</strong> a C-style array creates every element at once. <code>Entity a[3];</code> calls the <strong>default constructor</strong> three times; a brace list can give each element its own arguments. When the count is known only at run time, use <code>std::vector</code> (lesson 43). Heap arrays with <code>new[]</code> are lesson 35.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;vector&gt;</span>
+
+<span class="tk-kw">class</span> Entity {
+    <span class="tk-kw">int</span> id;
+<span class="tk-kw">public</span>:
+    <span class="tk-fn">Entity</span>() : <span class="tk-fn">id</span>(<span class="tk-num">0</span>) {}                       <span class="tk-com">// needed for Entity a[3];</span>
+    <span class="tk-fn">Entity</span>(<span class="tk-kw">int</span> i) : <span class="tk-fn">id</span>(i) {}
+    <span class="tk-kw">int</span> <span class="tk-fn">getId</span>() <span class="tk-kw">const</span> { <span class="tk-kw">return</span> id; }
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    Entity a[<span class="tk-num">3</span>];                              <span class="tk-com">// 3 objects, each default-constructed</span>
+    Entity b[<span class="tk-num">3</span>] = {<span class="tk-fn">Entity</span>(<span class="tk-num">1</span>), <span class="tk-fn">Entity</span>(<span class="tk-num">2</span>)};     <span class="tk-com">// b[2] has no initializer: default-constructed</span>
+    Entity c[] = {{<span class="tk-num">4</span>}, {<span class="tk-num">5</span>}, {<span class="tk-num">6</span>}};             <span class="tk-com">// size deduced from the list: 3</span>
+
+    <span class="tk-std">std::vector</span>&lt;Entity&gt; v;                    <span class="tk-com">// size decided at run time</span>
+    v.<span class="tk-fn">reserve</span>(<span class="tk-num">2</span>);
+    v.<span class="tk-fn">emplace_back</span>(<span class="tk-num">7</span>);                        <span class="tk-com">// built directly inside the vector</span>
+    v.<span class="tk-fn">push_back</span>(<span class="tk-fn">Entity</span>(<span class="tk-num">8</span>));                   <span class="tk-com">// built outside, then moved in</span>
+
+    <span class="tk-kw">for</span> (<span class="tk-kw">const</span> Entity&amp; e : a) <span class="tk-std">std::cout</span> &lt;&lt; e.<span class="tk-fn">getId</span>() &lt;&lt; <span class="tk-str">" "</span>;
+    <span class="tk-kw">for</span> (<span class="tk-kw">const</span> Entity&amp; e : b) <span class="tk-std">std::cout</span> &lt;&lt; e.<span class="tk-fn">getId</span>() &lt;&lt; <span class="tk-str">" "</span>;
+    <span class="tk-kw">for</span> (<span class="tk-kw">const</span> Entity&amp; e : c) <span class="tk-std">std::cout</span> &lt;&lt; e.<span class="tk-fn">getId</span>() &lt;&lt; <span class="tk-str">" "</span>;
+    <span class="tk-kw">for</span> (<span class="tk-kw">const</span> Entity&amp; e : v) <span class="tk-std">std::cout</span> &lt;&lt; e.<span class="tk-fn">getId</span>() &lt;&lt; <span class="tk-str">" "</span>;
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>0 0 0 1 2 0 4 5 6 7 8</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li>Without <code>Entity()</code>, the line <code>Entity a[3];</code> fails: <code>error: no matching function for call to 'Entity::Entity()'</code>.</li><li>In <code>b</code>, elements without an initializer are default-constructed, so <code>b[2]</code> is 0.</li><li><code>emplace_back(7)</code> passes 7 to the constructor and builds the element in place; <code>push_back</code> takes an object that already exists.</li></ol></section>
+<section class="section" aria-labelledby="creating-on-the-heap-new-vs-make-unique"><h2 id="creating-on-the-heap-new-vs-make-unique">Creating on the heap: new vs make_unique</h2><p><strong>Meaning:</strong> <code>new Entity(...)</code> creates an object on the heap and returns a raw pointer. You then <strong>own</strong> it: you must <code>delete</code> it exactly once, on every path. <code>std::make_unique&lt;Entity&gt;(...)</code> creates the same heap object but hands it to a <code>std::unique_ptr</code>, which deletes it automatically when the pointer goes out of scope. How <code>new</code> works inside is lesson 35; smart pointers are lesson 40.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;memory&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-kw">class</span> Entity {
+    <span class="tk-std">std::string</span> name;
+<span class="tk-kw">public</span>:
+    <span class="tk-fn">Entity</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; n) : <span class="tk-fn">name</span>(n) { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  create "</span> &lt;&lt; name &lt;&lt; <span class="tk-str">"\n"</span>; }
+    ~<span class="tk-fn">Entity</span>()                              { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  destroy "</span> &lt;&lt; name &lt;&lt; <span class="tk-str">"\n"</span>; }
+    <span class="tk-kw">void</span> <span class="tk-fn">hello</span>() <span class="tk-kw">const</span>                     { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"  hello from "</span> &lt;&lt; name &lt;&lt; <span class="tk-str">"\n"</span>; }
+};
+
+<span class="tk-kw">void</span> <span class="tk-fn">rawNew</span>(<span class="tk-kw">bool</span> early) {
+    Entity* p = <span class="tk-kw">new</span> <span class="tk-fn">Entity</span>(<span class="tk-str">"raw"</span>);            <span class="tk-com">// you own it: you must delete it</span>
+    p-&gt;<span class="tk-fn">hello</span>();
+    <span class="tk-kw">if</span> (early) <span class="tk-kw">return</span>;                        <span class="tk-com">// LEAK: this path skips the delete</span>
+    <span class="tk-kw">delete</span> p;
+}
+
+<span class="tk-kw">void</span> <span class="tk-fn">smart</span>(<span class="tk-kw">bool</span> early) {
+    <span class="tk-kw">auto</span> p = <span class="tk-std">std::make_unique</span>&lt;Entity&gt;(<span class="tk-str">"smart"</span>);   <span class="tk-com">// unique_ptr owns it</span>
+    p-&gt;<span class="tk-fn">hello</span>();
+    <span class="tk-kw">if</span> (early) <span class="tk-kw">return</span>;                        <span class="tk-com">// fine: p's destructor deletes the Entity</span>
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"rawNew(true):\n"</span>;
+    <span class="tk-fn">rawNew</span>(<span class="tk-kw">true</span>);
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"smart(true):\n"</span>;
+    <span class="tk-fn">smart</span>(<span class="tk-kw">true</span>);
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"main ends\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>rawNew(true):
+  create raw
+  hello from raw
+smart(true):
+  create smart
+  hello from smart
+  destroy smart
+main ends</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>rawNew(true)</code> returns early, so <code>delete p</code> never runs: "destroy raw" is never printed. The object is leaked.</li><li>In <code>smart</code>, the <code>unique_ptr</code> is a stack object. Its destructor runs on every path and deletes the <code>Entity</code>.</li><li>Both are used the same way: <code>p-&gt;hello()</code>.</li></ol>
+<p><strong>When to use the heap:</strong></p>
+<ul><li>The object must <strong>outlive</strong> the function that creates it (return a <code>std::unique_ptr</code>).</li><li>It is <strong>too big</strong> for the stack, or its size is known only <strong>at run time</strong> (a <code>std::vector</code> usually handles both).</li><li><strong>Polymorphism</strong>: a <code>std::unique_ptr&lt;Base&gt;</code> pointing to a <code>Derived</code> (lesson 14).</li></ul>
+<p>Otherwise, use the stack: simpler, faster, and it can't leak.</p></section>
+<section class="callout watch" aria-labelledby="common-mistakes"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="common-mistakes">Common mistakes</h2><p><strong>A dangling pointer to a stack object:</strong> the pointer outlives the object it points to.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">struct</span> Entity { <span class="tk-kw">int</span> x = <span class="tk-num">1</span>; };
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
     Entity* bad;
     {
-        Entity local;         <span class="tk-com">// stack object</span>
-        bad = &amp;local;         <span class="tk-com">// bad points to local</span>
-    }                         <span class="tk-com">// local destroyed here -&gt; bad now DANGLES (UB to use)</span>
-}                             <span class="tk-com">// a destroyed here automatically</span></code></pre></figure></section>
-<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">stack object vs heap object</div><div class="d">Stack: <code>Entity e;</code> auto lifetime, <code>.</code> access. Heap: <code>new Entity</code> returns a pointer, manual <code>delete</code>, <code>-&gt;</code> access.</div></div><div class="pair"><div class="vs">. vs -&gt;</div><div class="d"><code>.</code> on an actual object; <code>-&gt;</code> on a pointer to an object (<code>p-&gt;x</code> == <code>(*p).x</code>).</div></div><div class="pair"><div class="vs">dangling vs leak</div><div class="d">Dangling = pointer to memory already freed / out of scope (UB to use). Leak = heap memory never deleted (lost until the program ends).</div></div></div></section>
-<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>8 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#creating-objects">Start the 8 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
+        Entity local;
+        bad = &amp;local;
+    }                            <span class="tk-com">// local is destroyed here</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; bad-&gt;x;         <span class="tk-com">// undefined behaviour: bad points to a dead object</span>
+}</code></pre></figure>
+<ul><li><strong>Using a pointer after <code>delete</code></strong>, or deleting twice. Set it to <code>nullptr</code> after <code>delete</code> (<code>delete nullptr;</code> is a safe no-op), or let a <code>unique_ptr</code> own the object.</li><li><strong>Leaking.</strong> Every <code>new</code> needs exactly one <code>delete</code> on <strong>every</strong> path, including early returns and exceptions. <code>make_unique</code> removes the problem.</li><li><strong><code>Entity e();</code></strong> declares a function, not an object. Write <code>Entity e;</code> or <code>Entity e{};</code>.</li><li><strong><code>.</code> on a pointer, <code>-&gt;</code> on an object.</strong> <code>p.hello()</code> doesn't compile when <code>p</code> is a pointer; use <code>p-&gt;hello()</code>.</li><li><strong>Putting everything on the heap</strong> "to be safe". It is slower, needs ownership management, and gains nothing when the object's scope is enough.</li></ul></section>
+<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">stack vs heap vs static object</div><div class="d">Stack: <code>Entity e;</code>, destroyed at the end of its scope. Heap: <code>new Entity</code> / <code>make_unique</code>, destroyed by <code>delete</code> / the smart pointer. Static: globals and <code>static</code> locals, destroyed after <code>main</code> returns.</div></div><div class="pair"><div class="vs">. vs -&gt;</div><div class="d"><code>.</code> on an object (or reference); <code>-&gt;</code> on a pointer to an object (<code>p-&gt;x</code> == <code>(*p).x</code>).</div></div><div class="pair"><div class="vs">dangling vs leak</div><div class="d">Dangling = a pointer to an object that was already destroyed (UB to use). Leak = a heap object never deleted (lost until the program ends).</div></div><div class="pair"><div class="vs">v(3, 7) vs v{3, 7}</div><div class="d">For <code>std::vector&lt;int&gt;</code>: parentheses = 3 elements of value 7; braces = the 2 elements 3 and 7 (the <code>initializer_list</code> constructor wins).</div></div><div class="pair"><div class="vs">temporary vs named object</div><div class="d"><code>Entity(1)</code> as an expression has no name and dies at the end of the full expression. <code>Entity e(1);</code> lives to the end of its scope.</div></div></div></section>
+<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>12 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#creating-objects">Start the 12 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
 <div class="pager pager-bottom" aria-label="Lesson navigation"><a href="33-ternary-operator.html" rel="prev"><span class="pg-dir">&larr; Previous</span><span class="pg-title">33. Ternary Operator</span></a><a href="35-new-keyword.html" rel="next" class="pg-next"><span class="pg-dir">Next &rarr;</span><span class="pg-title">35. The new Keyword</span></a></div>
 </article>
-<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-plain" href="#one-example-stack-heap-and-a-dangling-pointer">One example: stack, heap, and a dangling pointer</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=8f762b8c8a"></script><script src="../assets/app.js?v=8f762b8c8a" defer></script></body></html>
+<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-plain" href="#three-places-an-object-can-live">Three places an object can live</a></li><li><a class="otp-plain" href="#initialization-forms">Initialization forms</a></li><li><a class="otp-plain" href="#temporaries-objects-without-a-name">Temporaries: objects without a name</a></li><li><a class="otp-plain" href="#arrays-of-objects">Arrays of objects</a></li><li><a class="otp-plain" href="#creating-on-the-heap-new-vs-make-unique">Creating on the heap: new vs make_unique</a></li><li><a class="otp-watch" href="#common-mistakes">Common mistakes</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=c3e831d229"></script><script src="../assets/app.js?v=c3e831d229" defer></script></body></html>
