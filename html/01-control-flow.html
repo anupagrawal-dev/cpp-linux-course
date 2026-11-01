@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="Branching and loops decide which statements run."><title>01 Control Flow — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=8f762b8c8a"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
+<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="Branches (if, switch) decide which statements run; loops (for, while, do-while) repeat them; break and continue steer the loops."><title>01 Control Flow — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=c3e831d229"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
 <a class="sb-home" href="../index.html">Course home</a>
 <details class="sb-group" open><summary><span>C++ Core</span><span class="sb-count" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static">0/28</span></summary><ul>
 <li><a class="sb-link is-current" data-slug="control-flow" href="../html/01-control-flow.html" aria-current="page"><span class="sb-num">01</span><span class="sb-title-text">Control Flow</span><span class="sb-check" aria-hidden="true"></span></a></li>
@@ -47,30 +47,216 @@
 <li><a class="sb-link" data-slug="memory-allocation-and-fragmentation" href="../html/26-memory-allocation-and-fragmentation.html"><span class="sb-num">26</span><span class="sb-title-text">Allocation Methods &amp; Fragmentation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="demand-paging-and-swapping" href="../html/27-demand-paging-and-swapping.html"><span class="sb-num">27</span><span class="sb-title-text">Demand Paging, Page Faults &amp; Swapping</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership">0/4</span></summary><ul>
+<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership libraries">0/5</span></summary><ul>
 <li><a class="sb-link" data-slug="linux-filesystem-navigation" href="../html/28-linux-filesystem-navigation.html"><span class="sb-num">28</span><span class="sb-title-text">Filesystem &amp; Navigation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="linux-permissions" href="../html/29-linux-permissions.html"><span class="sb-num">29</span><span class="sb-title-text">Permissions (rwx)</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chmod" href="../html/30-chmod.html"><span class="sb-num">30</span><span class="sb-title-text">chmod</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chown-ownership" href="../html/31-chown-ownership.html"><span class="sb-num">31</span><span class="sb-title-text">chown &amp; Ownership</span><span class="sb-check" aria-hidden="true"></span></a></li>
+<li><a class="sb-link" data-slug="libraries" href="../html/45-libraries.html"><span class="sb-num">45</span><span class="sb-title-text">Libraries: Static and Shared</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">293</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
+<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">524</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
 <div class="sb-section"><div class="sb-label">Deep dives</div>
 <a class="sb-plain" href="../extras/heap-layout-new-malloc.html">Heap layout — new / delete / malloc / free</a>
 <a class="sb-plain" href="../extras/shared-ptr-cycle.html">shared_ptr circular reference — why it leaks</a>
 <a class="sb-plain" href="../extras/code-to-execution-road.html">From written code to execution</a>
 </div></nav><div class="scrim" id="scrim" hidden></div><main id="main" tabindex="-1"><div class="lesson-wrap"><article class="page lesson" data-slug="control-flow" data-order="1">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Course</a><span aria-hidden="true">&rsaquo;</span><a href="../index.html#module-c-core">C++ Core</a><span aria-hidden="true">&rsaquo;</span><span aria-current="page">Control Flow</span></nav>
-<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Core</span><span class="meta-item">Lesson 01 of 44</span><span class="meta-item">1 min read</span><span class="meta-item">6 questions</span></div><h1>Control Flow</h1><p class="lead">Branching and loops decide which statements run.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
+<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Core</span><span class="meta-item">Lesson 01 of 45</span><span class="meta-item">11 min read</span><span class="meta-item">11 questions</span></div><h1>Control Flow</h1><p class="lead">Branches (if, switch) decide which statements run; loops (for, while, do-while) repeat them; break and continue steer the loops.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
 <p class="legend-inline"><span class="chip chip-concept"><span aria-hidden="true">&#9670;</span> Concept</span> core idea<span class="chip chip-watch"><span aria-hidden="true">&#9650;</span> Watch out</span> easy to get wrong</p>
-<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li>Branching (<code>if</code>/<code>else</code>/<code>switch</code>) and loops (<code>for</code>/<code>while</code>/<code>do-while</code>) direct which statements run.</li><li><code>switch</code> needs <code>break</code> in each case or it <strong>falls through</strong> to the next case.</li><li><code>do-while</code> runs the body at least once (condition checked after).</li></ol></section>
-<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#fall-through-gotcha">Fall-through gotcha</a><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
-<section class="callout watch" aria-labelledby="fall-through-gotcha"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="fall-through-gotcha">Fall-through gotcha</h2><p>A <code>switch</code> without <code>break</code> keeps running the following cases until a <code>break</code> or the end.</p>
-<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-kw">switch</span>(x){
-  <span class="tk-kw">case</span> <span class="tk-num">1</span>: <span class="tk-fn">doA</span>();      <span class="tk-com">// no break -&gt; also runs case 2!</span>
-  <span class="tk-kw">case</span> <span class="tk-num">2</span>: <span class="tk-fn">doB</span>(); <span class="tk-kw">break</span>;
-}</code></pre></figure></section>
-<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">while vs do-while</div><div class="d"><code>while</code> checks the condition BEFORE the first run (may run 0 times); <code>do-while</code> checks AFTER (runs at least once).</div></div><div class="pair"><div class="vs">= vs ==</div><div class="d"><code>=</code> assigns; <code>==</code> compares. <code>if(x = 5)</code> assigns 5 and is always true — a classic bug.</div></div></div></section>
-<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>6 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#control-flow">Start the 6 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
+<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li><strong>Branching</strong> (<code>if</code> / <code>else if</code> / <code>else</code>, <code>switch</code>) picks which statements run. <strong>Loops</strong> (<code>for</code>, range <code>for</code>, <code>while</code>, <code>do-while</code>) repeat them.</li><li>In a condition, any <strong>non-zero</strong> number or <strong>non-null</strong> pointer counts as <code>true</code>; <code>0</code> and <code>nullptr</code> count as <code>false</code>.</li><li><code>&amp;&amp;</code> and <code>||</code> <strong>short-circuit</strong>: the right side runs only if it can still change the result, so <code>p &amp;&amp; p-&gt;x</code> is safe when <code>p</code> is null.</li><li><code>switch</code> works on integers, <code>char</code> and enums (not <code>std::string</code>, not <code>double</code>); <code>case</code> labels must be constants. A case that declares a variable needs <code>{ }</code>.</li><li><code>switch</code> needs <code>break</code> in each case or it <strong>falls through</strong> to the next case. Mark deliberate fall-through with <code>[[fallthrough]];</code>.</li><li><code>for (init; condition; step)</code> for counting, range <code>for (x : container)</code> to visit every element, <code>while</code> when the number of passes is unknown.</li><li><code>do-while</code> runs the body <strong>at least once</strong> (condition checked after).</li><li><code>break</code> leaves the innermost loop or <code>switch</code>; <code>continue</code> jumps to the next pass. To leave nested loops, use a flag or <code>return</code> from a function.</li><li>Classic bugs: <code>=</code> instead of <code>==</code>, a stray <code>;</code> after <code>if (...)</code> or <code>for (...)</code>, <code>&lt;=</code> instead of <code>&lt;</code> (off by one). <code>-Wall -Wextra</code> catches most of them.</li></ol></section>
+<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#if-else-if-else">if, else if, else</a><a href="#logical-operators-and-short-circuit-evaluation">Logical operators and short-circuit evaluation</a><a href="#switch">switch</a><a href="#loops-for-range-for-while-do-while">Loops: for, range for, while, do-while</a><a href="#break-continue-and-nested-loops">break, continue and nested loops</a><a href="#common-mistakes">Common mistakes</a><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
+<section class="section" aria-labelledby="if-else-if-else"><h2 id="if-else-if-else">if, else if, else</h2><p><strong>Meaning:</strong> <code>if</code> runs a block only when its condition is true. <code>else if</code> adds more conditions, tested top to bottom, and <code>else</code> catches everything left. Exactly one branch of a chain runs: the first one whose condition is true. A condition doesn't have to be a <code>bool</code>: any non-zero number and any non-null pointer count as true.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">void</span> <span class="tk-fn">describe</span>(<span class="tk-kw">int</span> temp) {
+    <span class="tk-kw">if</span> (temp &lt; <span class="tk-num">0</span>) {
+        <span class="tk-std">std::cout</span> &lt;&lt; temp &lt;&lt; <span class="tk-str">": freezing\n"</span>;
+    } <span class="tk-kw">else</span> <span class="tk-kw">if</span> (temp &lt; <span class="tk-num">20</span>) {
+        <span class="tk-std">std::cout</span> &lt;&lt; temp &lt;&lt; <span class="tk-str">": cool\n"</span>;
+    } <span class="tk-kw">else</span> {
+        <span class="tk-std">std::cout</span> &lt;&lt; temp &lt;&lt; <span class="tk-str">": warm\n"</span>;
+    }
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-fn">describe</span>(-<span class="tk-num">5</span>);
+    <span class="tk-fn">describe</span>(<span class="tk-num">12</span>);
+    <span class="tk-fn">describe</span>(<span class="tk-num">30</span>);
+
+    <span class="tk-kw">int</span> unread = <span class="tk-num">3</span>;
+    <span class="tk-kw">if</span> (unread)                       <span class="tk-com">// any non-zero number counts as true</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"you have mail\n"</span>;
+
+    <span class="tk-kw">int</span>* p = <span class="tk-kw">nullptr</span>;
+    <span class="tk-kw">if</span> (!p)                           <span class="tk-com">// a null pointer counts as false, so !p is true</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"p is null\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>-5: freezing
+12: cool
+30: warm
+you have mail
+p is null</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li>For <code>12</code>, <code>temp &lt; 0</code> is false, so the next test <code>temp &lt; 20</code> is tried. It is true, so <code>cool</code> prints and the <code>else</code> is skipped.</li><li>For <code>30</code>, both tests are false, so the <code>else</code> branch runs.</li><li><code>if (unread)</code> means <code>if (unread != 0)</code>. <code>if (!p)</code> means <code>if (p == nullptr)</code>.</li></ol>
+<p>To choose between two <strong>values</strong> in one expression, use the conditional operator <code>cond ? a : b</code> (lesson 33).</p></section>
+<section class="section" aria-labelledby="logical-operators-and-short-circuit-evaluation"><h2 id="logical-operators-and-short-circuit-evaluation">Logical operators and short-circuit evaluation</h2><p><strong>Meaning:</strong> <code>&amp;&amp;</code> (and), <code>||</code> (or) and <code>!</code> (not) combine conditions. <code>&amp;&amp;</code> and <code>||</code> evaluate left to right and <strong>stop as soon as the result is known</strong>. This is called short-circuit evaluation, and it lets the left side guard the right side.</p>
+<div class="table-wrap"><table class="md-table"><thead><tr><th scope="col">Operator</th><th scope="col">True when</th><th scope="col">Right side evaluated?</th></tr></thead><tbody><tr><td><code>a &amp;&amp; b</code></td><td>both are true</td><td>only if <code>a</code> is true</td></tr><tr><td><code>a || b</code></td><td>at least one is true</td><td>only if <code>a</code> is false</td></tr><tr><td><code>!a</code></td><td><code>a</code> is false</td><td>(one operand)</td></tr></tbody></table></div>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">bool</span> <span class="tk-fn">check</span>(<span class="tk-kw">const</span> <span class="tk-kw">char</span>* name, <span class="tk-kw">bool</span> result) {
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"check "</span> &lt;&lt; name &lt;&lt; <span class="tk-str">"\n"</span>;
+    <span class="tk-kw">return</span> result;
+}
+
+<span class="tk-kw">struct</span> Sensor { <span class="tk-kw">int</span> value = <span class="tk-num">42</span>; };
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">if</span> (<span class="tk-fn">check</span>(<span class="tk-str">"A"</span>, <span class="tk-kw">false</span>) &amp;&amp; <span class="tk-fn">check</span>(<span class="tk-str">"B"</span>, <span class="tk-kw">true</span>))   <span class="tk-com">// A is false: B is never called</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"both true\n"</span>;
+    <span class="tk-kw">if</span> (<span class="tk-fn">check</span>(<span class="tk-str">"C"</span>, <span class="tk-kw">true</span>) || <span class="tk-fn">check</span>(<span class="tk-str">"D"</span>, <span class="tk-kw">false</span>))   <span class="tk-com">// C is true: D is never called</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"at least one true\n"</span>;
+    <span class="tk-kw">if</span> (!<span class="tk-fn">check</span>(<span class="tk-str">"E"</span>, <span class="tk-kw">false</span>))                      <span class="tk-com">// ! turns false into true</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"E was false\n"</span>;
+
+    Sensor* s = <span class="tk-kw">nullptr</span>;
+    <span class="tk-kw">if</span> (s &amp;&amp; s-&gt;value &gt; <span class="tk-num">10</span>)          <span class="tk-com">// safe: s-&gt;value is read only when s is not null</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"high\n"</span>;
+    <span class="tk-kw">else</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"no sensor\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>check A
+check C
+at least one true
+check E
+E was false
+no sensor</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>check("A", false)</code> returns false, so <code>&amp;&amp;</code> already knows the answer is false. <code>check("B", ...)</code> never runs: there is no <code>check B</code> line.</li><li><code>check("C", true)</code> returns true, so <code>||</code> already knows the answer is true and skips <code>D</code>.</li><li><code>s &amp;&amp; s-&gt;value &gt; 10</code>: <code>s</code> is null (false), so <code>s-&gt;value</code> is never touched. Written the other way round, <code>s-&gt;value &gt; 10 &amp;&amp; s</code> would dereference a null pointer first. Put the guarding test first: <code>i &lt; size &amp;&amp; v[i] == x</code>.</li></ol></section>
+<section class="section" aria-labelledby="switch"><h2 id="switch">switch</h2><p><strong>Meaning:</strong> <code>switch</code> compares one value against a list of constant <code>case</code> labels and jumps to the matching one. Execution then continues <strong>downwards</strong> until a <code>break</code> (or the end of the <code>switch</code>), so each case normally ends with <code>break</code>. <code>default</code> runs when no case matches.</p>
+<p>Rules:</p>
+<ul><li>The value must be an integer type, <code>char</code>, <code>bool</code> or an enum. A <code>std::string</code> or <code>double</code> is not allowed.</li><li>Each <code>case</code> label must be a compile-time constant, and no two labels may be equal.</li><li>A variable declared inside a case needs its own <code>{ }</code> block.</li><li>Leaving out <code>break</code> on purpose is allowed. Write <code>[[fallthrough]];</code> (C++17) to say so: with <code>-Wextra</code>, g++ warns about every unmarked fall-through (<code>this statement may fall through</code>).</li></ul>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">void</span> <span class="tk-fn">run</span>(<span class="tk-kw">char</span> cmd) {
+    <span class="tk-kw">switch</span> (cmd) {
+    <span class="tk-kw">case</span> <span class="tk-str">'a'</span>:
+    <span class="tk-kw">case</span> <span class="tk-str">'A'</span>:                         <span class="tk-com">// two labels share one branch</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"add\n"</span>;
+        <span class="tk-kw">break</span>;
+    <span class="tk-kw">case</span> <span class="tk-str">'d'</span>: {                       <span class="tk-com">// braces, because this case declares a variable</span>
+        <span class="tk-kw">int</span> count = <span class="tk-num">2</span>;
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"delete "</span> &lt;&lt; count &lt;&lt; <span class="tk-str">"\n"</span>;
+        <span class="tk-kw">break</span>;
+    }
+    <span class="tk-kw">case</span> <span class="tk-str">'v'</span>:
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"verbose, then "</span>;
+        [[fallthrough]];              <span class="tk-com">// deliberate: continue into the next case</span>
+    <span class="tk-kw">case</span> <span class="tk-str">'l'</span>:
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"list\n"</span>;
+        <span class="tk-kw">break</span>;
+    <span class="tk-kw">default</span>:                          <span class="tk-com">// no case matched</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"unknown '"</span> &lt;&lt; cmd &lt;&lt; <span class="tk-str">"'\n"</span>;
+    }
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-fn">run</span>(<span class="tk-str">'A'</span>);
+    <span class="tk-fn">run</span>(<span class="tk-str">'d'</span>);
+    <span class="tk-fn">run</span>(<span class="tk-str">'v'</span>);
+    <span class="tk-fn">run</span>(<span class="tk-str">'l'</span>);
+    <span class="tk-fn">run</span>(<span class="tk-str">'x'</span>);
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>add
+delete 2
+verbose, then list
+list
+unknown 'x'</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>run('A')</code> jumps to <code>case 'A'</code>, prints <code>add</code>, and <code>break</code> leaves the <code>switch</code>. <code>'a'</code> would land on the empty <code>case 'a'</code> and fall into the same code.</li><li>Without the braces around <code>case 'd'</code>, g++ stops with <code>error: jump to case label</code> and <code>note: crosses initialization of 'int count'</code>: a jump to a later case would skip the creation of <code>count</code> while it is still in scope.</li><li><code>run('v')</code> prints <code>verbose, then </code>, falls through into <code>case 'l'</code>, prints <code>list</code>, then breaks.</li><li><code>'x'</code> matches no case, so <code>default</code> runs.</li></ol>
+<p>A <code>switch</code> on a string does not compile:</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-std">std::string</span> cmd = <span class="tk-str">"add"</span>;
+    <span class="tk-kw">switch</span> (cmd) {          <span class="tk-com">// does not compile: error: switch quantity not an integer</span>
+    <span class="tk-kw">case</span> <span class="tk-str">"add"</span>: <span class="tk-kw">break</span>;
+    }
+}</code></pre></figure>
+<p><strong>When to use it:</strong></p>
+<ul><li><code>switch</code>: one value compared with many constants, especially an enum. With <code>-Wall</code>, g++ warns <code>enumeration value 'Yellow' not handled in switch</code> when an enum switch without <code>default</code> misses a value.</li><li><code>if</code> / <code>else if</code>: ranges (<code>temp &lt; 20</code>), strings, several variables, or any other condition.</li></ul></section>
+<section class="section" aria-labelledby="loops-for-range-for-while-do-while"><h2 id="loops-for-range-for-while-do-while">Loops: for, range for, while, do-while</h2><p><strong>Meaning:</strong> a loop repeats its body while a condition is true. <code>for (init; condition; step)</code> is built for counting. A range <code>for (int x : container)</code> visits each element in order, with no index to get wrong. <code>while (condition)</code> checks before every pass; <code>do { } while (condition);</code> checks after every pass.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;vector&gt;</span>
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">for</span> (<span class="tk-kw">int</span> i = <span class="tk-num">0</span>; i &lt; <span class="tk-num">3</span>; i++)            <span class="tk-com">// init; condition; step</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"for "</span> &lt;&lt; i &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    <span class="tk-std">std::vector</span>&lt;<span class="tk-kw">int</span>&gt; scores = {<span class="tk-num">70</span>, <span class="tk-num">85</span>, <span class="tk-num">90</span>};
+    <span class="tk-kw">int</span> total = <span class="tk-num">0</span>;
+    <span class="tk-kw">for</span> (<span class="tk-kw">int</span> s : scores)                    <span class="tk-com">// range-based for: each element in turn</span>
+        total += s;
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"total "</span> &lt;&lt; total &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    <span class="tk-kw">int</span> n = <span class="tk-num">4096</span>, digits = <span class="tk-num">0</span>;
+    <span class="tk-kw">while</span> (n &gt; <span class="tk-num">0</span>) {                         <span class="tk-com">// repeat while the condition holds</span>
+        n /= <span class="tk-num">10</span>;
+        digits++;
+    }
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"digits "</span> &lt;&lt; digits &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    <span class="tk-kw">int</span> tries = <span class="tk-num">0</span>;
+    <span class="tk-kw">do</span> {
+        tries++;                            <span class="tk-com">// the body runs first...</span>
+    } <span class="tk-kw">while</span> (tries &lt; <span class="tk-num">0</span>);                    <span class="tk-com">// ...then the check: false, but the body already ran</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"tries "</span> &lt;&lt; tries &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>for 0
+for 1
+for 2
+total 245
+digits 4
+tries 1</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li>The <code>for</code> loop runs <code>int i = 0</code> once, then repeats: check <code>i &lt; 3</code>, run the body, run <code>i++</code>. When <code>i</code> becomes 3 the check fails. <code>i</code> exists only inside the loop.</li><li>The range <code>for</code> copies each element into <code>s</code> in turn. To change the elements, loop with a reference, <code>for (int&amp; s : scores)</code> (lesson 4).</li><li>The <code>while</code> loop divides 4096 by 10 until it reaches 0: 409, 40, 4, 0. That is 4 passes, one per digit.</li><li>The <code>do-while</code> body runs once before <code>tries &lt; 0</code> is checked for the first time.</li></ol>
+<div class="table-wrap"><table class="md-table"><thead><tr><th scope="col">Loop</th><th scope="col">Condition checked</th><th scope="col">Runs at least once?</th><th scope="col">Use it when</th></tr></thead><tbody><tr><td><code>for</code></td><td>before each pass</td><td>no</td><td>counting, or stepping through an index range</td></tr><tr><td>range <code>for</code></td><td>(none: once per element)</td><td>no</td><td>visiting every element of a container or array</td></tr><tr><td><code>while</code></td><td>before each pass</td><td>no</td><td>repeating until something happens, number of passes unknown</td></tr><tr><td><code>do-while</code></td><td>after each pass</td><td>yes</td><td>the body must run once first (read input, then validate it)</td></tr></tbody></table></div></section>
+<section class="section" aria-labelledby="break-continue-and-nested-loops"><h2 id="break-continue-and-nested-loops">break, continue and nested loops</h2><p><strong>Meaning:</strong> <code>break</code> leaves the innermost loop (or <code>switch</code>) immediately. <code>continue</code> skips the rest of the current pass and goes on with the next one (in a <code>for</code>, the step still runs). <code>while (true)</code> is a loop whose exit is a <code>break</code> somewhere inside it.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">for</span> (<span class="tk-kw">int</span> i = <span class="tk-num">1</span>; i &lt;= <span class="tk-num">6</span>; i++) {
+        <span class="tk-kw">if</span> (i % <span class="tk-num">2</span> == <span class="tk-num">0</span>) <span class="tk-kw">continue</span>;           <span class="tk-com">// skip even numbers: go to the next pass</span>
+        <span class="tk-kw">if</span> (i == <span class="tk-num">5</span>) <span class="tk-kw">break</span>;                  <span class="tk-com">// leave the loop completely</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; i &lt;&lt; <span class="tk-str">" "</span>;
+    }
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    <span class="tk-kw">bool</span> found = <span class="tk-kw">false</span>;                     <span class="tk-com">// break leaves only the inner loop,</span>
+    <span class="tk-kw">for</span> (<span class="tk-kw">int</span> row = <span class="tk-num">0</span>; row &lt; <span class="tk-num">3</span> &amp;&amp; !found; row++) {   <span class="tk-com">// so the outer loop checks a flag</span>
+        <span class="tk-kw">for</span> (<span class="tk-kw">int</span> col = <span class="tk-num">0</span>; col &lt; <span class="tk-num">3</span>; col++) {
+            <span class="tk-kw">if</span> (row * col == <span class="tk-num">2</span>) {
+                <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"found at "</span> &lt;&lt; row &lt;&lt; <span class="tk-str">","</span> &lt;&lt; col &lt;&lt; <span class="tk-str">"\n"</span>;
+                found = <span class="tk-kw">true</span>;
+                <span class="tk-kw">break</span>;
+            }
+        }
+    }
+
+    <span class="tk-kw">int</span> total = <span class="tk-num">0</span>;
+    <span class="tk-kw">while</span> (<span class="tk-kw">true</span>) {                          <span class="tk-com">// the exit test is in the middle</span>
+        total += <span class="tk-num">7</span>;
+        <span class="tk-kw">if</span> (total &gt; <span class="tk-num">20</span>) <span class="tk-kw">break</span>;
+    }
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"total "</span> &lt;&lt; total &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>1 3
+found at 1,2
+total 21</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>i = 2</code> and <code>i = 4</code> hit <code>continue</code>, so nothing prints for them. At <code>i = 5</code>, <code>break</code> ends the loop before 5 prints.</li><li>In the grid search, <code>break</code> only leaves the <code>col</code> loop. The outer loop's condition <code>!found</code> then stops the <code>row</code> loop too.</li><li>Two other ways out of nested loops: move the loops into a function and <code>return</code> from it (usually the clearest), or <code>goto</code> a label after the loops (legal, rarely used).</li><li>The <code>while (true)</code> loop adds 7 until the total passes 20: 7, 14, 21.</li></ol></section>
+<section class="callout watch" aria-labelledby="common-mistakes"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="common-mistakes">Common mistakes</h2><ul><li><strong><code>=</code> instead of <code>==</code>.</strong> <code>if (x = 5)</code> assigns 5 and is always true. g++ <code>-Wall</code> warns: <code>suggest parentheses around assignment used as truth value</code>.</li><li><strong>A stray semicolon.</strong> <code>if (x &gt; 0);</code> and <code>for (...);</code> end with an empty statement, so the block below runs once, unconditionally. g++ warns (<code>suggest braces around empty body in an 'if' statement</code>, <code>this 'for' clause does not guard...</code>).</li><li><strong>Off by one.</strong> For an array of <code>n</code> elements the valid indexes are <code>0</code> to <code>n - 1</code>: write <code>i &lt; n</code>, not <code>i &lt;= n</code>. Reading <code>a[n]</code> is out of bounds (undefined behaviour, lesson 20).</li><li><strong>Missing <code>break</code></strong> in a <code>switch</code>: the next case runs too.</li><li><strong><code>break</code> inside a <code>switch</code> inside a loop</strong> leaves only the <code>switch</code>, not the loop.</li><li><strong>Counting down with <code>unsigned</code>.</strong> <code>for (unsigned i = n - 1; i &gt;= 0; i--)</code> never ends: an unsigned value is never below 0, it wraps to a huge number. g++ <code>-Wextra</code> warns <code>comparison of unsigned expression in '&gt;= 0' is always true</code>. Use a signed <code>int</code> for a downward loop.</li><li><strong>Missing braces.</strong> Only the first statement after <code>if</code>/<code>for</code>/<code>while</code> is guarded; an indented second line is not.</li><li><strong><code>&amp;</code> or <code>|</code> instead of <code>&amp;&amp;</code> or <code>||</code>.</strong> The bitwise operators always evaluate both sides, so <code>p &amp; p-&gt;x</code> does not protect against a null <code>p</code>.</li></ul></section>
+<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">while vs do-while</div><div class="d"><code>while</code> checks the condition BEFORE the first run (may run 0 times); <code>do-while</code> checks AFTER (runs at least once).</div></div><div class="pair"><div class="vs">= vs ==</div><div class="d"><code>=</code> assigns; <code>==</code> compares. <code>if (x = 5)</code> stores 5 in <code>x</code>, and the condition is then always true: a classic bug that <code>-Wall</code> warns about.</div></div><div class="pair"><div class="vs">break vs continue</div><div class="d"><code>break</code> leaves the innermost loop (or <code>switch</code>) completely. <code>continue</code> skips the rest of this pass and starts the next one.</div></div><div class="pair"><div class="vs">&amp;&amp; vs &amp;</div><div class="d"><code>&amp;&amp;</code> is logical and: it <strong>short-circuits</strong> (skips the right side when the left is false). <code>&amp;</code> is bitwise and: it always evaluates both sides.</div></div><div class="pair"><div class="vs">switch vs if-else chain</div><div class="d"><code>switch</code> compares <strong>one</strong> integer, char or enum value with constant labels. An <code>if</code>/<code>else if</code> chain can test anything: ranges, strings, several variables.</div></div></div></section>
+<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>11 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#control-flow">Start the 11 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
 <div class="pager pager-bottom" aria-label="Lesson navigation"><a href="../index.html" rel="prev"><span class="pg-dir">&larr; Back</span><span class="pg-title">Course home</span></a><a href="02-pointers.html" rel="next" class="pg-next"><span class="pg-dir">Next &rarr;</span><span class="pg-title">02. Pointers</span></a></div>
 </article>
-<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-watch" href="#fall-through-gotcha">Fall-through gotcha</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=8f762b8c8a"></script><script src="../assets/app.js?v=8f762b8c8a" defer></script></body></html>
+<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-plain" href="#if-else-if-else">if, else if, else</a></li><li><a class="otp-plain" href="#logical-operators-and-short-circuit-evaluation">Logical operators and short-circuit evaluation</a></li><li><a class="otp-plain" href="#switch">switch</a></li><li><a class="otp-plain" href="#loops-for-range-for-while-do-while">Loops: for, range for, while, do-while</a></li><li><a class="otp-plain" href="#break-continue-and-nested-loops">break, continue and nested loops</a></li><li><a class="otp-watch" href="#common-mistakes">Common mistakes</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=c3e831d229"></script><script src="../assets/app.js?v=c3e831d229" defer></script></body></html>

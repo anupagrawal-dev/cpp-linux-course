@@ -1,10 +1,10 @@
 # Master Question Bank
 
-293 single-focus questions across 44 topics, in learning order. Each question asks one thing; the answer is hidden in a <details> block.
+524 single-focus questions across 45 topics, in learning order. Each question asks one thing; the answer is hidden in a <details> block.
 
 ## C++ Core
 
-### 01 — Control Flow  (6 Qs)
+### 01 — Control Flow  (11 Qs)
 **Q1. What does this code print?**
 
 ```cpp
@@ -97,8 +97,104 @@ do { std::cout << i; } while (i++ < 2);
 
 </details>
 
-### 02 — Pointers  (7 Qs)
-**Q7. What is the difference between `*p` and `&x`?**
+**Q7. What does this print?**
+
+```cpp
+int calls = 0;
+bool f() { ++calls; return true; }
+
+int main() {
+    if (false && f()) {}
+    if (true || f()) {}
+    if (true && f()) {}
+    std::cout << calls;
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+1
+```
+
+Only the third `if` calls `f()`. In `false && f()` the left side is false, so `&&` skips `f()`. In `true || f()` the left side is true, so `||` skips `f()`. In `true && f()` the result depends on the right side, so `f()` runs once: `calls` is 1.
+
+</details>
+
+**Q8. What does this print?**
+
+```cpp
+for (int i = 0; i < 6; i++) {
+    if (i == 1) continue;
+    if (i == 4) break;
+    std::cout << i;
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+023
+```
+
+`i = 0` prints 0. `i = 1` hits `continue`, so the rest of that pass is skipped. `i = 2` and `i = 3` print. At `i = 4`, `break` leaves the loop before printing.
+
+</details>
+
+**Q9. Which of these can be the value tested by a `switch`? Select all that apply.**
+
+- **A)** An `int`
+- **B)** A `char`
+- **C)** An `enum class` value
+- **D)** A `std::string`
+- **E)** A `double`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, C**
+
+A `switch` needs an integer type, `char`, `bool` or an enum (scoped or not). A `std::string` is rejected (`switch quantity not an integer`), and so is a `double`. Use an `if` / `else if` chain for those.
+
+</details>
+
+**Q10. True or false: inside a `for` loop, a `break` placed in a `switch` leaves the `for` loop.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** `break` leaves the innermost enclosing `switch` or loop, which here is the `switch`. The loop carries on with its next pass. To leave the loop, use a flag, `return`, or move the `switch` out.
+
+</details>
+
+**Q11. Why does this fail to compile, and how do you fix it?**
+
+```cpp
+int x = 2;
+switch (x) {
+case 1:
+    int y = 5;
+    std::cout << y;
+    break;
+case 2:
+    std::cout << "two";
+    break;
+}
+```
+
+<details><summary>Show answer</summary>
+
+g++ says `jump to case label` with the note `crosses initialization of 'int y'`. Jumping to `case 2` would skip the line that creates and initializes `y`, while `y` is still in scope for the rest of the `switch`. Fix: give the case its own block, `case 1: { int y = 5; std::cout << y; break; }`, so `y`'s scope ends before `case 2`.
+
+</details>
+
+### 02 — Pointers  (13 Qs)
+**Q12. What is the difference between `*p` and `&x`?**
 
 <details><summary>Show answer</summary>
 
@@ -112,7 +208,7 @@ int y = *p;    // y = 42 (value at that address)
 
 </details>
 
-**Q8. For a heap pointer `p`, what does printing `p` give you versus printing `&p`?**
+**Q13. For a heap pointer `p`, what does printing `p` give you versus printing `&p`?**
 
 ```cpp
 int* p = new int(5);
@@ -126,7 +222,7 @@ cout << &p;   // where p itself lives (stack)
 
 </details>
 
-**Q9. What is the difference between a null pointer and a dangling pointer?**
+**Q14. What is the difference between a null pointer and a dangling pointer?**
 
 <details><summary>Show answer</summary>
 
@@ -139,7 +235,7 @@ delete q;           // q now dangles (still non-null!)
 
 </details>
 
-**Q10. Can a pointer be changed to point somewhere else after it is created?**
+**Q15. Can a pointer be changed to point somewhere else after it is created?**
 
 <details><summary>Show answer</summary>
 
@@ -153,7 +249,7 @@ p = nullptr;   // now points to nothing
 
 </details>
 
-**Q11. Where does a pointer variable itself live in memory?**
+**Q16. Where does a pointer variable itself live in memory?**
 
 <details><summary>Show answer</summary>
 
@@ -161,7 +257,7 @@ The pointer **variable** — the 8 bytes holding the address on a 64-bit machine
 
 </details>
 
-**Q12. After `int x = 5; int* p = &x; *p = 9;` what is the value of `x`?**
+**Q17. After `int x = 5; int* p = &x; *p = 9;` what is the value of `x`?**
 
 - **A)** 5
 - **B)** 9
@@ -176,7 +272,7 @@ The pointer **variable** — the 8 bytes holding the address on a 64-bit machine
 
 </details>
 
-**Q13. What does this print?**
+**Q18. What does this print?**
 
 ```cpp
 int a = 1, b = 2;
@@ -198,16 +294,96 @@ std::cout << a << " " << b;
 
 </details>
 
-### 03 — Stack & Heap Memory  (8 Qs)
-**Q14. Why is stack allocation faster than heap allocation?**
+**Q19. What does this print?**
+
+```cpp
+int a[] = {5, 10, 15, 20};
+int* p = a + 1;
+*(p + 1) += 1;
+p++;
+std::cout << *p << " " << p[-2] << " " << (p - a);
+```
 
 <details><summary>Show answer</summary>
 
-Stack memory is **already committed** to the process, so allocating a local is just moving the stack-pointer register down by the needed bytes; freeing is moving it back when the function returns — no searching, no bookkeeping. Heap allocation (`new`) must ask the allocator to **search a free list** for a suitable block, mark it used, and return it (and you must `delete` it later). That search + metadata make it slower.
+**Expected output:**
+```
+16 5 2
+```
+
+`p` starts at `a + 1`, so `*(p + 1)` is `a[2]`, which becomes 16. `p++` moves `p` to `a[2]`, so `*p` is 16, `p[-2]` is `a[0]` (5), and `p - a` is the distance in elements: 2.
 
 </details>
 
-**Q15. Which direction does the stack grow, and where is its 'top'?**
+**Q20. In `int* a, b;`, what is the type of `b`?**
+
+- **A)** `int*`
+- **B)** `int`
+- **C)** `int&`
+- **D)** It does not compile
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**`int`.** The `*` binds to the name next to it, not to the type, so only `a` is a pointer. Declare pointers one per line to avoid it.
+
+</details>
+
+**Q21. Given `int x = 1, y = 2; int* const p = &x;`, which lines compile? Select all that apply.**
+
+- **A)** `*p = 5;`
+- **B)** `p = &y;`
+- **C)** `int v = *p;`
+- **D)** `p = nullptr;`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, C**
+
+`p` is a **const pointer** to a non-const `int`. The value can be changed and read through it (`*p = 5;`, `int v = *p;`), but `p` itself can't be reseated, so `p = &y;` and `p = nullptr;` fail with `assignment of read-only variable 'p'`.
+
+</details>
+
+**Q22. True or false: on x86-64 with g++, `sizeof(char*)` is smaller than `sizeof(double*)`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** Both are 8 bytes. Every data pointer stores an address of the same width; the pointed-to type only changes how `*p` is read and how far `p + 1` moves.
+
+</details>
+
+**Q23. Why prefer `nullptr` over `NULL` or `0` for a null pointer?**
+
+<details><summary>Show answer</summary>
+
+`nullptr` has its own type, `std::nullptr_t`, which converts to any pointer type but never to an integer. `0` and `NULL` are integers. With overloads `f(int)` and `f(int*)`, `f(0)` calls `f(int)`, and with g++ `f(NULL)` is rejected as ambiguous, while `f(nullptr)` calls `f(int*)` as intended. It also makes the code say clearly that a pointer is meant.
+
+</details>
+
+**Q24. A function `int count(int arr[])` returns `sizeof(arr) / sizeof(arr[0])`. Called with a 10-element array on x86-64, it returns 2. Why, and what is the fix?**
+
+<details><summary>Show answer</summary>
+
+An array parameter is really a **pointer**: `int arr[]` means `int* arr`, because the array decays when passed. So `sizeof(arr)` is the pointer's size (8), and 8 / 4 = 2. g++ warns `'sizeof' on array function parameter 'arr' will return size of 'int*'`. Fix: pass the length as a second parameter, or pass a `std::array` / `std::vector` (which know their size).
+
+</details>
+
+### 03 — Stack & Heap Memory  (13 Qs)
+**Q25. Why is stack allocation faster than heap allocation?**
+
+<details><summary>Show answer</summary>
+
+Allocating a local on the stack is just moving the stack-pointer register down by the needed bytes (one instruction for all the function's locals); freeing is moving it back when the function returns. There is no searching and no bookkeeping, and the top of the stack is usually in the CPU cache. (The stack's address range is set aside in advance; each page gets physical RAM the first time it is touched, like any other memory.) Heap allocation (`new`) must ask the allocator to **find a free block** of the right size, record its size, and sometimes ask the kernel for more memory; `delete` must give the block back. That search and bookkeeping make it slower.
+
+</details>
+
+**Q26. Which direction does the stack grow, and where is its 'top'?**
 
 <details><summary>Show answer</summary>
 
@@ -215,7 +391,7 @@ On typical machines the stack grows **downward**, toward **lower** addresses —
 
 </details>
 
-**Q16. What happens when the caller dereferences the pointer this function returns?**
+**Q27. What happens when the caller dereferences the pointer this function returns?**
 
 ```cpp
 int* bad() {
@@ -230,7 +406,7 @@ It's a **dangling pointer**, so dereferencing it is **undefined behaviour**. `x`
 
 </details>
 
-**Q17. What happens if you free `new[]` memory with plain `delete` (instead of `delete[]`)?**
+**Q28. What happens if you free `new[]` memory with plain `delete` (instead of `delete[]`)?**
 
 <details><summary>Show answer</summary>
 
@@ -242,7 +418,7 @@ delete a;     // WRONG — must be delete[] a;
 
 </details>
 
-**Q18. Why does very deep recursion crash a program?**
+**Q29. Why does very deep recursion crash a program?**
 
 <details><summary>Show answer</summary>
 
@@ -250,7 +426,7 @@ Each function call pushes a **stack frame** (return address, saved registers, lo
 
 </details>
 
-**Q19. Why do the heap addresses a program prints change on every run?**
+**Q30. Why do the heap addresses a program prints change on every run?**
 
 <details><summary>Show answer</summary>
 
@@ -258,7 +434,7 @@ Because of **ASLR** (Address Space Layout Randomization): the OS deliberately ra
 
 </details>
 
-**Q20. In `void f() { int a = 1; int* p = new int(2); }`, what lives on the heap?**
+**Q31. In `void f() { int a = 1; int* p = new int(2); }`, what lives on the heap?**
 
 - **A)** `a`
 - **B)** The pointer variable `p` itself
@@ -273,7 +449,7 @@ Only **the `int` that `p` points to** (created by `new`). `a` and the pointer va
 
 </details>
 
-**Q21. True or false: the stack grows toward lower addresses, so the most recently pushed value sits at the lowest address.**
+**Q32. True or false: the stack grows toward lower addresses, so the most recently pushed value sits at the lowest address.**
 
 - **A)** True
 - **B)** False
@@ -286,8 +462,69 @@ Only **the `int` that `p` points to** (created by `new`). `a` and the pointer va
 
 </details>
 
-### 04 — References  (6 Qs)
-**Q22. Name two things a reference cannot do that a pointer can.**
+**Q33. A global `int total;` with no initializer: which region holds it?**
+
+- **A)** text
+- **B)** data
+- **C)** bss
+- **D)** heap
+- **E)** stack
+
+<details><summary>Show answer</summary>
+
+**Correct: C**
+
+**bss.** Globals and statics with no initializer (or initialized to zero) go in bss, which takes no space in the program file and is zero-filled when the program starts. A global with a non-zero initial value (`int total = 5;`) would go in **data**.
+
+</details>
+
+**Q34. True or false: on Linux, the whole 8 MB stack is given physical RAM when the program starts.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** The stack's address range is set aside, but each page gets physical RAM only when it is first touched (a page fault, lesson 27).
+
+</details>
+
+**Q35. What does a stack frame hold, and what happens to it when the function returns?**
+
+<details><summary>Show answer</summary>
+
+A frame holds the **return address** (where to continue in the caller), **saved registers** (such as the caller's frame pointer), the function's **local variables**, and arguments that don't fit in registers. On return the stack pointer is moved back above the frame, so all of it is freed at once; the locals no longer exist, and any pointer to them dangles.
+
+</details>
+
+**Q36. Which of these belong on the heap rather than the stack? Select all that apply.**
+
+- **A)** A 50 MB image buffer
+- **B)** An `int` loop counter
+- **C)** An object that must outlive the function that creates it
+- **D)** An array whose length is read from the user
+- **E)** A small struct used only inside one function
+
+<details><summary>Show answer</summary>
+
+**Correct: A, C, D**
+
+A 50 MB buffer would overflow an 8 MB stack. An object that must outlive its function can't live in that function's frame. An array whose size is read at run time needs a run-time allocation (`std::vector`). A loop counter and a small struct used only inside one function are ideal stack variables.
+
+</details>
+
+**Q37. How do you see the stack size limit on Linux, and how does a program end when it overflows the stack?**
+
+<details><summary>Show answer</summary>
+
+`ulimit -s` prints the limit in KiB (typically `8192`, 8 MB). A program that goes past it touches the guard area below the stack, the kernel sends `SIGSEGV`, and the shell reports `Segmentation fault` with exit code **139** (128 + signal 11). `ulimit -s <KiB>` changes the limit for that shell and its children.
+
+</details>
+
+### 04 — References  (12 Qs)
+**Q38. Name two things a reference cannot do that a pointer can.**
 
 <details><summary>Show answer</summary>
 
@@ -295,7 +532,7 @@ A reference **cannot be null** and **cannot be reseated** (rebound to a differen
 
 </details>
 
-**Q23. What does this print, and why?**
+**Q39. What does this print, and why?**
 
 ```cpp
 void byVal(int x){ x = 99; }
@@ -311,7 +548,7 @@ It prints **99**. `byVal` gets a **copy**, so its `x = 99` changes only the loca
 
 </details>
 
-**Q24. Why do we often pass large objects as `const T&` instead of by value?**
+**Q40. Why do we often pass large objects as `const T&` instead of by value?**
 
 <details><summary>Show answer</summary>
 
@@ -322,7 +559,7 @@ void print(const std::string& s);  // no copy, cannot change s
 
 </details>
 
-**Q25. Why must a reference be initialized at the point where it is declared?**
+**Q41. Why must a reference be initialized at the point where it is declared?**
 
 <details><summary>Show answer</summary>
 
@@ -330,7 +567,7 @@ Because a reference is a permanent **alias** with no identity of its own — it 
 
 </details>
 
-**Q26. What does this print?**
+**Q42. What does this print?**
 
 ```cpp
 void f(int a, int& b) { a = 10; b = 20; }
@@ -353,7 +590,7 @@ int main() {
 
 </details>
 
-**Q27. True or false: in well-formed code, a reference can be null.**
+**Q43. True or false: in well-formed code, a reference can be null.**
 
 - **A)** True
 - **B)** False
@@ -366,8 +603,100 @@ int main() {
 
 </details>
 
-### 05 — Classes & Encapsulation  (5 Qs)
-**Q28. If `private` gives no runtime security, what is the real point of making data private?**
+**Q44. What does this print?**
+
+```cpp
+int a = 1, b = 2;
+int& r = a;
+r = b;
+b = 5;
+std::cout << a << " " << b << " " << r;
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+2 5 2
+```
+
+`r` is bound to `a` for good. `r = b` copies `b`'s value (2) into `a`; it does not rebind `r`. Changing `b` to 5 afterwards doesn't affect `a`, and `r` is still `a`, so it prints `2 5 2`.
+
+</details>
+
+**Q45. What does this print?**
+
+```cpp
+std::vector<int> v = {1, 2, 3};
+for (auto x : v) x++;
+for (auto& x : v) x *= 2;
+std::cout << v[0] << v[1] << v[2];
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+246
+```
+
+The first loop's `x` is a **copy** of each element, so `x++` changes only the copies. The second loop's `x` is a **reference** to each element, so doubling sticks: 1, 2, 3 become 2, 4, 6.
+
+</details>
+
+**Q46. Which line does **not** compile? (`x` is an `int` variable.)**
+
+- **A)** `const int& a = 5;`
+- **B)** `int& b = 5;`
+- **C)** `int& c = x;`
+- **D)** `const int& d = x + 1;`
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+`int& b = 5;` fails: a non-const reference must bind to a variable (an lvalue), and `5` is a temporary (`cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'`). A `const int&` may bind to a temporary such as `5` or `x + 1`.
+
+</details>
+
+**Q47. True or false: with `std::array<int, 100> a; auto& r = a;`, `sizeof(r)` is 8 on x86-64, the size of a pointer.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** `sizeof` applied to a reference gives the size of the referred object: 400 bytes here. The language gives no way to measure a reference itself (stored in a struct, it takes 8 bytes on x86-64 with g++).
+
+</details>
+
+**Q48. Which of these are good reasons to use a pointer instead of a reference? Select all that apply.**
+
+- **A)** The value may be absent
+- **B)** It must refer to different objects over time
+- **C)** To avoid copying a big argument
+- **D)** So the function can change the caller's variable
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B**
+
+A pointer can be `nullptr`, so it can express "no object", and it can be re-pointed, so it can walk through objects. Avoiding a copy and letting a function change the caller's variable are both done just as well by a reference (`const T&`, `T&`).
+
+</details>
+
+**Q49. Returning `int&` from a member function like `int& at(int i) { return values[i]; }` is fine, but returning `int&` to a local variable is a bug. Explain the difference.**
+
+<details><summary>Show answer</summary>
+
+A reference is only valid while the object it refers to exists. `values` is a member, so it lives as long as the object you called `at` on; the caller gets a reference to a living element (and can even assign through it). A local variable is destroyed when the function returns, so a reference to it **dangles** at once and using it is undefined behaviour (g++ warns `reference to local variable ... returned`). Return locals **by value**.
+
+</details>
+
+### 05 — Classes & Encapsulation  (10 Qs)
+**Q50. If `private` gives no runtime security, what is the real point of making data private?**
 
 <details><summary>Show answer</summary>
 
@@ -375,7 +704,7 @@ Two real benefits: (1) **Invariant safety** — every change must go through a p
 
 </details>
 
-**Q29. What is a class invariant?**
+**Q51. What is a class invariant?**
 
 <details><summary>Show answer</summary>
 
@@ -383,7 +712,7 @@ An **invariant** is a rule that must always be true for a valid object — e.g. 
 
 </details>
 
-**Q30. Show how a method can protect an invariant that a public field could not.**
+**Q52. Show how a method can protect an invariant that a public field could not.**
 
 <details><summary>Show answer</summary>
 
@@ -402,7 +731,7 @@ If `balance` were public, any code could do `a.balance = -500;` and break the in
 
 </details>
 
-**Q31. What does this print?**
+**Q53. What does this print?**
 
 ```cpp
 class Account {
@@ -433,7 +762,7 @@ Every change goes through a method that checks it. `deposit(100)` sets 100; `wit
 
 </details>
 
-**Q32. True or false: making a member `private` stops other code from reading that object's memory at runtime.**
+**Q54. True or false: making a member `private` stops other code from reading that object's memory at runtime.**
 
 - **A)** True
 - **B)** False
@@ -446,8 +775,80 @@ Every change goes through a method that checks it. `deposit(100)` sets 100; `wit
 
 </details>
 
-### 06 — Classes vs Structs  (5 Qs)
-**Q33. What are the ONLY two language-level differences between a `class` and a `struct`?**
+**Q55. What does this print?**
+
+```cpp
+class Counter {
+    int count = 0;
+public:
+    void add() { count++; }
+    int get() const { return count; }
+};
+
+int main() {
+    Counter a, b;
+    a.add(); a.add(); b.add();
+    std::cout << a.get() << " " << b.get();
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+2 1
+```
+
+Each object has its own `count`. `a.add()` runs twice on `a`, `b.add()` once on `b`, so `a` holds 2 and `b` holds 1. Member functions are shared code, but the data they work on belongs to the object they are called on.
+
+</details>
+
+**Q56. Inside a member function of class `Player`, can you read the `private` member `health` of **another** `Player` object passed as a parameter?**
+
+- **A)** Yes: access is checked per class, not per object
+- **B)** No: private members are visible only through `this`
+- **C)** Only if the other object is `const`
+- **D)** Only if `health` is declared `protected`
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**Yes.** Access control is checked per class, not per object: any member function of `Player` may use the private members of any `Player`. That is how comparison functions and copy constructors read the other object's data.
+
+</details>
+
+**Q57. True or false: adding a member function to a class makes every object of that class bigger.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** Member functions are stored once, in the program's code. Objects contain only the data members (plus padding, and a hidden pointer if the class has virtual functions, lesson 14).
+
+</details>
+
+**Q58. Why is a class with a public getter **and** an unchecked setter for every field hardly better than a struct with public fields? What should you write instead?**
+
+<details><summary>Show answer</summary>
+
+An unchecked setter lets any code store any value, so the invariant is as unprotected as with a public field; you only added typing. Instead: keep the data private, validate in the constructor, and offer operations that say what users want (`deposit`, `withdraw`, `addMinutes`), each keeping the rule. Add a getter only for values outside code really needs to read, and a setter only if it validates.
+
+</details>
+
+**Q59. What role does the constructor play in keeping a class invariant?**
+
+<details><summary>Show answer</summary>
+
+Member functions keep the invariant true **after each change**, but the object must also **start** valid. The constructor runs when the object is created; it checks its arguments and either sets up a valid state or refuses (typically by throwing), so no invalid object ever exists. Without that, a default-constructed object could break the rule before any method is called.
+
+</details>
+
+### 06 — Classes vs Structs  (9 Qs)
+**Q60. What are the ONLY two language-level differences between a `class` and a `struct`?**
 
 <details><summary>Show answer</summary>
 
@@ -455,7 +856,7 @@ Every change goes through a method that checks it. `deposit(100)` sets 100; `wit
 
 </details>
 
-**Q34. Is `x` accessible from outside here?**
+**Q61. Is `x` accessible from outside here?**
 
 ```cpp
 class C { int x; };
@@ -468,7 +869,7 @@ int main(){ C c; c.x = 5; }
 
 </details>
 
-**Q35. By convention, when do you use a `struct` rather than a `class`?**
+**Q62. By convention, when do you use a `struct` rather than a `class`?**
 
 <details><summary>Show answer</summary>
 
@@ -476,7 +877,7 @@ Use a **`struct`** for a passive bundle of public data with little or no behavio
 
 </details>
 
-**Q36. Which of these are real language differences between `class` and `struct`? Select all that apply.**
+**Q63. Which of these are real language differences between `class` and `struct`? Select all that apply.**
 
 - **A)** Default member access
 - **B)** Default inheritance mode
@@ -491,7 +892,7 @@ Only the two **defaults** differ: members are `private` in a `class` and `public
 
 </details>
 
-**Q37. `struct B { int x; };` and `class D : B {};`. Does `D d; d.x = 1;` compile?**
+**Q64. `struct B { int x; };` and `class D : B {};`. Does `D d; d.x = 1;` compile?**
 
 - **A)** Yes: `struct` members are always public
 - **B)** No: `class` inherits privately by default, so `x` is private in `D`
@@ -506,14 +907,72 @@ Only the two **defaults** differ: members are `private` in a `class` and `public
 
 </details>
 
-### 07 — How to Write a Class  (6 Qs)
-**Q38. Why does this compile but fail to link with 'undefined reference to Entity::GetX()'?**
+**Q65. What does this print?**
+
+```cpp
+struct P { int a; int b = 5; int c; };
+
+int main() {
+    P p{1};
+    std::cout << p.a << p.b << p.c;
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+150
+```
+
+`P` is an aggregate. `p{1}` sets `a = 1`; `b` is not given, so it uses its default member initializer, 5; `c` is not given and has no default, so it is set to 0.
+
+</details>
+
+**Q66. Which of these types can be initialized with `T t{1, 2};` as an aggregate (member by member)?**
+
+- **A)** `struct A { int x; int y; };`
+- **B)** `struct B { B(int v) : x(v), y(v) {} int x, y; };`
+- **C)** `struct C { private: int x, y; };`
+- **D)** `struct D { virtual void f() {} int x, y; };`
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+Only `struct A { int x; int y; };`: all data public, no user-declared constructor, no virtual functions. `B` has a user-declared constructor, `C` has private data, and `D` has a virtual function, so none of them is an aggregate.
+
+</details>
+
+**Q67. True or false: a C compiler accepts `struct Point { int x; void move(); };`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** In C a struct may contain only data members. gcc stops with `field 'move' declared as a function`. Member functions, access specifiers and constructors are C++ additions.
+
+</details>
+
+**Q68. `struct Point { int x, y; };` was used as `Point p{1, 2};` all over a project. Someone adds `Point(int v) : x(v), y(v) {}`. Why do those lines stop compiling, and what are two fixes?**
+
+<details><summary>Show answer</summary>
+
+With a user-declared constructor, `Point` is no longer an **aggregate**, so `{1, 2}` no longer fills the members; it must match a constructor, and there is none taking two `int`s (`no matching function for call to 'Point::Point(<brace-enclosed initializer list>)'`). Fixes: also add `Point(int x, int y)`, or remove the constructor and keep `Point` a plain aggregate (give the members default values instead).
+
+</details>
+
+### 07 — How to Write a Class  (11 Qs)
+**Q69. Why does this compile but fail to link with 'undefined reference to Entity::GetX()'?**
 
 ```cpp
 // entity.h
 class Entity { int x; public: int GetX(); };
 // entity.cpp
-int GetX() { return x; }   // note: no Entity::
+int GetX() { return 42; }   // note: no Entity::
 ```
 
 <details><summary>Show answer</summary>
@@ -522,7 +981,7 @@ The out-of-class definition is missing the `Entity::` qualifier, so `int GetX(){
 
 </details>
 
-**Q39. When should a member function be marked `const`?**
+**Q70. When should a member function be marked `const`?**
 
 <details><summary>Show answer</summary>
 
@@ -530,7 +989,7 @@ Mark a method `const` whenever it **doesn't modify the object's state** — typi
 
 </details>
 
-**Q40. What happens if you put a non-inline function's full body in a header that multiple .cpp files include?**
+**Q71. What happens if you put a non-inline function's full body in a header that multiple .cpp files include?**
 
 <details><summary>Show answer</summary>
 
@@ -538,7 +997,7 @@ You get a **duplicate-symbol link error**, because of the **One Definition Rule 
 
 </details>
 
-**Q41. What is the difference between a declaration and a definition?**
+**Q72. What is the difference between a declaration and a definition?**
 
 <details><summary>Show answer</summary>
 
@@ -546,7 +1005,7 @@ A **declaration** tells the compiler something *exists* and its type/signature (
 
 </details>
 
-**Q42. `Entity` declares `int GetX() const;`. Which out-of-class definition is correct?**
+**Q73. `Entity` declares `int GetX() const;`. Which out-of-class definition is correct?**
 
 - **A)** `int GetX() const { return x; }`
 - **B)** `int Entity::GetX() const { return x; }`
@@ -561,7 +1020,7 @@ A **declaration** tells the compiler something *exists* and its type/signature (
 
 </details>
 
-**Q43. True or false: a member function defined inside the class body is implicitly `inline`.**
+**Q74. True or false: a member function defined inside the class body is implicitly `inline`.**
 
 - **A)** True
 - **B)** False
@@ -574,8 +1033,91 @@ A **declaration** tells the compiler something *exists* and its type/signature (
 
 </details>
 
-### 08 — Static (outside classes)  (6 Qs)
-**Q44. What does calling `counter()` three times in a row print?**
+**Q75. What does this print?**
+
+```cpp
+class Box {
+    int w = 2, h = 3;
+public:
+    int area() const { return w * h; }
+    void grow() { w++; h++; }
+};
+
+void show(const Box& b) { std::cout << b.area(); }
+
+int main() {
+    Box b;
+    b.grow();
+    show(b);
+    b.grow();
+    std::cout << " " << b.area();
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+12 20
+```
+
+`show` takes a `const Box&`, so it can only call `const` members; `area()` is `const`, so the call compiles. After one `grow()` the box is 3 x 4 = 12; after the second, 4 x 5 = 20.
+
+</details>
+
+**Q76. `point.h` has no include guard. `main.cpp` includes `point.h` and also `shape.h`, which itself includes `point.h`. What happens when you build?**
+
+- **A)** Compile error: `redefinition of 'struct Point'`
+- **B)** Link error: `multiple definition of Point`
+- **C)** It builds: the second copy is ignored
+- **D)** It builds, with a warning
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+`main.cpp` gets the class definition pasted in twice, and a class may be defined only once per translation unit: g++ stops with `redefinition of 'struct Point'` while **compiling** `main.cpp`. An include guard or `#pragma once` in `point.h` fixes it.
+
+</details>
+
+**Q77. A member is declared in the class as `virtual void draw(int scale = 1) const;`. Which parts must **not** be repeated in the out-of-class definition? Select all that apply.**
+
+- **A)** The default argument `= 1`
+- **B)** The trailing `const`
+- **C)** The keyword `virtual`
+- **D)** The return type `void`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, C**
+
+The definition is `void Shape::draw(int scale) const { ... }`. The default argument and `virtual` appear only in the declaration (repeating them gives `default argument given for parameter 1` and `'virtual' outside class declaration`). The trailing `const` **must** be repeated, and so must the return type.
+
+</details>
+
+**Q78. True or false: `g++ main.cpp -o app` is enough to build a program whose member functions are defined in `bank_account.cpp`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** `main.cpp` compiles (the header declares the members), but the bodies are in `bank_account.cpp`, which was never compiled, so the linker reports `undefined reference` for each of them. Build with `g++ main.cpp bank_account.cpp -o app`.
+
+</details>
+
+**Q79. Why do tiny getters often stay in the class body in the header, while bigger member functions go in the `.cpp`?**
+
+<details><summary>Show answer</summary>
+
+A function defined in the class body is implicitly `inline`, so it may appear in every `.cpp` that includes the header without breaking the One Definition Rule, and the compiler can inline it at each call. Bigger functions go in the `.cpp`: the header stays short and readable, and changing a body recompiles only that one `.cpp` instead of every file that includes the header.
+
+</details>
+
+### 08 — Static (outside classes)  (11 Qs)
+**Q80. What does calling `counter()` three times in a row print?**
 
 ```cpp
 int counter(){ static int n = 0; return ++n; }
@@ -583,11 +1125,11 @@ int counter(){ static int n = 0; return ++n; }
 
 <details><summary>Show answer</summary>
 
-It prints **1 2 3**. The `static` local `n` is initialized to 0 **once**, on the first call, then **retains its value between calls** (lifetime = the whole program, scope = the function). So each call increments the same `n`: 1, 2, 3. Without `static`, `n` would reset to 0 each call and print 1 1 1.
+It prints **1 2 3**. The `static` local `n` is initialized to 0 only **once** (a constant like 0 is already in place before `main` starts), then **retains its value between calls** (lifetime = the whole program, scope = the function). So each call increments the same `n`: 1, 2, 3. Without `static`, `n` would reset to 0 each call and print 1 1 1.
 
 </details>
 
-**Q45. What does `static` do to a variable declared at file/global scope?**
+**Q81. What does `static` do to a variable declared at file/global scope?**
 
 <details><summary>Show answer</summary>
 
@@ -595,7 +1137,7 @@ It gives the variable **internal linkage** — the symbol is visible **only with
 
 </details>
 
-**Q46. Why does a `static` local variable initialize safely regardless of other globals' init order?**
+**Q82. Why does a `static` local variable initialize safely regardless of other globals' init order?**
 
 <details><summary>Show answer</summary>
 
@@ -603,7 +1145,7 @@ Because a `static` local initializes **on first use** — the first time control
 
 </details>
 
-**Q47. What does `extern int x;` declare?**
+**Q83. What does `extern int x;` declare?**
 
 <details><summary>Show answer</summary>
 
@@ -611,7 +1153,7 @@ It's a **declaration** (not a definition) saying: 'an `int x` with external link
 
 </details>
 
-**Q48. What does this print?**
+**Q84. What does this print?**
 
 ```cpp
 void f() {
@@ -635,7 +1177,7 @@ int main() { f(); f(); f(); }
 
 </details>
 
-**Q49. `a.cpp` has `static int helper = 5;` at file scope. `b.cpp` says `extern int helper;` and uses it. What happens?**
+**Q85. `a.cpp` has `static int helper = 5;` at file scope. `b.cpp` says `extern int helper;` and uses it. What happens?**
 
 - **A)** It works: `extern` finds it
 - **B)** The link fails: `static` makes `helper` private to `a.cpp`
@@ -650,8 +1192,75 @@ int main() { f(); f(); f(); }
 
 </details>
 
-### 09 — Static (for Classes & Structs)  (5 Qs)
-**Q50. Does a `static` data member increase each object's `sizeof`?**
+**Q86. A header contains `static int counter = 0;` and is included by `a.cpp` and `b.cpp`. A function in `a.cpp` sets `counter = 5`. What value does code in `b.cpp` read?**
+
+- **A)** 0: each file has its own copy
+- **B)** 5: they share one variable
+- **C)** Link error: multiple definition
+- **D)** Compile error: static is not allowed in headers
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**0.** `static` at file scope gives internal linkage, so every file that includes the header gets its **own private** `counter`. `a.cpp` changes only its copy. No compile or link error appears: that's why a `static` variable in a header is a silent bug. Use `inline int counter = 0;` (C++17) for one shared variable.
+
+</details>
+
+**Q87. Which of these, written at file scope in a `.cpp`, have **internal linkage**? Select all that apply.**
+
+- **A)** `static int a;`
+- **B)** `const int b = 1;`
+- **C)** `int c;`
+- **D)** `namespace { int d; }`
+- **E)** `extern int e;`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, D**
+
+`static int a;`, `const int b = 1;` (a `const` global has internal linkage in C++) and anything in an unnamed namespace are private to the file. A plain `int c;` has external linkage, and `extern int e;` refers to an external variable defined elsewhere.
+
+</details>
+
+**Q88. True or false: in C++, if `limits.cpp` defines `const int maxUsers = 10;` at file scope, another file can use it after declaring `extern const int maxUsers;`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** In C++ a `const` global has internal linkage, so the link fails with `undefined reference` to `maxUsers`. Define it as `extern const int maxUsers = 10;`, or put `inline constexpr int maxUsers = 10;` in a header. (In C, a `const` global has external linkage, so this would work.)
+
+</details>
+
+**Q89. You want one global setting shared by every `.cpp` that includes `config.h`. Which line in the header does that on its own, with no extra definition in a `.cpp`?**
+
+- **A)** `int verbosity = 1;`
+- **B)** `static int verbosity = 1;`
+- **C)** `inline int verbosity = 1;`
+- **D)** `extern int verbosity;`
+
+<details><summary>Show answer</summary>
+
+**Correct: C**
+
+**`inline int verbosity = 1;`** (C++17): every file includes the definition and the linker merges them into one variable. `int verbosity = 1;` gives `multiple definition`, `static` gives every file its own copy, and `extern int verbosity;` is only a declaration: it still needs `int verbosity = 1;` in exactly one `.cpp`.
+
+</details>
+
+**Q90. Why do modern C++ guidelines prefer an unnamed namespace to `static` for file-private names?**
+
+<details><summary>Show answer</summary>
+
+It gives internal linkage to **every** kind of declaration, including classes, structs and enums, which `static` can't be applied to (`static struct P {...};` is an error). One block covers many declarations at once. It also keeps two files' same-named helper classes apart, which would otherwise silently break the One Definition Rule.
+
+</details>
+
+### 09 — Static (for Classes & Structs)  (10 Qs)
+**Q91. Does a `static` data member increase each object's `sizeof`?**
 
 <details><summary>Show answer</summary>
 
@@ -659,7 +1268,7 @@ No. A `static` member is **shared by all objects** — there is exactly **one** 
 
 </details>
 
-**Q51. Why does this fail to link with 'undefined reference to Entity::count'?**
+**Q92. Why does this fail to link with 'undefined reference to Entity::count'?**
 
 ```cpp
 struct Entity { static int count; };
@@ -673,7 +1282,7 @@ A **non-inline static data member** is only *declared* inside the class — it s
 
 </details>
 
-**Q52. Why can't a `static` member function read a normal (non-static) data member?**
+**Q93. Why can't a `static` member function read a normal (non-static) data member?**
 
 <details><summary>Show answer</summary>
 
@@ -681,7 +1290,7 @@ A static member function has **no `this` pointer** — it isn't tied to any part
 
 </details>
 
-**Q53. On x86-64, what does this print?**
+**Q94. On x86-64, what does this print?**
 
 ```cpp
 struct Entity {
@@ -708,7 +1317,7 @@ One shared `count` for all objects: three constructions make it 3, and `b` was s
 
 </details>
 
-**Q54. True or false: a `static` member function can read the object's non-static data members.**
+**Q95. True or false: a `static` member function can read the object's non-static data members.**
 
 - **A)** True
 - **B)** False
@@ -721,8 +1330,82 @@ One shared `count` for all objects: three constructions make it 3, and `b` was s
 
 </details>
 
-### 10 — Enums  (6 Qs)
-**Q55. In `enum E { A = 3, B, C };`, what are the values of `B` and `C`?**
+**Q96. What does this print?**
+
+```cpp
+struct Player {
+    inline static int alive = 0;
+    Player()  { ++alive; }
+    ~Player() { --alive; }
+};
+
+int main() {
+    {
+        Player a;
+        Player b = a;
+        std::cout << Player::alive << " ";
+    }
+    std::cout << Player::alive;
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+1 -1
+```
+
+The constructor increments the shared `alive`, but `Player b = a;` uses the compiler-generated **copy constructor**, which doesn't run `++alive`. So inside the block the count is 1 although two players exist. Both destructors run `--alive`, so after the block it is -1. Fix: a copy constructor that also increments.
+
+</details>
+
+**Q97. Which of these define a static data member **inside** the class, so no separate definition in a `.cpp` is needed? Select all that apply.**
+
+- **A)** `inline static int x = 0;`
+- **B)** `static constexpr int y = 5;`
+- **C)** `static int z;`
+- **D)** `static int Player::alive = 0;` written outside the class
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B**
+
+`inline static int x = 0;` (C++17) and `static constexpr int y = 5;` (implicitly inline since C++17) are definitions. A plain `static int z;` is only a declaration: it needs `int C::z = 0;` in one `.cpp`. `static int Player::alive = 0;` doesn't compile: `static` may not appear on the out-of-class definition.
+
+</details>
+
+**Q98. True or false: the address of a static member function can be stored in a plain function pointer such as `void (*fp)(int)`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**True.** A static member function has no `this`, so it is called like a free function and its address is an ordinary function pointer. That's why it can be passed to C APIs like `pthread_create` or `qsort`. A normal member function needs an object, so its address is a pointer-to-member, which doesn't fit.
+
+</details>
+
+**Q99. Why are factory functions such as `Temperature::fromCelsius(double)` and `Temperature::fromFahrenheit(double)` written as **static** member functions instead of constructors?**
+
+<details><summary>Show answer</summary>
+
+Two constructors that both take one `double` can't be overloaded: the compiler couldn't tell them apart. Static factories have **names**, so each says what its argument means. They are static because they're called **before** any object exists (`Temperature::fromCelsius(25)`), and as members they can still call a private constructor.
+
+</details>
+
+**Q100. Give two drawbacks of the singleton pattern (`static Logger& instance()`).**
+
+<details><summary>Show answer</summary>
+
+Any two of: it is **hidden global state**, so any code can reach and change it and dependencies are invisible; it is **hard to test** because a fake can't be substituted; only its **creation** is thread-safe, not its use; and objects destroyed at program exit may still try to use it after it is gone.
+
+</details>
+
+### 10 — Enums  (11 Qs)
+**Q101. In `enum E { A = 3, B, C };`, what are the values of `B` and `C`?**
 
 <details><summary>Show answer</summary>
 
@@ -730,7 +1413,7 @@ One shared `count` for all objects: three constructions make it 3, and `b` was s
 
 </details>
 
-**Q56. Give two problems with a plain `enum` that `enum class` fixes.**
+**Q102. Give two problems with a plain `enum` that `enum class` fixes.**
 
 <details><summary>Show answer</summary>
 
@@ -738,7 +1421,7 @@ One shared `count` for all objects: three constructions make it 3, and `b` was s
 
 </details>
 
-**Q57. How do you make an enum occupy only 1 byte instead of the default 4?**
+**Q103. How do you make an enum occupy only 1 byte instead of the default 4?**
 
 <details><summary>Show answer</summary>
 
@@ -750,7 +1433,7 @@ The `: uint8_t` fixes storage to 1 byte — useful when packing many enum values
 
 </details>
 
-**Q58. How do you convert an `enum class` value to an `int`?**
+**Q104. How do you convert an `enum class` value to an `int`?**
 
 <details><summary>Show answer</summary>
 
@@ -758,7 +1441,7 @@ With an explicit cast: `int n = static_cast<int>(Color::Green);`. It's deliberat
 
 </details>
 
-**Q59. What does this print?**
+**Q105. What does this print?**
 
 ```cpp
 enum Level { Low, Mid = 5, High };
@@ -776,7 +1459,7 @@ Values start at 0 and count up from the last assigned one: `Low` is 0, `Mid` is 
 
 </details>
 
-**Q60. `enum class Color { Red, Green };` What does `int x = Color::Green;` do?**
+**Q106. `enum class Color { Red, Green };` What does `int x = Color::Green;` do?**
 
 - **A)** Sets `x` to 1
 - **B)** Compile error: needs `static_cast<int>`
@@ -791,8 +1474,84 @@ Values start at 0 and count up from the last assigned one: `Low` is 0, `Mid` is 
 
 </details>
 
-### 11 — Constructors  (6 Qs)
-**Q61. Why does `Entity e;` stop compiling once you add a constructor that takes arguments?**
+**Q107. What does this print?**
+
+```cpp
+enum class Dir { North, East, South, West };
+
+Dir turnRight(Dir d) { return static_cast<Dir>((static_cast<int>(d) + 1) % 4); }
+
+int main() {
+    Dir d = turnRight(Dir::West);
+    std::cout << static_cast<int>(d) << " " << (d == Dir::North);
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+0 1
+```
+
+`West` is 3. `turnRight` converts it to `int`, adds 1 and wraps with `% 4`, giving 0, then casts back to `Dir::North`. So it prints `0`, then `1` because the comparison is true.
+
+</details>
+
+**Q108. Given `enum class Color { Red, Green, Blue };` and `enum class Light { Red, Green };`, which lines compile? Select all that apply.**
+
+- **A)** `int n = Color::Red;`
+- **B)** `int n = static_cast<int>(Color::Red);`
+- **C)** `Color c = static_cast<Color>(1);`
+- **D)** `Color c = 1;`
+- **E)** `bool b = (Color::Red == Light::Red);`
+
+<details><summary>Show answer</summary>
+
+**Correct: B, C**
+
+Only the explicit casts compile: `static_cast<int>(Color::Red)` and `static_cast<Color>(1)`. An `enum class` never converts to `int` implicitly, an `int` never converts to an enum implicitly, and two different enum class types can't be compared.
+
+</details>
+
+**Q109. True or false: with `enum class Color { Red, Green, Blue };`, the expression `static_cast<Color>(7)` is undefined behaviour.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** An `enum class` has a fixed underlying type (`int`), so any `int` value is a valid `Color`; it just matches no enumerator, so a name function needs a fallback. (For a plain enum *without* a fixed type, a value outside its range is undefined behaviour.)
+
+</details>
+
+**Q110. On x86-64 with g++, what is `sizeof(Pixel)` for `enum class Color : std::uint8_t { Red, Green, Blue }; struct Pixel { Color c; std::uint8_t alpha; };`?**
+
+- **A)** 2
+- **B)** 5
+- **C)** 8
+- **D)** 16
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**2.** `: std::uint8_t` makes `Color` one byte, and `alpha` adds one more, with no padding needed. With the default `int` underlying type the struct would be 8 bytes (4 + 1, padded to a multiple of 4).
+
+</details>
+
+**Q111. C++ has no built-in way to print an enum's name. How do you write a name function for an `enum class`, and why leave out `default`?**
+
+<details><summary>Show answer</summary>
+
+A function with a `switch` that returns a string literal per enumerator (`case Color::Red: return "Red";`), plus a fallback `return "unknown";` after the switch: a cast can create a value with no name, and without the fallback g++ warns `control reaches end of non-void function`. Leave out `default` so that when a new enumerator is added, `-Wall` warns `enumeration value '...' not handled in switch` at every switch that needs updating.
+
+</details>
+
+### 11 — Constructors  (11 Qs)
+**Q112. Why does `Entity e;` stop compiling once you add a constructor that takes arguments?**
 
 ```cpp
 class Entity {
@@ -807,7 +1566,7 @@ As soon as you **declare any constructor of your own**, the compiler stops provi
 
 </details>
 
-**Q62. Name two cases where a member initializer list is *required*, not merely preferred.**
+**Q113. Name two cases where a member initializer list is *required*, not merely preferred.**
 
 <details><summary>Show answer</summary>
 
@@ -820,7 +1579,7 @@ class A { const int id; int& ref;
 
 </details>
 
-**Q63. Why prefer an initializer list over assigning members inside the constructor body?**
+**Q114. Why prefer an initializer list over assigning members inside the constructor body?**
 
 <details><summary>Show answer</summary>
 
@@ -828,7 +1587,7 @@ The init list **constructs each member once, directly** with the right value. As
 
 </details>
 
-**Q64. What does `Entity e();` actually declare?**
+**Q115. What does `Entity e();` actually declare?**
 
 <details><summary>Show answer</summary>
 
@@ -836,7 +1595,7 @@ A **function** named `e` that takes no parameters and returns an `Entity` — *n
 
 </details>
 
-**Q65. Which line creates a default-constructed `Entity` object named `e`?**
+**Q116. Which line creates a default-constructed `Entity` object named `e`?**
 
 - **A)** `Entity e();`
 - **B)** `Entity e;`
@@ -851,7 +1610,7 @@ A **function** named `e` that takes no parameters and returns an `Entity` — *n
 
 </details>
 
-**Q66. Which members **must** be initialized in the member initializer list? Select all that apply.**
+**Q117. Which members **must** be initialized in the member initializer list? Select all that apply.**
 
 - **A)** A `const int` member
 - **B)** An `int&` member
@@ -866,8 +1625,88 @@ A `const` member and a reference member can't be assigned after construction, an
 
 </details>
 
-### 12 — Destructors & RAII  (6 Qs)
-**Q67. `Base` has a non-virtual destructor — what happens when `delete b;` runs?**
+**Q118. What does this print?**
+
+```cpp
+struct R {
+    R()             { std::cout << "A"; }
+    R(int, int = 5) { std::cout << "B"; }
+    R(const R&)     { std::cout << "C"; }
+};
+
+int main() {
+    R x;
+    R y(1);
+    R z(1, 2);
+    R w = y;
+    R v{};
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+ABBCA
+```
+
+`R x;` uses the default constructor (A). `R y(1);` and `R z(1, 2);` both match `R(int, int = 5)`; the default argument fills in the missing second value (B, B). `R w = y;` builds a new object from an existing one: the copy constructor (C). `R v{};` with empty braces value-initializes the object, which calls the default constructor (A).
+
+</details>
+
+**Q119. `struct P { int x, y; P(int a, int b) : x(a), y(b) {} };` What does `P p{2.9, 1};` do with g++?**
+
+- **A)** Compiles; `p.x` is 2
+- **B)** Compiles; `p.x` is 3
+- **C)** Compile error: narrowing conversion
+- **D)** Compiles, but it is undefined behaviour
+
+<details><summary>Show answer</summary>
+
+**Correct: C**
+
+**It doesn't compile**: braces forbid narrowing conversions, and `2.9` to `int` would lose information (`error: narrowing conversion of '2.8999999999999999e+0' from 'double' to 'int'`). With parentheses, `P p(2.9, 1);` compiles and silently stores 2.
+
+</details>
+
+**Q120. True or false: if a constructor throws an exception, the destructor of that object runs to clean up.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** The object never finished being built, so it never existed and its destructor does not run. Members and base classes that were already fully constructed **are** destroyed. That's why resources should be held by members that clean up after themselves (RAII, lesson 12).
+
+</details>
+
+**Q121. Which of these are true about constructors? Select all that apply.**
+
+- **A)** A class can have several constructors
+- **B)** A constructor can have default arguments
+- **C)** A constructor can be declared `virtual`
+- **D)** A constructor can return an error code
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B**
+
+Constructors **can be overloaded** and **can have default arguments**. They **can't be virtual** (g++: `constructors cannot be declared 'virtual'`) and have **no return value**, so they report failure by throwing, not with an error code.
+
+</details>
+
+**Q122. What does `FileHandle(const FileHandle&) = delete;` do, and why would a class want it?**
+
+<details><summary>Show answer</summary>
+
+It **deletes the copy constructor**: any attempt to copy a `FileHandle` is a compile error (`use of deleted function`). A class that owns a unique resource, such as a file descriptor, must not be copied: two copies would both close the same descriptor. Deleting the copy turns that run-time bug into a compile-time error (`std::unique_ptr` does the same).
+
+</details>
+
+### 12 — Destructors & RAII  (11 Qs)
+**Q123. `Base` has a non-virtual destructor — what happens when `delete b;` runs?**
 
 ```cpp
 struct Base { ~Base(){} };            // non-virtual!
@@ -882,7 +1721,7 @@ Only `~Base()` runs. `delete b` goes through a `Base*` whose destructor is non-v
 
 </details>
 
-**Q68. Why does RAII make resource cleanup automatic and exception-safe?**
+**Q124. Why does RAII make resource cleanup automatic and exception-safe?**
 
 <details><summary>Show answer</summary>
 
@@ -890,7 +1729,7 @@ Only `~Base()` runs. `delete b` goes through a `Base*` whose destructor is non-v
 
 </details>
 
-**Q69. What is the Rule of Three?**
+**Q125. What is the Rule of Three?**
 
 <details><summary>Show answer</summary>
 
@@ -898,7 +1737,7 @@ If a class needs a custom **destructor**, it almost certainly also needs a custo
 
 </details>
 
-**Q70. In what order are members and base/derived subobjects destroyed?**
+**Q126. In what order are members and base/derived subobjects destroyed?**
 
 <details><summary>Show answer</summary>
 
@@ -906,7 +1745,7 @@ If a class needs a custom **destructor**, it almost certainly also needs a custo
 
 </details>
 
-**Q71. What does this print?**
+**Q127. What does this print?**
 
 ```cpp
 struct T {
@@ -935,7 +1774,7 @@ Objects are destroyed at the end of their scope. `B` lives only in the inner blo
 
 </details>
 
-**Q72. True or false: deleting a derived object through a base pointer is safe even when the base destructor is not `virtual`.**
+**Q128. True or false: deleting a derived object through a base pointer is safe even when the base destructor is not `virtual`.**
 
 - **A)** True
 - **B)** False
@@ -948,8 +1787,87 @@ Objects are destroyed at the end of their scope. `B` lives only in the inner blo
 
 </details>
 
-### 13 — Inheritance  (6 Qs)
-**Q73. What is object slicing?**
+**Q129. What does this print?**
+
+```cpp
+struct T {
+    char c;
+    T(char ch) : c(ch) { std::cout << "+" << c; }
+    ~T() { std::cout << "-" << c; }
+};
+
+int main() {
+    T('t');
+    T x('x');
+    T* p = new T('p');
+    delete p;
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
++t-t+x+p-p-x
+```
+
+The temporary `T('t')` dies at the end of its full expression, so `-t` prints before `x` is made. `p` is a heap object and dies only at `delete`. At the end of `main`, the remaining local `x` is destroyed. Note that `delete p` comes before the closing brace, so `-p` prints before `-x`.
+
+</details>
+
+**Q130. A function locks a mutex with a `std::lock_guard` and then throws an exception. When is the mutex unlocked?**
+
+- **A)** While the exception leaves the function, before any catch block runs
+- **B)** Only if a catch block calls `unlock()`
+- **C)** Never: the mutex stays locked
+- **D)** When the program exits
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**While the exception leaves the function**, before any `catch` block runs: the exception unwinds the stack, the `lock_guard`'s destructor runs, and it unlocks. That is the point of RAII: the release happens on every path, including exceptions.
+
+</details>
+
+**Q131. True or false: if an exception escapes from a destructor, the nearest matching `catch` block handles it like any other exception.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** Destructors are implicitly `noexcept` since C++11, so an escaping exception calls `std::terminate` and the program aborts. g++ warns: `'throw' will always call 'terminate'`. Handle errors inside the destructor instead.
+
+</details>
+
+**Q132. What is the Rule of Zero, and why is it preferred?**
+
+<details><summary>Show answer</summary>
+
+Build a class only from members that manage their own resources (`std::string`, `std::vector`, `std::unique_ptr`, ...) and write **no** destructor, copy or move operations. The compiler-generated ones do the right thing member by member: each member frees its own resource, and a `unique_ptr` member makes the class move-only instead of letting copies double-free. There is no cleanup code to get wrong. Only small classes that own one raw resource need a destructor (and then the Rule of Three/Five).
+
+</details>
+
+**Q133. Which of these end an object's lifetime and run its destructor? Select all that apply.**
+
+- **A)** The closing `}` of the block that declares a local object
+- **B)** `delete p;` on a pointer from `new`
+- **C)** An exception thrown and passing out of the local's scope
+- **D)** `p = nullptr;` on the only raw pointer to a heap object
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, C**
+
+A local's scope ending, `delete` on a heap object, and an exception passing out of the local's scope (stack unwinding) all run the destructor. Assigning `nullptr` to a raw pointer does **not** destroy the object it pointed to: the object is leaked.
+
+</details>
+
+### 13 — Inheritance  (13 Qs)
+**Q134. What is object slicing?**
 
 <details><summary>Show answer</summary>
 
@@ -964,7 +1882,7 @@ Avoid it by handling polymorphic objects through base **pointers or references**
 
 </details>
 
-**Q74. Who can access a `protected` member?**
+**Q135. Who can access a `protected` member?**
 
 <details><summary>Show answer</summary>
 
@@ -972,7 +1890,7 @@ A `protected` member is accessible to the class's **own methods** and to the met
 
 </details>
 
-**Q75. In what order are the base and derived parts constructed and destroyed?**
+**Q136. In what order are the base and derived parts constructed and destroyed?**
 
 <details><summary>Show answer</summary>
 
@@ -980,7 +1898,7 @@ A `protected` member is accessible to the class's **own methods** and to the met
 
 </details>
 
-**Q76. What is the difference between an 'is-a' and a 'has-a' relationship?**
+**Q137. What is the difference between an 'is-a' and a 'has-a' relationship?**
 
 <details><summary>Show answer</summary>
 
@@ -988,7 +1906,7 @@ A `protected` member is accessible to the class's **own methods** and to the met
 
 </details>
 
-**Q77. What does this print?**
+**Q138. What does this print?**
 
 ```cpp
 struct Base {
@@ -1014,7 +1932,7 @@ Construction goes **base first**, then derived (`B` then `D`). Destruction is th
 
 </details>
 
-**Q78. What does this print?**
+**Q139. What does this print?**
 
 ```cpp
 struct Animal { virtual std::string name() const { return "animal"; } };
@@ -1042,8 +1960,108 @@ animal dog
 
 </details>
 
-### 14 — Virtual Functions  (7 Qs)
-**Q79. What does `a->speak()` print here, and why?**
+**Q140. Give two reasons to choose composition (has-a) over inheritance (is-a) when you only want to reuse another class's code.**
+
+<details><summary>Show answer</summary>
+
+(1) **Looser coupling**: the class uses only the part's public interface, so changes inside the part don't ripple into it, and the part can be swapped for another type later. (2) **Control over the interface**: you expose only the operations you choose. Inheriting would also expose every public base function (e.g. `insert()` on a stack built by inheriting from `std::vector`). Also: the class doesn't falsely become usable wherever the base is expected.
+
+</details>
+
+**Q141. What does this print?**
+
+```cpp
+struct Vehicle {
+    Vehicle(const char* b) { std::cout << "Vehicle(" << b << ") "; }
+    ~Vehicle() { std::cout << "~Vehicle"; }
+};
+struct Car : Vehicle {
+    Car(const char* b, int d) : Vehicle(b) { std::cout << "Car(" << d << ") "; }
+    ~Car() { std::cout << "~Car "; }
+};
+
+int main() { Car c("Audi", 2); }
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+Vehicle(Audi) Car(2) ~Car ~Vehicle
+```
+
+The base part is built first, in the order the initializer list asks for (`Vehicle(Audi)`), then the derived constructor body (`Car(2)`). At the end of `main`, destruction runs in reverse: `~Car`, then `~Vehicle`.
+
+</details>
+
+**Q142. `Square` inherits from `Rectangle`. A function that sets a rectangle's width to 10 and height to 5 leaves a `Square` with sides 10 and 5. Which principle does this design break?**
+
+- **A)** Liskov substitution
+- **B)** Encapsulation
+- **C)** RAII
+- **D)** The One Definition Rule
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+The **Liskov substitution principle**: a derived object must work anywhere the base is expected. A square can't keep the rectangle's promise that width and height are independent, so `Square` should not inherit from `Rectangle`.
+
+</details>
+
+**Q143. True or false: a derived class automatically gets the base class's constructors.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** Constructors (and the destructor and assignment operators) are not inherited. The derived class calls a base constructor from its initializer list, or opts in with `using Base::Base;`.
+
+</details>
+
+**Q144. Which of these are better modelled with composition (has-a) than with inheritance? Select all that apply.**
+
+- **A)** A `Car` and its `Engine`
+- **B)** A `Dog` and `Animal`
+- **C)** A `Stack` built on top of `std::vector`
+- **D)** A `Manager` and `Employee`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, C**
+
+A car **has** an engine, and a stack is **implemented using** a vector (it shouldn't expose `insert()` in the middle): both are composition. A dog **is an** animal and a manager **is an** employee: those are is-a relationships, so inheritance fits.
+
+</details>
+
+**Q145. With `class D : protected B`, what does a `public` member of `B` become inside `D`?**
+
+- **A)** public
+- **B)** protected
+- **C)** private
+- **D)** not accessible
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**protected.** Protected inheritance turns the base's public members into protected ones: usable by `D` and classes derived from `D`, but not by outside code.
+
+</details>
+
+**Q146. A base class has `print()` and `print(int)`. The derived class declares only `print()`. Why does `d.print(3)` fail to compile, and how do you fix it?**
+
+<details><summary>Show answer</summary>
+
+**Name hiding**: declaring `print` in the derived class hides **every** base function named `print`, whatever its parameters, so `print(int)` isn't found through `d`. Fix: add `using Base::print;` inside the derived class (or rename the derived function).
+
+</details>
+
+### 14 — Virtual Functions  (12 Qs)
+**Q147. What does `a->speak()` print here, and why?**
 
 ```cpp
 struct Animal { void speak(){cout<<"Animal";} };  // not virtual
@@ -1058,7 +2076,7 @@ It prints **"Animal"**. Because `speak()` is **not virtual**, the call uses **st
 
 </details>
 
-**Q80. How does a virtual call select the right function at runtime, using the vtable and vptr?**
+**Q148. How does a virtual call select the right function at runtime, using the vtable and vptr?**
 
 <details><summary>Show answer</summary>
 
@@ -1066,7 +2084,7 @@ Each class with virtual functions has one **vtable** — an array of function po
 
 </details>
 
-**Q81. What is the cost of using virtual functions?**
+**Q149. What is the cost of using virtual functions?**
 
 <details><summary>Show answer</summary>
 
@@ -1074,7 +2092,7 @@ Memory: every polymorphic object stores a hidden **vptr** (~8 bytes on 64-bit), 
 
 </details>
 
-**Q82. What does the `override` specifier do, and why is it worth adding?**
+**Q150. What does the `override` specifier do, and why is it worth adding?**
 
 <details><summary>Show answer</summary>
 
@@ -1082,7 +2100,7 @@ Memory: every polymorphic object stores a hidden **vptr** (~8 bytes on 64-bit), 
 
 </details>
 
-**Q83. What does `final` do in C++?**
+**Q151. What does `final` do in C++?**
 
 <details><summary>Show answer</summary>
 
@@ -1090,7 +2108,7 @@ On a **virtual function**, `final` forbids any further overriding of it in subcl
 
 </details>
 
-**Q84. What does this print?**
+**Q152. What does this print?**
 
 ```cpp
 struct Base {
@@ -1121,7 +2139,7 @@ Ba Db
 
 </details>
 
-**Q85. A class has no virtual functions. How much does a vptr add to each object?**
+**Q153. A class has no virtual functions. How much does a vptr add to each object?**
 
 - **A)** 8 bytes
 - **B)** 4 bytes
@@ -1136,8 +2154,103 @@ Ba Db
 
 </details>
 
-### 15 — Interfaces / Abstract Classes  (7 Qs)
-**Q86. What makes a class abstract in C++?**
+**Q154. What does this print?**
+
+```cpp
+struct Base {
+    Base() { who(); }
+    virtual ~Base() = default;
+    virtual void who() const { std::cout << "B"; }
+};
+struct Derived : Base {
+    void who() const override { std::cout << "D"; }
+};
+
+int main() {
+    Derived d;
+    Base* p = &d;
+    p->who();
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+BD
+```
+
+Inside `Base()` the object is still only a `Base`, so the virtual call reaches `Base::who` and prints `B`. After construction, `p->who()` goes through the vtable of the real object and prints `D`.
+
+</details>
+
+**Q155. What does this print?**
+
+```cpp
+struct Base {
+    virtual ~Base() = default;
+    virtual void f(int x = 1) const { std::cout << "Base " << x; }
+};
+struct Derived : Base {
+    void f(int x = 2) const override { std::cout << "Derived " << x; }
+};
+
+int main() {
+    Derived d;
+    const Base& b = d;
+    b.f();
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+Derived 1
+```
+
+The body is chosen at run time (`Derived::f`), but the default argument is filled in at compile time from the static type of `b`, which is `Base&`. So `Derived::f` runs with `x = 1`.
+
+</details>
+
+**Q156. `Dog` derives from `Animal`, which has `virtual void speak() const`, and `Dog d;` exists. Which of these calls print Dog's version? Select all that apply.**
+
+- **A)** `Animal* p = &d; p->speak();`
+- **B)** `Animal& r = d; r.speak();`
+- **C)** `Animal a = d; a.speak();`
+- **D)** `d.Animal::speak();`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B**
+
+Only calls through a pointer or reference to the base reach the override. `Animal a = d;` makes a sliced `Animal` copy, and a qualified call `d.Animal::speak()` always calls the named class's version.
+
+</details>
+
+**Q157. True or false: a function in a derived class that matches a base `virtual` function's signature is virtual too, even without the `virtual` keyword.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**True.** Once virtual, always virtual: the override is itself virtual, and a further derived class can override it again (unless it is marked `final`). Write `override` on it to make this visible and checked.
+
+</details>
+
+**Q158. Give two situations where you would not make a function virtual.**
+
+<details><summary>Show answer</summary>
+
+Any two of: (1) the class is a **value type** not meant to be a base (`Point`, `Money`), so a vtable and vptr are pure cost; (2) the type is **known at compile time**, so overloads or templates can choose the function with no run-time cost; (3) **hot code** over many small objects, where the extra memory load per call and the lost inlining are measurable; (4) the function is called from a constructor or destructor and must behave the same in every class (virtual dispatch doesn't reach derived overrides there anyway).
+
+</details>
+
+### 15 — Interfaces / Abstract Classes  (12 Qs)
+**Q159. What makes a class abstract in C++?**
 
 <details><summary>Show answer</summary>
 
@@ -1145,7 +2258,7 @@ A class becomes **abstract** as soon as it declares at least one **pure virtual*
 
 </details>
 
-**Q87. If you can't instantiate an abstract class, what CAN you do with it?**
+**Q160. If you can't instantiate an abstract class, what CAN you do with it?**
 
 <details><summary>Show answer</summary>
 
@@ -1153,7 +2266,7 @@ You use **pointers or references** to it — that's the whole point of an abstra
 
 </details>
 
-**Q88. What is the difference between an abstract class and an interface in C++?**
+**Q161. What is the difference between an abstract class and an interface in C++?**
 
 <details><summary>Show answer</summary>
 
@@ -1161,7 +2274,7 @@ Both rely on pure virtuals, but: an **abstract class** has **at least one** pure
 
 </details>
 
-**Q89. Why must an interface / polymorphic base declare a virtual destructor?**
+**Q162. Why must an interface / polymorphic base declare a virtual destructor?**
 
 <details><summary>Show answer</summary>
 
@@ -1169,7 +2282,7 @@ Because clients hold and delete derived objects **through base pointers** (`Base
 
 </details>
 
-**Q90. Can an abstract class also contain normal (non-pure) methods with bodies?**
+**Q163. Can an abstract class also contain normal (non-pure) methods with bodies?**
 
 <details><summary>Show answer</summary>
 
@@ -1177,7 +2290,7 @@ Yes. An abstract class can mix **pure virtuals** (which every subclass must impl
 
 </details>
 
-**Q91. Given `struct Shape { virtual double area() const = 0; };`, which line does **not** compile?**
+**Q164. Given `struct Shape { virtual double area() const = 0; };`, which line does **not** compile?**
 
 - **A)** `Shape* p = nullptr;`
 - **B)** `Shape s;`
@@ -1192,7 +2305,7 @@ Yes. An abstract class can mix **pure virtuals** (which every subclass must impl
 
 </details>
 
-**Q92. True or false: a derived class that overrides only some of its base's pure virtual functions is still abstract.**
+**Q165. True or false: a derived class that overrides only some of its base's pure virtual functions is still abstract.**
 
 - **A)** True
 - **B)** False
@@ -1205,10 +2318,92 @@ Yes. An abstract class can mix **pure virtuals** (which every subclass must impl
 
 </details>
 
+**Q166. What does this print?**
+
+```cpp
+struct Report {
+    virtual ~Report() = default;
+    virtual std::string title() const = 0;
+    void print() const { std::cout << "[" << title() << "]"; }
+};
+struct Sales : Report {
+    std::string title() const override { return "sales"; }
+};
+
+int main() {
+    Sales s;
+    s.print();
+    const Report& r = s;
+    r.print();
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+[sales][sales]
+```
+
+`Report` is abstract, but its implemented function `print()` calls the pure virtual `title()` through the vtable, so both calls reach `Sales::title`. The second call goes through a `const Report&`, which works the same way.
+
+</details>
+
+**Q167. Which of these can an abstract class have? Select all that apply.**
+
+- **A)** Data members
+- **B)** A constructor
+- **C)** Member functions with a body
+- **D)** Objects created directly from it, like `Shape s;`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, C**
+
+An abstract class can have **data members**, **constructors** (they run as the base part of each derived object) and **implemented member functions**. What it can't have is objects of its own type: `Shape s;` does not compile.
+
+</details>
+
+**Q168. True or false: if `Shape` is abstract, `void draw(Shape s) { }` compiles.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** A parameter by value would need a `Shape` object, which can't exist. g++: `cannot declare parameter 's' to be of abstract type 'Shape'`. Take `const Shape&` or `const Shape*` instead. (This also means an abstract base can't be sliced by accident.)
+
+</details>
+
+**Q169. How do interfaces make a class easier to unit-test?**
+
+<details><summary>Show answer</summary>
+
+If the class depends on an interface (e.g. holds a `Logger&`) instead of a concrete class, the test can pass in a **fake implementation** that records calls or returns fixed data. The class then runs without real files, network or hardware, and the test checks what the fake recorded. The real implementation is passed in by the program (dependency injection).
+
+</details>
+
+**Q170. A class declares `virtual ~Base() = 0;` and never defines it. A class derives from it and an object of the derived class is created. What happens?**
+
+- **A)** It compiles, links and runs
+- **B)** Compile error: a destructor can't be pure virtual
+- **C)** Link error: undefined reference to `Base::~Base()`
+- **D)** It runs and crashes with 'pure virtual method called'
+
+<details><summary>Show answer</summary>
+
+**Correct: C**
+
+It compiles but **fails to link**: the linker reports an *undefined reference to* `Base::~Base()`. A pure virtual destructor still has to be defined (`Base::~Base() {}`), because every derived destructor calls the base destructor when the object is destroyed.
+
+</details>
+
 ## C++ Language & Safety
 
-### 16 — const, constexpr & volatile  (6 Qs)
-**Q93. Which of these compile, and which is an error?**
+### 16 — const, constexpr & volatile  (11 Qs)
+**Q171. Which of these compile, and which is an error?**
 
 ```cpp
 int n = getInput();
@@ -1223,7 +2418,7 @@ constexpr int c = 42;
 
 </details>
 
-**Q94. What is the core difference between `const` and `constexpr`?**
+**Q172. What is the core difference between `const` and `constexpr`?**
 
 <details><summary>Show answer</summary>
 
@@ -1231,7 +2426,7 @@ constexpr int c = 42;
 
 </details>
 
-**Q95. Is `volatile` a correct tool for synchronizing a variable between threads?**
+**Q173. Is `volatile` a correct tool for synchronizing a variable between threads?**
 
 <details><summary>Show answer</summary>
 
@@ -1239,7 +2434,7 @@ constexpr int c = 42;
 
 </details>
 
-**Q96. When does a `constexpr` function run at runtime instead of compile time?**
+**Q174. When does a `constexpr` function run at runtime instead of compile time?**
 
 <details><summary>Show answer</summary>
 
@@ -1252,7 +2447,7 @@ int y = read(); int b = sq(y); // runtime
 
 </details>
 
-**Q97. `n` is read at runtime (`int n = getInput();`). Which of these lines compile? Select all that apply.**
+**Q175. `n` is read at runtime (`int n = getInput();`). Which of these lines compile? Select all that apply.**
 
 - **A)** `const int a = n;`
 - **B)** `constexpr int b = n;`
@@ -1267,7 +2462,7 @@ int y = read(); int b = sq(y); // runtime
 
 </details>
 
-**Q98. True or false: marking a shared counter `volatile` makes `++counter` safe to call from two threads.**
+**Q176. True or false: marking a shared counter `volatile` makes `++counter` safe to call from two threads.**
 
 - **A)** True
 - **B)** False
@@ -1280,8 +2475,78 @@ int y = read(); int b = sq(y); // runtime
 
 </details>
 
-### 17 — Compile-time Constants & VLAs  (7 Qs)
-**Q99. Two of these are standard C++ and one is not — which one, and what is it called?**
+**Q177. Which declaration lets you change the `int` through `p`, but never make `p` point to another `int`?**
+
+- **A)** `const int* p`
+- **B)** `int const* p`
+- **C)** `int* const p`
+- **D)** `const int* const p`
+
+<details><summary>Show answer</summary>
+
+**Correct: C**
+
+**`int* const p`.** Read right to left: "p is a const pointer to an int". The pointer is fixed; the int is not. `const int* p` and `int const* p` are the same thing (pointer to a const int: `p` can move, `*p` can't be changed), and `const int* const p` fixes both.
+
+</details>
+
+**Q178. What does this print?**
+
+```cpp
+struct Cache {
+    mutable int hits = 0;
+    int get() const { ++hits; return 7; }
+};
+
+int main() {
+    const Cache c;
+    int sum = c.get() + c.get();
+    std::cout << sum << " " << c.hits;
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+14 2
+```
+
+`c` is a `const` object, but `get()` is a `const` member function, so it can be called. It increments `hits`, which is allowed because `hits` is `mutable`. Two calls: `sum` is 7 + 7 = 14 and `hits` is 2.
+
+</details>
+
+**Q179. True or false: a `consteval` function (C++20) can be called with a value read at run time; it then simply runs at run time.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** That fallback is what a `constexpr` function does. A `consteval` function must be evaluated at compile time, so calling it with a run-time value is a compile error ("the value of 'k' is not usable in a constant expression").
+
+</details>
+
+**Q180. A signal handler sets a global flag and `main` loops `while (!stop) {}`. Why must the flag be declared `volatile std::sig_atomic_t`, and what can happen at `-O2` without `volatile`?**
+
+<details><summary>Show answer</summary>
+
+The handler runs outside the normal flow of the program, so the compiler can't see that it changes the flag. Without `volatile` the optimizer sees that nothing in the loop changes `stop`, reads it once, and can turn the loop into an endless jump: the program never stops. `volatile` forces a real read on every pass. `std::sig_atomic_t` is the integer type a handler is allowed to write in one indivisible step.
+
+</details>
+
+**Q181. What does `const` after a member function's parameter list (`int get() const`) promise, and which member functions can be called on a `const` object?**
+
+<details><summary>Show answer</summary>
+
+It promises the function does not modify the object's members (inside it, `this` points to a const object; only `mutable` members may still change). On a `const` object, or through a `const&` / `const*`, **only const member functions** can be called. Calling a non-const one fails with "passing 'const X' as 'this' argument discards qualifiers".
+
+</details>
+
+### 17 — Compile-time Constants & VLAs  (11 Qs)
+**Q182. Two of these are standard C++ and one is not — which one, and what is it called?**
 
 ```cpp
 constexpr int s1 = 5*4; int a[s1];
@@ -1295,7 +2560,7 @@ The third — `int s = 5*4; int c[s];` — is **not standard C++**. Because `s` 
 
 </details>
 
-**Q100. Your `int a[n]` (runtime `n`) compiled fine on g++ — how do you check whether it's actually standard C++?**
+**Q183. Your `int a[n]` (runtime `n`) compiled fine on g++ — how do you check whether it's actually standard C++?**
 
 <details><summary>Show answer</summary>
 
@@ -1303,7 +2568,7 @@ Add **`-pedantic`**: `g++ -std=c++17 -pedantic t.cpp` warns 'ISO C++ forbids var
 
 </details>
 
-**Q101. Does the VLA warning depend on which C++ version you pick (`-std=c++11` vs `c++20`)?**
+**Q184. Does the VLA warning depend on which C++ version you pick (`-std=c++11` vs `c++20`)?**
 
 <details><summary>Show answer</summary>
 
@@ -1311,7 +2576,7 @@ No. VLAs were never part of **any** C++ standard (proposed for C++14, then remov
 
 </details>
 
-**Q102. Which array sizes ARE valid standard C++?**
+**Q185. Which array sizes ARE valid standard C++?**
 
 <details><summary>Show answer</summary>
 
@@ -1319,7 +2584,7 @@ A size that is a **compile-time constant**: either a `constexpr` value, or a `co
 
 </details>
 
-**Q103. What runtime clue reveals that an array is actually a VLA?**
+**Q186. What runtime clue reveals that an array is actually a VLA?**
 
 <details><summary>Show answer</summary>
 
@@ -1327,7 +2592,7 @@ A size that is a **compile-time constant**: either a `constexpr` value, or a `co
 
 </details>
 
-**Q104. `int a[n];` with a runtime `n` compiles silently on g++. Which flag makes g++ warn that it is not standard C++?**
+**Q187. `int a[n];` with a runtime `n` compiles silently on g++. Which flag makes g++ warn that it is not standard C++?**
 
 - **A)** `-Wall`
 - **B)** `-pedantic`
@@ -1342,7 +2607,7 @@ A size that is a **compile-time constant**: either a `constexpr` value, or a `co
 
 </details>
 
-**Q105. True or false: switching from `-std=c++11` to `-std=c++20` makes g++ reject `int a[n];` with a runtime `n`.**
+**Q188. True or false: switching from `-std=c++11` to `-std=c++20` makes g++ reject `int a[n];` with a runtime `n`.**
 
 - **A)** True
 - **B)** False
@@ -1355,8 +2620,65 @@ A size that is a **compile-time constant**: either a `constexpr` value, or a `co
 
 </details>
 
-### 18 — Arrays & Memory Contiguity  (6 Qs)
-**Q106. An array must be laid out contiguously — is that guaranteed in virtual memory or in physical RAM?**
+**Q189. True or false: `const int n = readSize(); int a[n];` is standard C++, because `n` is `const`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** `n` is read-only, but its value comes from a run-time call, so it is not a constant expression. `int a[n]` is therefore a VLA (a g++ extension; `-pedantic` warns). Only a `const` integer initialized with a constant expression, or a `constexpr` one, can size a standard array.
+
+</details>
+
+**Q190. In which of these places must the value be a compile-time constant expression? Select all that apply.**
+
+- **A)** The size in `int a[N];`
+- **B)** `N` in `std::array<int, N>`
+- **C)** A `case` label
+- **D)** The argument in an ordinary call `f(n)`
+- **E)** The condition of `static_assert`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, C, E**
+
+Array bounds, template arguments, `case` labels and `static_assert` conditions are all evaluated by the compiler, so they need constant expressions. An ordinary function argument is just a run-time value.
+
+</details>
+
+**Q191. What does this print?**
+
+```cpp
+int n = 3;
+std::vector<int> v(n);
+auto p = std::make_unique<int[]>(n);
+std::cout << v.size() << v[2] << p[2];
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+300
+```
+
+`std::vector<int> v(n)` creates `n` elements set to 0, so `size()` is 3 and `v[2]` is 0. `std::make_unique<int[]>(n)` also value-initializes its `n` ints, so `p[2]` is 0. Output: `3`, `0`, `0` with no spaces.
+
+</details>
+
+**Q192. A program does `int buf[n];` where `n` comes from user input. Explain why this can crash with no error message, and what to write instead.**
+
+<details><summary>Show answer</summary>
+
+`buf` is a VLA: it is placed on the stack by moving the stack pointer `n * sizeof(int)` bytes, and nothing checks that the stack (often 8 MB) has room. A large `n` makes the program write outside the stack and the kernel kills it with a segmentation fault; there is no exception to catch. Write `std::vector<int> buf(n);` instead: the memory comes from the heap, the vector knows its size, and if the allocation fails it throws `std::bad_alloc`. It is also standard C++, unlike the VLA.
+
+</details>
+
+### 18 — Arrays & Memory Contiguity  (11 Qs)
+**Q193. An array must be laid out contiguously — is that guaranteed in virtual memory or in physical RAM?**
 
 <details><summary>Show answer</summary>
 
@@ -1364,7 +2686,7 @@ In the process's **virtual** address space. Indexing computes `base + i*sizeof(e
 
 </details>
 
-**Q107. How does the compiler compute the address of `arr[i]`?**
+**Q194. How does the compiler compute the address of `arr[i]`?**
 
 <details><summary>Show answer</summary>
 
@@ -1372,7 +2694,7 @@ As **`base_address + i * sizeof(element)`** — a single multiply-and-add, no lo
 
 </details>
 
-**Q108. An `int arr[100000]` is about 400 KB — should it live on the stack or the heap, and why?**
+**Q195. An `int arr[100000]` is about 400 KB — should it live on the stack or the heap, and why?**
 
 <details><summary>Show answer</summary>
 
@@ -1380,7 +2702,7 @@ On the **heap** — `new int[100000]` or, better, `std::vector<int>`. A **local*
 
 </details>
 
-**Q109. With demand paging, is the physical RAM for a big `new` array allocated immediately?**
+**Q196. With demand paging, is the physical RAM for a big `new` array allocated immediately?**
 
 <details><summary>Show answer</summary>
 
@@ -1388,7 +2710,7 @@ No. The **virtual** address range is reserved right away (so the array looks all
 
 </details>
 
-**Q110. What does this print?**
+**Q197. What does this print?**
 
 ```cpp
 int arr[5] = {10, 20, 30, 40, 50};
@@ -1407,7 +2729,7 @@ std::cout << *(p + 3) << " " << (&arr[4] - &arr[1]);
 
 </details>
 
-**Q111. An array must be contiguous. Where is that actually guaranteed?**
+**Q198. An array must be contiguous. Where is that actually guaranteed?**
 
 - **A)** In physical RAM
 - **B)** In virtual address space
@@ -1422,8 +2744,72 @@ std::cout << *(p + 3) << " " << (&arr[4] - &arr[1]);
 
 </details>
 
-### 19 — Endianness  (7 Qs)
-**Q112. On a little-endian machine, how is the int `500` (`0x000001F4`) laid out byte by byte in memory?**
+**Q199. What does this print?**
+
+```cpp
+int a[5] = {7, 8};
+int sum = 0;
+for (int x : a) sum += x;
+std::cout << std::size(a) << " " << sum << " " << a[4];
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+5 15 0
+```
+
+`a` has 5 elements; only the first two are given, so `a[2]`, `a[3]` and `a[4]` are 0. `std::size(a)` is 5, the sum is 7 + 8 = 15, and `a[4]` is 0.
+
+</details>
+
+**Q200. In `int m[3][4];`, which element is stored directly after `m[0][3]` in memory?**
+
+- **A)** `m[1][0]`
+- **B)** `m[0][4]`
+- **C)** `m[1][3]`
+- **D)** `m[3][0]`
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**`m[1][0]`.** C++ stores 2D arrays row-major: all 4 elements of row 0, then row 1. `m[0][3]` is the last element of row 0, so the first element of row 1 follows it. (`m[0][4]` is past the end of row 0.)
+
+</details>
+
+**Q201. True or false: inside `void f(int a[10])`, `sizeof(a)` is the size of 10 ints.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** An array parameter is adjusted to a pointer (`int* a`), whatever size is written in the brackets. `sizeof(a)` is the size of a pointer (8 on x86-64), and g++ warns that `'sizeof' on array function parameter 'a' will return size of 'int*'`.
+
+</details>
+
+**Q202. Summing a 4096 x 4096 `int` array row by row is many times faster than column by column, although both add the same numbers. Why?**
+
+<details><summary>Show answer</summary>
+
+The array is stored row-major, so row by row visits memory in order. The CPU loads memory in 64-byte **cache lines** (16 ints), so one load serves 16 additions, and the **prefetcher** loads the next lines ahead of time. Column by column, each step jumps a whole row (16 KB) ahead, to a different cache line; each loaded line is used for one int and is usually evicted before its neighbours are needed. Most reads then wait for RAM.
+
+</details>
+
+**Q203. Give two ways to pass an array to a function without losing its size.**
+
+<details><summary>Show answer</summary>
+
+Any two of: (1) pass a pointer **and** the count: `f(const int* a, std::size_t n)`; (2) take a **reference to an array** in a template: `template <std::size_t N> void f(const int (&a)[N])`, so `N` is deduced; (3) use `std::array<int, N>` or `std::vector<int>` by `const&`, which know their size; (4) `std::span<const int>` (C++20), a pointer plus size in one object.
+
+</details>
+
+### 19 — Endianness  (12 Qs)
+**Q204. On a little-endian machine, how is the int `500` (`0x000001F4`) laid out byte by byte in memory?**
 
 <details><summary>Show answer</summary>
 
@@ -1431,7 +2817,7 @@ As **`F4 01 00 00`** — least-significant byte first. The value's bytes are `00
 
 </details>
 
-**Q113. If you `cout << somePointer;`, do you see the reversed little-endian bytes or the real address?**
+**Q205. If you `cout << somePointer;`, do you see the reversed little-endian bytes or the real address?**
 
 <details><summary>Show answer</summary>
 
@@ -1439,7 +2825,7 @@ You see the **real, human-readable address** (most-significant-first, e.g. `0x7f
 
 </details>
 
-**Q114. Is a pointer affected by endianness?**
+**Q206. Is a pointer affected by endianness?**
 
 <details><summary>Show answer</summary>
 
@@ -1447,7 +2833,7 @@ Yes. A pointer is just a **multi-byte integer** (8 bytes on 64-bit) that holds a
 
 </details>
 
-**Q115. How do you detect at runtime whether a machine is little- or big-endian?**
+**Q207. How do you detect at runtime whether a machine is little- or big-endian?**
 
 <details><summary>Show answer</summary>
 
@@ -1462,7 +2848,7 @@ On little-endian the least-significant byte (the `01`) sits at the lowest addres
 
 </details>
 
-**Q116. Which values are immune to endianness?**
+**Q208. Which values are immune to endianness?**
 
 <details><summary>Show answer</summary>
 
@@ -1470,7 +2856,7 @@ On little-endian the least-significant byte (the `01`) sits at the lowest addres
 
 </details>
 
-**Q117. On a little-endian machine (x86-64), what does this print?**
+**Q209. On a little-endian machine (x86-64), what does this print?**
 
 ```cpp
 int x = 0x01020304;
@@ -1489,7 +2875,7 @@ Little-endian stores the **least-significant** byte at the lowest address. `0x01
 
 </details>
 
-**Q118. True or false: on a little-endian machine, `std::cout << x;` prints the value of `x` with its bytes reversed.**
+**Q210. True or false: on a little-endian machine, `std::cout << x;` prints the value of `x` with its bytes reversed.**
 
 - **A)** True
 - **B)** False
@@ -1502,8 +2888,72 @@ Little-endian stores the **least-significant** byte at the lowest address. `0x01
 
 </details>
 
-### 20 — Undefined Behavior & Bounds Checking  (7 Qs)
-**Q119. This program prints `4` and exits cleanly. Is it correct?**
+**Q211. What does this print (on any machine)?**
+
+```cpp
+std::uint32_t x = 0x0A0B0C0D;
+unsigned char hi = x >> 24;
+unsigned char lo = x & 0xFF;
+std::cout << (int)hi << " " << (int)lo;
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+10 13
+```
+
+Shifts and masks work on the **value**, not on memory, so endianness doesn't matter. `x >> 24` is the most-significant byte `0x0A` = 10, and `x & 0xFF` is the least-significant byte `0x0D` = 13.
+
+</details>
+
+**Q212. What is network byte order?**
+
+- **A)** Big-endian
+- **B)** Little-endian
+- **C)** Whatever order the sending host uses
+- **D)** It depends on the protocol version
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**Big-endian.** Internet protocol headers send multi-byte numbers most-significant byte first. `htonl`/`htons` convert from host order to it, `ntohl`/`ntohs` back.
+
+</details>
+
+**Q213. True or false: on a big-endian host, `htonl(x)` returns `x` unchanged.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**True.** Network byte order is big-endian, so a big-endian host is already in network order and the conversion functions do nothing. That is why code that calls them works correctly on both kinds of machine.
+
+</details>
+
+**Q214. A server fills `sockaddr_in::sin_port = 8080;` without `htons` on x86-64. Which port does it really use, and why?**
+
+<details><summary>Show answer</summary>
+
+**36895.** 8080 is `0x1F90`; on little-endian x86-64 it is stored as bytes `90 1F`. The port field is read in network order (big-endian), so those bytes mean `0x901F` = 36895. Write `sin_port = htons(8080);`.
+
+</details>
+
+**Q215. Why is `uint32_t v = *(uint32_t*)buf;` a bad way to read a 32-bit number from a received network buffer, and what should you write instead?**
+
+<details><summary>Show answer</summary>
+
+Two problems: (1) it reads the bytes in **host** order, but the data is in network (big-endian) order, so the value is wrong on x86-64; (2) `buf` may not be aligned for `uint32_t`, and accessing a `char` buffer through a `uint32_t*` breaks the aliasing rules: undefined behaviour. Write `uint32_t v; std::memcpy(&v, buf, 4); v = ntohl(v);`, or rebuild it with shifts: `v = uint32_t(buf[0]) << 24 | uint32_t(buf[1]) << 16 | uint32_t(buf[2]) << 8 | buf[3];`.
+
+</details>
+
+### 20 — Undefined Behavior & Bounds Checking  (11 Qs)
+**Q216. This program prints `4` and exits cleanly. Is it correct?**
 
 ```cpp
 std::array<int,5> a;
@@ -1517,7 +2967,7 @@ cout << a[10];
 
 </details>
 
-**Q120. Which access is bounds-checked, and what does it do on a bad index?**
+**Q217. Which access is bounds-checked, and what does it do on a bad index?**
 
 <details><summary>Show answer</summary>
 
@@ -1528,7 +2978,7 @@ a.at(10) = 4;  // throws std::out_of_range
 
 </details>
 
-**Q121. Why does C++ leave `operator[]` unchecked by default?**
+**Q218. Why does C++ leave `operator[]` unchecked by default?**
 
 <details><summary>Show answer</summary>
 
@@ -1536,7 +2986,7 @@ Because of the principle **'don't pay for what you don't use'** — a bounds che
 
 </details>
 
-**Q122. Name three different things undefined behaviour is allowed to do.**
+**Q219. Name three different things undefined behaviour is allowed to do.**
 
 <details><summary>Show answer</summary>
 
@@ -1544,7 +2994,7 @@ It may: (1) **appear to work** (produce the expected output, as in the `a[10]` e
 
 </details>
 
-**Q123. Which compiler flag would have caught the out-of-bounds write at runtime during testing?**
+**Q220. Which compiler flag would have caught the out-of-bounds write at runtime during testing?**
 
 <details><summary>Show answer</summary>
 
@@ -1552,7 +3002,7 @@ It may: (1) **appear to work** (produce the expected output, as in the `a[10]` e
 
 </details>
 
-**Q124. `std::array<int, 5> a{}; a[10] = 4;` What does the C++ standard say happens?**
+**Q221. `std::array<int, 5> a{}; a[10] = 4;` What does the C++ standard say happens?**
 
 - **A)** It throws `std::out_of_range`
 - **B)** It is undefined behaviour
@@ -1567,7 +3017,7 @@ It may: (1) **appear to work** (produce the expected output, as in the `a[10]` e
 
 </details>
 
-**Q125. What does this print?**
+**Q222. What does this print?**
 
 ```cpp
 std::vector<int> v = {1, 2, 3};
@@ -1590,16 +3040,67 @@ caught
 
 </details>
 
-### 21 — std::array vs std::vector  (6 Qs)
-**Q126. When should you choose `std::array` rather than `std::vector`?**
+**Q223. Classify each: (a) signed integer overflow, (b) the order in which `f(a(), b())` evaluates `a()` and `b()`, (c) `sizeof(long)`. Which is undefined, which unspecified, which implementation-defined?**
 
 <details><summary>Show answer</summary>
 
-Choose **`std::array<T,N>`** when the element count is **fixed and known at compile time** — it lives on the stack, has zero heap overhead, and never resizes. Choose **`std::vector<T>`** instead when the count is **unknown or changes at runtime** — it lives on the heap and grows via `push_back`/`resize`. Rule of thumb: fixed → array, growable → vector.
+(a) **Undefined**: no requirements; the optimizer may assume it never happens. (b) **Unspecified**: either order is allowed and the compiler needn't document it (g++ 13 evaluates `b()` first, clang 18 `a()` first). (c) **Implementation-defined**: the compiler must document it (8 on x86-64 Linux, 4 on 64-bit Windows).
 
 </details>
 
-**Q127. How does a `std::vector` grow when you keep adding elements?**
+**Q224. `bool ok(int x) { int n = x + 1; return n > x; }` returns 0 for `INT_MAX` at `-O0` but 1 at `-O2` with g++. Why?**
+
+- **A)** The program has undefined behaviour, so the optimizer may assume `x + 1 > x` is always true
+- **B)** `-O2` has a bug in integer arithmetic
+- **C)** `-O0` uses unsigned arithmetic for `int`
+- **D)** The comparison is implementation-defined
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+`x + 1` overflows for `INT_MAX`, which is **undefined behaviour**. At `-O0` the addition happens to wrap to `INT_MIN`, so the comparison is false. At `-O2` the optimizer assumes signed overflow never happens, so `x + 1 > x` is always true and the function compiles to `return 1`. The program is wrong, not the compiler. A correct check is `return x < INT_MAX;` (test before adding).
+
+</details>
+
+**Q225. Which of these are undefined behaviour? Select all that apply.**
+
+- **A)** `int r = 10 / d;` with `d == 0`
+- **B)** `int x; std::cout << x;`
+- **C)** `unsigned u = UINT_MAX; u = u + 1;`
+- **D)** An `int` function that reaches its closing `}` without `return`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, D**
+
+Integer division by zero, reading an uninitialized local `int`, and a non-void function that ends without `return` are all UB. Unsigned arithmetic is defined to wrap modulo 2^N, so `UINT_MAX + 1u` is simply 0.
+
+</details>
+
+**Q226. True or false: if a program with undefined behaviour gives the right output in every test, the undefined behaviour is harmless.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** UB has no guaranteed behaviour. The same code can break with another compiler, another optimization level, other input, or an unrelated change nearby, because the optimizer is allowed to assume UB never happens.
+
+</details>
+
+### 21 — std::array vs std::vector  (11 Qs)
+**Q227. When should you choose `std::array` rather than `std::vector`?**
+
+<details><summary>Show answer</summary>
+
+Choose **`std::array<T,N>`** when the element count is **fixed and known at compile time**: it stores its elements inside itself (no heap allocation of its own, so it sits on the stack when it is a local variable), and never resizes. Choose **`std::vector<T>`** when the count is **unknown or changes at run time**: it keeps its elements in a heap block and grows via `push_back`/`resize`. Rule of thumb: fixed → array, growable → vector. Large fixed data still belongs in a vector, not a local array.
+
+</details>
+
+**Q228. How does a `std::vector` grow when you keep adding elements?**
 
 <details><summary>Show answer</summary>
 
@@ -1607,7 +3108,7 @@ You add with **`push_back`** (or `resize`/`insert`); when it runs out of room it
 
 </details>
 
-**Q128. What is the difference between a vector's `size()` and its `capacity()`?**
+**Q229. What is the difference between a vector's `size()` and its `capacity()`?**
 
 <details><summary>Show answer</summary>
 
@@ -1615,7 +3116,7 @@ You add with **`push_back`** (or `resize`/`insert`); when it runs out of room it
 
 </details>
 
-**Q129. Do both `array` and `vector` offer a bounds-checked access?**
+**Q230. Do both `array` and `vector` offer a bounds-checked access?**
 
 <details><summary>Show answer</summary>
 
@@ -1623,7 +3124,7 @@ Yes — both provide `.at(i)` (bounds-checked, throws `std::out_of_range`) and `
 
 </details>
 
-**Q130. Which of these can grow at runtime with `push_back`?**
+**Q231. Which of these can grow at runtime with `push_back`?**
 
 - **A)** `std::array<int, 5>`
 - **B)** `std::vector<int>`
@@ -1638,7 +3139,7 @@ Only **`std::vector`**. `std::array<int, 5>` and `int[5]` have a size fixed at c
 
 </details>
 
-**Q131. What does this print?**
+**Q232. What does this print?**
 
 ```cpp
 std::vector<int> v;
@@ -1659,8 +3160,72 @@ std::cout << v.size() << " " << (v.capacity() >= 10);
 
 </details>
 
-### 22 — Exceptions & try/catch  (6 Qs)
-**Q132. Calling `a.at(10)` on a size-5 array printed 'Aborted (core dumped)'. Whose fault is the crash?**
+**Q233. True or false: a `std::array<int, 4>` that is a member of an object created with `new` is stored on the heap.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**True.** A `std::array` stores its elements inside itself, so it lives wherever its owner lives. Inside a heap object it is part of that heap block. What a `std::array` never does is make a heap allocation of its own.
+
+</details>
+
+**Q234. On x86-64 with g++, what is `sizeof(v)` for a `std::vector<int> v` holding 1000 elements?**
+
+- **A)** 24
+- **B)** 4000
+- **C)** 4024
+- **D)** It depends on the capacity
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**24.** The vector object is only a handle: three pointers (start, end of the elements, end of the allocated block). The 1000 ints live in a separate heap block that `sizeof` doesn't count.
+
+</details>
+
+**Q235. What does this print?**
+
+```cpp
+std::array<int, 3> a = {1, 2, 3};
+std::array<int, 3> b = a;
+b[0] = 9;
+std::cout << a[0] << " " << (a == b) << " " << b.size();
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+1 0 3
+```
+
+`b = a` copies all three elements, so changing `b[0]` doesn't touch `a`: `a[0]` is still 1. `==` compares the elements, which now differ, so it prints 0. `b.size()` is 3.
+
+</details>
+
+**Q236. A function takes `const std::array<int, 3>&`. Why can't you pass it a `std::array<int, 5>`, and what are two ways to write a function that accepts both?**
+
+<details><summary>Show answer</summary>
+
+The size is part of the type: `std::array<int, 3>` and `std::array<int, 5>` are unrelated types, so the reference can't bind. Fixes: (1) make it a template, `template <std::size_t N> int f(const std::array<int, N>& a)`, so `N` is deduced; (2) take a `std::span<const int>` (C++20), or a pointer plus a size via `.data()` and `.size()`; (3) if the size really varies, store the data in a `std::vector` and take `const std::vector<int>&`.
+
+</details>
+
+**Q237. Name three things a `std::array` can do that a C array can't.**
+
+<details><summary>Show answer</summary>
+
+Any three of: it **knows its size** (`.size()`), even inside a function; it **doesn't decay** to a pointer when passed; it can be **copied and assigned** with `=`; `==` **compares the elements** (a C array comparison compares addresses); it has **`.at()`** for checked access; it can be **returned** from a function by value.
+
+</details>
+
+### 22 — Exceptions & try/catch  (12 Qs)
+**Q238. Calling `a.at(10)` on a size-5 array printed 'Aborted (core dumped)'. Whose fault is the crash?**
 
 <details><summary>Show answer</summary>
 
@@ -1668,7 +3233,7 @@ The **caller's** — for not handling the exception. `.at()` did its job: it det
 
 </details>
 
-**Q133. Rewrite the call so the program reports the error and keeps running.**
+**Q239. Rewrite the call so the program reports the error and keeps running.**
 
 <details><summary>Show answer</summary>
 
@@ -1685,7 +3250,7 @@ Now the exception is caught and handled, and execution continues past the `try/c
 
 </details>
 
-**Q134. Should you catch an exception by value or by `const` reference, and why?**
+**Q240. Should you catch an exception by value or by `const` reference, and why?**
 
 <details><summary>Show answer</summary>
 
@@ -1693,7 +3258,7 @@ By **`const` reference** (`catch (const std::exception& e)`). Catching **by valu
 
 </details>
 
-**Q135. What does `e.what()` return?**
+**Q241. What does `e.what()` return?**
 
 <details><summary>Show answer</summary>
 
@@ -1701,7 +3266,7 @@ A C-style string (`const char*`) describing the error — the exception's messag
 
 </details>
 
-**Q136. What does this print?**
+**Q242. What does this print?**
 
 ```cpp
 try {
@@ -1725,7 +3290,7 @@ ACboomD
 
 </details>
 
-**Q137. Which is the recommended way to catch a standard exception?**
+**Q243. Which is the recommended way to catch a standard exception?**
 
 - **A)** `catch (std::exception e)`
 - **B)** `catch (const std::exception& e)`
@@ -1740,8 +3305,90 @@ ACboomD
 
 </details>
 
-### 23 — AddressSanitizer & Debugging Tools  (6 Qs)
-**Q138. You built with `-fsanitize=address` and compiling produced no error — why hasn't AddressSanitizer reported anything yet?**
+**Q244. What does this print?**
+
+```cpp
+struct B {
+    B()  { std::cout << "B "; }
+    ~B() { std::cout << "~B "; }
+};
+
+void f() {
+    B b;
+    throw std::runtime_error("x");
+}
+
+int main() {
+    try { f(); }
+    catch (const std::exception&) { std::cout << "caught"; }
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+B ~B caught
+```
+
+Stack unwinding: when `f` throws, its local `b` is destroyed (`~B`), then the handler runs (`caught`). Locals are destroyed before the handler, in reverse order of construction.
+
+</details>
+
+**Q245. `std::out_of_range`, `std::invalid_argument` and `std::length_error` all derive from which class?**
+
+- **A)** `std::logic_error`
+- **B)** `std::runtime_error`
+- **C)** `std::bad_alloc`
+- **D)** `std::system_error`
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**`std::logic_error`** (which derives from `std::exception`). So `catch (const std::logic_error&)` handles all three. `std::runtime_error` is the other main branch, for problems only detectable at run time.
+
+</details>
+
+**Q246. True or false: if a constructor throws, the object's destructor runs to clean up.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** The object was never completely built, so its destructor does not run. The members and base classes that were already constructed **are** destroyed. So hold resources in members that clean up after themselves (RAII), not in raw pointers freed by the destructor.
+
+</details>
+
+**Q247. Inside a `catch (const std::exception& e)` handler you want to log and pass the error on. Why write `throw;` and not `throw e;`?**
+
+<details><summary>Show answer</summary>
+
+`throw;` rethrows the **original** exception object, keeping its real type (say `std::invalid_argument`), so outer handlers for that type still match. `throw e;` throws a **new copy** of `e`'s static type, `std::exception`: the derived part is sliced off, and outer handlers for the specific type no longer match.
+
+</details>
+
+**Q248. Why must a destructor not throw, and what happens if it does?**
+
+<details><summary>Show answer</summary>
+
+Destructors are implicitly `noexcept` (since C++11), so an exception leaving one calls `std::terminate` and the program aborts (g++ warns: `'throw' will always call 'terminate'`). Destructors also run during stack unwinding, when another exception is already in flight; two active exceptions at once can't be handled. Report cleanup errors another way, for example with a separate `close()` function that may throw.
+
+</details>
+
+**Q249. Give one situation where an error code or `std::optional` is a better choice than an exception, and one where an exception is better.**
+
+<details><summary>Show answer</summary>
+
+**Error value:** an expected outcome such as "key not found" or invalid user input in a loop, a hot path where failures are common (throwing is expensive), or code built with `-fno-exceptions`. **Exception:** a constructor that can't build its object (it has no return value), or a rare error deep in a call chain that only a far-away caller can handle, since the exception travels up automatically and can't be ignored.
+
+</details>
+
+### 23 — AddressSanitizer & Debugging Tools  (11 Qs)
+**Q250. You built with `-fsanitize=address` and compiling produced no error — why hasn't AddressSanitizer reported anything yet?**
 
 <details><summary>Show answer</summary>
 
@@ -1749,7 +3396,7 @@ Because AddressSanitizer is a **runtime** detector, not a compile-time one. Comp
 
 </details>
 
-**Q139. How does AddressSanitizer detect an out-of-bounds access?**
+**Q251. How does AddressSanitizer detect an out-of-bounds access?**
 
 <details><summary>Show answer</summary>
 
@@ -1757,15 +3404,15 @@ It surrounds each variable/allocation with poisoned **redzones** (guard bytes wi
 
 </details>
 
-**Q140. Does AddressSanitizer report every error in a run, or stop at the first one?**
+**Q252. Does AddressSanitizer report every error in a run, or stop at the first one?**
 
 <details><summary>Show answer</summary>
 
-By default it **aborts on the first error** (you'll see `==pid==ABORTING`). To make it report the error and keep going, set the environment option **`ASAN_OPTIONS=halt_on_error=0`** before running.
+By default it **aborts on the first error** (you'll see `==pid==ABORTING`). To report an error and keep going, you need **both** a build with **`-fsanitize-recover=address`** and the run-time option **`ASAN_OPTIONS=halt_on_error=0`**. The environment variable alone is not enough: without the build flag, ASan still aborts.
 
 </details>
 
-**Q141. Name two other tools or flags for finding C++ memory / undefined-behaviour bugs.**
+**Q253. Name two other tools or flags for finding C++ memory / undefined-behaviour bugs.**
 
 <details><summary>Show answer</summary>
 
@@ -1773,7 +3420,7 @@ By default it **aborts on the first error** (you'll see `==pid==ABORTING`). To m
 
 </details>
 
-**Q142. Which flags build a program with AddressSanitizer and the line numbers it needs for a readable report?**
+**Q254. Which flags build a program with AddressSanitizer and the line numbers it needs for a readable report?**
 
 - **A)** `-fsanitize=address -g`
 - **B)** `-Wall -Wextra`
@@ -1788,7 +3435,7 @@ By default it **aborts on the first error** (you'll see `==pid==ABORTING`). To m
 
 </details>
 
-**Q143. True or false: if a program built with `-fsanitize=address` compiles without errors, it has no memory bugs.**
+**Q255. True or false: if a program built with `-fsanitize=address` compiles without errors, it has no memory bugs.**
 
 - **A)** True
 - **B)** False
@@ -1801,10 +3448,69 @@ By default it **aborts on the first error** (you'll see `==pid==ABORTING`). To m
 
 </details>
 
+**Q256. An ASan report says `heap-use-after-free ... READ of size 4`, then `freed by thread T0 here: ... main uaf.cpp:5` and `previously allocated by thread T0 here: ... main uaf.cpp:4`. What happened, and on which lines?**
+
+<details><summary>Show answer</summary>
+
+A 4-byte value (an `int`) was **read from heap memory after it was freed**. The block was allocated with `new` on line 4 and released with `delete`/`delete[]` on line 5; the access itself is the line in the first stack trace (`READ of size 4 ... in main`). Fix the ownership so nothing uses the pointer after the free (for example a smart pointer, or set it to `nullptr` and stop using it).
+
+</details>
+
+**Q257. Which tool reports a data race between two threads incrementing a shared `int`?**
+
+- **A)** `-fsanitize=thread` (TSan)
+- **B)** `-fsanitize=address` (ASan)
+- **C)** `-fsanitize=undefined` (UBSan)
+- **D)** `valgrind --leak-check=full`
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**ThreadSanitizer** (`-fsanitize=thread`). It records which thread touched which memory and reports unsynchronized pairs, naming the variable and both accesses. ASan and UBSan don't look at thread interleavings, and valgrind's default tool (memcheck) doesn't either.
+
+</details>
+
+**Q258. True or false: running an ASan build with `ASAN_OPTIONS=halt_on_error=0` is enough to make it report several errors in one run.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** ASan only recovers from errors if the program was also built with `-fsanitize-recover=address`. Without that flag it still prints the first report and aborts, whatever the environment variable says.
+
+</details>
+
+**Q259. Which of these does valgrind memcheck find in an ordinary build (no sanitizer flags)? Select all that apply.**
+
+- **A)** Reading a heap block after `delete`
+- **B)** A heap block never freed
+- **C)** Writing one element past a local array into a neighbouring local variable
+- **D)** An `if` that depends on an uninitialized variable
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, D**
+
+Valgrind tracks heap blocks and which bytes have been initialized, so it finds a heap use-after-free, a leaked heap block (with `--leak-check=full`) and a branch on an uninitialized value. It doesn't know the boundaries of arrays inside a stack frame, so a stack-buffer-overflow into a neighbouring local goes unnoticed (ASan finds that).
+
+</details>
+
+**Q260. A program crashed with a segmentation fault on a test machine, and you can't reproduce it. How do you get a backtrace of that crash with gdb, and what must be in place beforehand?**
+
+<details><summary>Show answer</summary>
+
+Use a **core dump**: allow it with `ulimit -c unlimited` in the shell that runs the program, check where `/proc/sys/kernel/core_pattern` sends it (a `core` file in the current directory, or `systemd-coredump`, opened with `coredumpctl gdb`), and build with `-g`. After the crash, run `gdb ./prog core` and type `bt` to see the call chain, `frame N` and `print var` to inspect the state at the moment of the crash.
+
+</details>
+
 ## OS Memory & Systems
 
-### 24 — Paging & Virtual Memory  (7 Qs)
-**Q144. Why is a process divided into pages in the first place?**
+### 24 — Paging & Virtual Memory  (12 Qs)
+**Q261. Why is a process divided into pages in the first place?**
 
 <details><summary>Show answer</summary>
 
@@ -1812,7 +3518,7 @@ So it **doesn't need one big contiguous block of physical RAM**. Once the proces
 
 </details>
 
-**Q145. What is the difference between a page and a frame?**
+**Q262. What is the difference between a page and a frame?**
 
 <details><summary>Show answer</summary>
 
@@ -1820,7 +3526,7 @@ A **page** is a fixed-size chunk of the **program's content** (a slice of code/h
 
 </details>
 
-**Q146. Does virtual address space itself store any data or hold any RAM?**
+**Q263. Does virtual address space itself store any data or hold any RAM?**
 
 <details><summary>Show answer</summary>
 
@@ -1828,7 +3534,7 @@ No. A virtual address is a **per-process, imaginary label** — it holds nothing
 
 </details>
 
-**Q147. If a program's pages are scattered all over physical RAM, how does it still behave as if memory were one contiguous block?**
+**Q264. If a program's pages are scattered all over physical RAM, how does it still behave as if memory were one contiguous block?**
 
 <details><summary>Show answer</summary>
 
@@ -1836,7 +3542,7 @@ The **page table** maps each contiguous **virtual** page to whatever physical **
 
 </details>
 
-**Q148. Beyond avoiding fragmentation, what benefits does paging unlock?**
+**Q265. Beyond avoiding fragmentation, what benefits does paging unlock?**
 
 <details><summary>Show answer</summary>
 
@@ -1844,7 +3550,7 @@ The **page table** maps each contiguous **virtual** page to whatever physical **
 
 </details>
 
-**Q149. True or false: one physical frame can hold pieces of several pages at the same time.**
+**Q266. True or false: one physical frame can hold pieces of several pages at the same time.**
 
 - **A)** True
 - **B)** False
@@ -1857,7 +3563,7 @@ The **page table** maps each contiguous **virtual** page to whatever physical **
 
 </details>
 
-**Q150. Which problem does paging solve?**
+**Q267. Which problem does paging solve?**
 
 - **A)** Internal fragmentation
 - **B)** External fragmentation
@@ -1872,8 +3578,68 @@ The **page table** maps each contiguous **virtual** page to whatever physical **
 
 </details>
 
-### 25 — MMU, TLB & Multi-level Paging  (7 Qs)
-**Q151. What does the MMU do on every memory access?**
+**Q268. A global `int value = 1;` exists. After `fork()`, the child sets `value = 2` and exits. The parent waits for the child, then prints `value` and `&value`. What does it see?**
+
+- **A)** 1, at the same address the child printed
+- **B)** 2, at the same address the child printed
+- **C)** 1, at a different address
+- **D)** It depends on which process runs first
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**1, at the same address the child printed.** Both processes have the same virtual layout, so `&value` is the same number, but each has its own page table. The child's write went to its own copy of the page (copy-on-write), so the parent's frame still holds 1.
+
+</details>
+
+**Q269. Which of these are stored in a page table entry on x86-64? Select all that apply.**
+
+- **A)** The frame number
+- **B)** A present bit
+- **C)** A dirty bit
+- **D)** The name of the program file
+- **E)** The process ID
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, C**
+
+The **frame number**, the **present** bit and the **dirty** bit (also writable, user, accessed, no-execute). The page table has no file names and no process ID: each process simply has its own table.
+
+</details>
+
+**Q270. True or false: the page size is 4096 bytes on every Linux system, so it is safe to hardcode it.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** It is 4 KiB on x86-64, but some ARM64 systems use 16 KiB or 64 KiB pages. Ask with `sysconf(_SC_PAGESIZE)` (or `getconf PAGESIZE` in the shell).
+
+</details>
+
+**Q271. Writing through a pointer into a string literal, or jumping into code placed on the stack, crashes with a segmentation fault. Which part of paging enforces this, and how?**
+
+<details><summary>Show answer</summary>
+
+The **permission bits in the page table entries**. String literals sit in read-only pages (writable bit off); the stack and heap are in no-execute pages (NX bit on). The MMU checks the bits on every access; a violation raises a fault, the kernel sees the access is not allowed and sends `SIGSEGV`. `/proc/self/maps` shows these permissions per region (`r--p`, `r-xp`, `rw-p`).
+
+</details>
+
+**Q272. `/proc/self/maps` shows a region as `r-xp`. What does each letter mean?**
+
+<details><summary>Show answer</summary>
+
+`r` readable, `-` **not** writable, `x` executable, `p` **private** (this process's changes are not shared with other processes; `s` would mean shared). This is how a program's machine code is mapped: it can be run and read, but not modified.
+
+</details>
+
+### 25 — MMU, TLB & Multi-level Paging  (12 Qs)
+**Q273. What does the MMU do on every memory access?**
 
 <details><summary>Show answer</summary>
 
@@ -1881,7 +3647,7 @@ The **MMU (Memory Management Unit)** is dedicated **hardware in the CPU** that t
 
 </details>
 
-**Q152. A virtual address splits into two parts for translation — what are they, and what does each select?**
+**Q274. A virtual address splits into two parts for translation — what are they, and what does each select?**
 
 <details><summary>Show answer</summary>
 
@@ -1893,7 +3659,7 @@ page 3 -> frame 47 ; physical = frame47_base + 2
 
 </details>
 
-**Q153. Why don't OSes use a single flat page table (on x86-64)?**
+**Q275. Why don't OSes use a single flat page table (on x86-64)?**
 
 <details><summary>Show answer</summary>
 
@@ -1901,7 +3667,7 @@ Because it would be enormous. With a 48-bit address and 4 KB pages there are 2^3
 
 </details>
 
-**Q154. How many levels does x86-64 paging use, and how is the address split?**
+**Q276. How many levels does x86-64 paging use, and how is the address split?**
 
 <details><summary>Show answer</summary>
 
@@ -1909,7 +3675,7 @@ Because it would be enormous. With a 48-bit address and 4 KB pages there are 2^3
 
 </details>
 
-**Q155. A multi-level walk costs several memory accesses per translation — what hides that cost?**
+**Q277. A multi-level walk costs several memory accesses per translation — what hides that cost?**
 
 <details><summary>Show answer</summary>
 
@@ -1917,7 +3683,7 @@ The **TLB (Translation Lookaside Buffer)** — a small, fast cache in the MMU th
 
 </details>
 
-**Q156. With 4 KB (4096-byte) pages, virtual address 12290 is in which page, and at what offset?**
+**Q278. With 4 KB (4096-byte) pages, virtual address 12290 is in which page, and at what offset?**
 
 - **A)** Page 3, offset 2
 - **B)** Page 2, offset 4098
@@ -1932,7 +3698,7 @@ The **TLB (Translation Lookaside Buffer)** — a small, fast cache in the MMU th
 
 </details>
 
-**Q157. With 4 KB pages, how many bits of a virtual address are the offset inside the page?**
+**Q279. With 4 KB pages, how many bits of a virtual address are the offset inside the page?**
 
 - **A)** 9
 - **B)** 12
@@ -1947,16 +3713,78 @@ The **TLB (Translation Lookaside Buffer)** — a small, fast cache in the MMU th
 
 </details>
 
-### 26 — Allocation Methods & Fragmentation  (7 Qs)
-**Q158. Where is the wasted space in internal fragmentation versus external fragmentation?**
+**Q280. What does this print? (4 KiB pages)**
+
+```cpp
+uint64_t va = 0x5123;
+std::cout << (va >> 12) << " " << (va & 0xFFF);
+```
 
 <details><summary>Show answer</summary>
 
-**External** fragmentation wastes memory in the **gaps between** allocations: enough total memory is free, but it's scattered in pieces too small (or separated by live allocations) to satisfy a large contiguous request. **Internal** fragmentation wastes memory **inside** an allocated block — the unused tail of the last page of a region. The names say it: *between* blocks (external) vs *inside* a block (internal).
+**Expected output:**
+```
+5 291
+```
+
+`va >> 12` drops the 12 offset bits: 0x5123 >> 12 = 5. `va & 0xFFF` keeps them: 0x123 = 291.
 
 </details>
 
-**Q159. Why does paging cause internal fragmentation but eliminate external fragmentation?**
+**Q281. True or false: switching between two threads of the same process requires flushing the TLB.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** Threads of one process share one address space and one page table, so the cached translations stay valid. A switch to a **different process** changes the page table; then the TLB is flushed, unless entries are tagged with PCID (x86) / ASID (ARM).
+
+</details>
+
+**Q282. Why do 2 MiB huge pages reduce TLB misses?**
+
+- **A)** One TLB entry covers 512 times more memory
+- **B)** Huge pages stay in the TLB permanently
+- **C)** Huge pages need no page table at all
+- **D)** They make the CPU caches bigger
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**One TLB entry covers 512 times more memory** (2 MiB instead of 4 KiB), so the same number of entries covers a much larger working set. The page walk is also one level shorter.
+
+</details>
+
+**Q283. What happens on a TLB miss, and how is it different from a page fault?**
+
+<details><summary>Show answer</summary>
+
+On a **TLB miss** the translation is not cached, so the MMU walks the page tables in hardware (up to 4 memory reads on x86-64), stores the result in the TLB and continues. No kernel code runs. A **page fault** happens only when the walk finds no valid entry (page not present) or the access breaks the permission bits; then the CPU traps into the kernel, which loads the page or kills the process with `SIGSEGV`.
+
+</details>
+
+**Q284. A program's page tables use 52 kB at start. After `malloc(1 << 30)` (1 GiB) they use 60 kB; after writing to every byte of that block, 2108 kB. Why so little at first, and where do the extra 2 MiB come from?**
+
+<details><summary>Show answer</summary>
+
+**Multi-level paging creates table pages only for address ranges in use**, and `malloc` only reserves virtual addresses: no page is mapped yet, so almost no tables are added. Writing touches all 262,144 pages (1 GiB / 4 KiB); each needs an 8-byte last-level entry, so 262,144 x 8 B = 2 MiB of new tables (512 table pages). A flat table would have needed 512 GiB from the start.
+
+</details>
+
+### 26 — Allocation Methods & Fragmentation  (12 Qs)
+**Q285. Where is the wasted space in internal fragmentation versus external fragmentation?**
+
+<details><summary>Show answer</summary>
+
+**External** fragmentation wastes memory in the **gaps between** allocations: enough total memory is free, but it's scattered in pieces too small (or separated by live allocations) to satisfy a large contiguous request. **Internal** fragmentation wastes memory **inside** an allocated block, because the block handed out is bigger than what was asked for: the unused tail of a region's last page in paging, `malloc` rounding a 13-byte request up to a 24-byte block, a fixed partition bigger than its process. The names say it: *between* blocks (external) vs *inside* a block (internal).
+
+</details>
+
+**Q286. Why does paging cause internal fragmentation but eliminate external fragmentation?**
 
 <details><summary>Show answer</summary>
 
@@ -1964,15 +3792,15 @@ Paging places each page into any free frame, so there are **no unusable gaps bet
 
 </details>
 
-**Q160. Why does internal fragmentation only affect the *last* page of a region?**
+**Q287. Why does internal fragmentation only affect the *last* page of a region?**
 
 <details><summary>Show answer</summary>
 
-Because all the **earlier** pages are **completely full** of the region's data — they flow continuously with no gaps. Only when you reach the end do you run out of data mid-page, leaving the tail of the **final** page unused. Every page before it is 100% packed, so there's nothing to waste there.
+In **paging**, all the **earlier** pages of a region are **completely full** of its data: the data flows continuously with no gaps. Only at the end does the data run out mid-page, leaving the tail of the **final** page unused. (That is the paging case. In general, internal fragmentation is any space wasted inside an allocated block that is bigger than the request, such as `malloc` rounding a request up to its next block size.)
 
 </details>
 
-**Q161. Is external fragmentation a memory-management method you can choose, like paging?**
+**Q288. Is external fragmentation a memory-management method you can choose, like paging?**
 
 <details><summary>Show answer</summary>
 
@@ -1980,7 +3808,7 @@ No — it's a **problem / side effect**, not a method. The methods are **contigu
 
 </details>
 
-**Q162. What does each entry in a segment table store?**
+**Q289. What does each entry in a segment table store?**
 
 <details><summary>Show answer</summary>
 
@@ -1988,7 +3816,7 @@ A **base** (the segment's start address in physical memory) and a **limit** (its
 
 </details>
 
-**Q163. A process needs 10 KB and pages are 4 KB. How many frames does it use, and how much internal fragmentation is there?**
+**Q290. A process needs 10 KB and pages are 4 KB. How many frames does it use, and how much internal fragmentation is there?**
 
 - **A)** 2 frames, 0 KB
 - **B)** 3 frames, 2 KB
@@ -2003,7 +3831,7 @@ A **base** (the segment's start address in physical memory) and a **limit** (its
 
 </details>
 
-**Q164. True or false: paging suffers from external fragmentation.**
+**Q291. True or false: paging suffers from external fragmentation.**
 
 - **A)** True
 - **B)** False
@@ -2016,8 +3844,67 @@ A **base** (the segment's start address in physical memory) and a **limit** (its
 
 </details>
 
-### 27 — Demand Paging, Page Faults & Swapping  (8 Qs)
-**Q165. Walk through exactly what happens on a page fault.**
+**Q292. Free holes, in address order: 100, 500, 200, 300, 600 KB. A 212 KB request arrives. Which hole does **best-fit** choose?**
+
+- **A)** 100 KB
+- **B)** 500 KB
+- **C)** 300 KB
+- **D)** 600 KB
+
+<details><summary>Show answer</summary>
+
+**Correct: C**
+
+**300 KB**: the smallest hole that is still big enough (100 and 200 are too small). First-fit would take 500 (the first that fits); worst-fit would take 600 (the largest).
+
+</details>
+
+**Q293. Which of these are **internal** fragmentation? Select all that apply.**
+
+- **A)** `malloc(13)` returns a block with 24 usable bytes
+- **B)** 959 KB are free, but the largest hole is 300 KB
+- **C)** A 2 MiB huge page holds only 10 KB of data
+- **D)** A 40 KB process runs in a 64 KB fixed partition
+
+<details><summary>Show answer</summary>
+
+**Correct: A, C, D**
+
+Internal fragmentation is waste inside an allocated block: `malloc(13)` getting a 24-byte block, a 2 MiB huge page holding 10 KB, a 64 KB fixed partition holding a 40 KB process. 959 KB free with the largest hole 300 KB is **external** fragmentation: the waste is between blocks.
+
+</details>
+
+**Q294. True or false: the allocator can compact a C++ program's heap by moving live blocks together.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** A C++ pointer is a raw address that can be stored anywhere; the allocator can't find and update every copy, so live blocks can never move. Compaction works where addresses are relocatable: page tables (Linux's `kcompactd`) or garbage-collected languages that fix every reference.
+
+</details>
+
+**Q295. A segment table has segment 2 with base 4300 and limit 400. What happens for the logical addresses (2, 53) and (2, 450)?**
+
+<details><summary>Show answer</summary>
+
+(2, 53): 53 < 400, so the physical address is 4300 + 53 = **4353**. (2, 450): 450 is not below the limit 400, so the hardware **traps**: the access is outside the segment (a segmentation fault).
+
+</details>
+
+**Q296. A long-running C++ server's memory keeps growing, though it frees what it allocates. Name three ways to reduce heap fragmentation.**
+
+<details><summary>Show answer</summary>
+
+(1) **Allocate less often:** `reserve()` vectors, store objects by value in a `std::vector` instead of allocating each with `new`. (2) **Pools** for same-size objects, so every freed slot fits the next one. (3) **Arenas** (`std::pmr::monotonic_buffer_resource`): allocate a task's objects from one buffer and release them all together. Also: keep long-lived and short-lived allocations apart, and try another allocator (jemalloc, tcmalloc), measuring the result.
+
+</details>
+
+### 27 — Demand Paging, Page Faults & Swapping  (13 Qs)
+**Q297. Walk through exactly what happens on a page fault.**
 
 <details><summary>Show answer</summary>
 
@@ -2025,7 +3912,7 @@ A **base** (the segment's start address in physical memory) and a **limit** (its
 
 </details>
 
-**Q166. A page fault can be ~1000× slower than a RAM access — why is demand paging still a net win?**
+**Q298. A page fault can be ~1000× slower than a RAM access — why is demand paging still a net win?**
 
 <details><summary>Show answer</summary>
 
@@ -2033,7 +3920,7 @@ Because the cost is **paid once per page**, then that page sits in RAM for many 
 
 </details>
 
-**Q167. What is thrashing, and what causes it?**
+**Q299. What is thrashing, and what causes it?**
 
 <details><summary>Show answer</summary>
 
@@ -2041,7 +3928,7 @@ Because the cost is **paid once per page**, then that page sits in RAM for many 
 
 </details>
 
-**Q168. What is the difference between a minor and a major page fault?**
+**Q300. What is the difference between a minor and a major page fault?**
 
 <details><summary>Show answer</summary>
 
@@ -2049,7 +3936,7 @@ A **minor** fault is resolved **without disk I/O** — the page is already in RA
 
 </details>
 
-**Q169. How is a page fault different from a segmentation fault?**
+**Q301. How is a page fault different from a segmentation fault?**
 
 <details><summary>Show answer</summary>
 
@@ -2057,7 +3944,7 @@ A **page fault** is a *normal* event: the address is valid, the page just isn't 
 
 </details>
 
-**Q170. What is swapping, and which capability does it provide?**
+**Q302. What is swapping, and which capability does it provide?**
 
 <details><summary>Show answer</summary>
 
@@ -2065,7 +3952,7 @@ A **page fault** is a *normal* event: the address is valid, the page just isn't 
 
 </details>
 
-**Q171. Which of these are true of a page fault? Select all that apply.**
+**Q303. Which of these are true of a page fault? Select all that apply.**
 
 - **A)** It is normal: the OS loads the missing page and restarts the instruction
 - **B)** It always means the program has a bug
@@ -2080,7 +3967,7 @@ A page fault is **normal**: the OS loads the missing page and restarts the instr
 
 </details>
 
-**Q172. The running programs need more memory than RAM, so pages are constantly swapped in and out and the system crawls. What is this called?**
+**Q304. The running programs need more memory than RAM, so pages are constantly swapped in and out and the system crawls. What is this called?**
 
 - **A)** Demand paging
 - **B)** Thrashing
@@ -2095,10 +3982,76 @@ A page fault is **normal**: the OS loads the missing page and restarts the instr
 
 </details>
 
+**Q305. With FIFO replacement, the reference string 1 2 3 4 1 2 5 1 2 3 4 5 gives 9 faults with 3 frames but 10 faults with 4 frames. What is this called?**
+
+- **A)** Belady's anomaly
+- **B)** Thrashing
+- **C)** Copy-on-write
+- **D)** External fragmentation
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**Belady's anomaly**: with FIFO, adding frames can increase the number of faults. LRU and Optimal never show it, because the pages they keep with n frames are also kept with n + 1 frames.
+
+</details>
+
+**Q306. After `fork()`, the child reads every page of a 40 MiB buffer, then writes every page. Roughly how many page faults does each pass cause in the child?**
+
+- **A)** Reads: about 0; writes: one per page
+- **B)** Reads: one per page; writes: about 0
+- **C)** Both about 0
+- **D)** Both one per page
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+Reads: about **0** (the child uses the parent's frames, shared read-only). Writes: **one fault per page** (10,240 for 40 MiB in 4 KiB pages): each first write triggers copy-on-write, and the kernel copies that one page.
+
+</details>
+
+**Q307. True or false: on Linux with default settings, `malloc(8UL << 30)` (8 GiB) can succeed on a machine with 16 GB of RAM even if most of it is in use, and the process's RAM use barely changes.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**True.** Linux overcommits: `malloc` only reserves virtual pages, and frames are attached when pages are first touched. RSS stays small until the memory is written. If programs later touch more than RAM + swap, the OOM killer kills a process.
+
+</details>
+
+**Q308. Using LRU with 3 frames, how many page faults does the reference string 1 2 3 1 4 1 5 1 cause?**
+
+- **A)** 4
+- **B)** 5
+- **C)** 6
+- **D)** 8
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**5.** 1, 2, 3 fault (frames fill). 1 hits. 4 faults and evicts 2 (least recently used). 1 hits. 5 faults and evicts 3. 1 hits. FIFO would cause 6, because it evicts page 1 just for being oldest.
+
+</details>
+
+**Q309. How do the Clock (second-chance) and Optimal replacement policies choose a victim, and why can't the kernel use Optimal?**
+
+<details><summary>Show answer</summary>
+
+**Clock:** frames are in a circle with a referenced (accessed) bit. The hand moves round; a page with the bit set gets a second chance (bit cleared, hand moves on); the first page with the bit clear is evicted. **Optimal:** evicts the page whose next use is farthest in the future. The kernel can't know future references, so Optimal is only a benchmark for comparing real policies.
+
+</details>
+
 ## Linux
 
-### 28 — Filesystem & Navigation  (6 Qs)
-**Q173. Your program does `open("config.txt")`; it works from one directory but fails with 'file not found' from another. Why?**
+### 28 — Filesystem & Navigation  (11 Qs)
+**Q310. Your program does `open("config.txt")`; it works from one directory but fails with 'file not found' from another. Why?**
 
 <details><summary>Show answer</summary>
 
@@ -2106,7 +4059,7 @@ A page fault is **normal**: the OS loads the missing page and restarts the instr
 
 </details>
 
-**Q174. What is the difference between an absolute and a relative path?**
+**Q311. What is the difference between an absolute and a relative path?**
 
 <details><summary>Show answer</summary>
 
@@ -2114,7 +4067,7 @@ An **absolute** path starts at the root `/` (e.g. `/home/anup/config.txt`) and m
 
 </details>
 
-**Q175. What do `.` and `..` refer to in a path?**
+**Q312. What do `.` and `..` refer to in a path?**
 
 <details><summary>Show answer</summary>
 
@@ -2122,7 +4075,7 @@ An **absolute** path starts at the root `/` (e.g. `/home/anup/config.txt`) and m
 
 </details>
 
-**Q176. What does `ls -la` show that a plain `ls` does not?**
+**Q313. What does `ls -la` show that a plain `ls` does not?**
 
 <details><summary>Show answer</summary>
 
@@ -2130,7 +4083,7 @@ Two things: **`-l`** gives the **long format** (permissions, owner, group, size,
 
 </details>
 
-**Q177. Both directories exist. What does this print?**
+**Q314. Both directories exist. What does this print?**
 
 ```bash
 cd /home/anup/project/src
@@ -2149,7 +4102,7 @@ pwd
 
 </details>
 
-**Q178. Which of these paths is absolute?**
+**Q315. Which of these paths is absolute?**
 
 - **A)** `../config.txt`
 - **B)** `./run.sh`
@@ -2164,8 +4117,80 @@ pwd
 
 </details>
 
-### 29 — Permissions (rwx)  (6 Qs)
-**Q179. What numeric permission mode does `-rwxr-xr-x` correspond to?**
+**Q316. `b.txt` is a hard link to `a.txt` (`ln a.txt b.txt`). You run `rm a.txt`. What does `cat b.txt` do?**
+
+- **A)** Prints the original contents
+- **B)** Fails: No such file or directory
+- **C)** Prints nothing: the file is now empty
+- **D)** Prints the path a.txt
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+It **prints the original contents**. `a.txt` and `b.txt` were two names for the same inode. `rm` removed one name; the data is freed only when the last name is gone (and no process has it open). A **symbolic** link would be broken now.
+
+</details>
+
+**Q317. Which of these are true of a symbolic link? Select all that apply.**
+
+- **A)** It can point to a directory
+- **B)** It can point to a file on another filesystem
+- **C)** It keeps the data alive after the target is deleted
+- **D)** It has its own inode
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, D**
+
+A symlink is its own small file (its own inode) that stores a path, so it **can point to a directory** and **can cross filesystems**. When the target is removed it becomes **dangling**; it does not keep the data alive (a hard link does).
+
+</details>
+
+**Q318. What does this print?**
+
+```cpp
+#include <filesystem>
+#include <iostream>
+
+int main() {
+    std::filesystem::path p = "/home/sam/project/src/main.cpp";
+    std::filesystem::path q = "../build/app";
+    std::cout << p.is_absolute() << " " << q.is_absolute() << "\n";
+    std::cout << p.parent_path().string() << "\n";
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+1 0
+/home/sam/project/src
+```
+
+`is_absolute()` is true only for a path that starts at `/`, so `1` then `0` (`<<` prints a `bool` as 1 or 0). `parent_path()` drops the last component: `/home/sam/project/src`.
+
+</details>
+
+**Q319. The current directory contains `a.txt` and `b.txt`. Why does `find . -name *.txt` fail, and how do you fix it?**
+
+<details><summary>Show answer</summary>
+
+The **shell** expands `*.txt` before `find` runs, so `find` receives `find . -name a.txt b.txt` and rejects the extra `b.txt` (`paths must precede expression`). Quote the pattern so it reaches `find` unchanged: `find . -name "*.txt"`. (With no `.txt` file in the current directory the unquoted form happens to work, which hides the bug.)
+
+</details>
+
+**Q320. Which directory holds system-wide configuration files (the hosts file, the list of users), and which one is a live view generated by the kernel rather than stored on disk?**
+
+<details><summary>Show answer</summary>
+
+**`/etc`** holds system-wide configuration as text files (`/etc/hosts`, `/etc/passwd`). **`/proc`** is generated by the kernel when read: `/proc/<pid>` describes each process, `/proc/meminfo` the memory. (`/dev` holds device files; `/var` holds logs and other changing data.)
+
+</details>
+
+### 29 — Permissions (rwx)  (11 Qs)
+**Q321. What numeric permission mode does `-rwxr-xr-x` correspond to?**
 
 <details><summary>Show answer</summary>
 
@@ -2173,7 +4198,7 @@ pwd
 
 </details>
 
-**Q180. You compiled a program but `./prog` says 'Permission denied' — what's the most likely cause?**
+**Q322. You compiled a program but `./prog` says 'Permission denied' — what's the most likely cause?**
 
 <details><summary>Show answer</summary>
 
@@ -2181,7 +4206,7 @@ The binary is missing its **execute (`x`) bit**, so the kernel won't run it. Fix
 
 </details>
 
-**Q181. When you access a file, how does the kernel decide which of the three rwx triplets to apply?**
+**Q323. When you access a file, how does the kernel decide which of the three rwx triplets to apply?**
 
 <details><summary>Show answer</summary>
 
@@ -2189,7 +4214,7 @@ The three triplets are for the file's **owner**, its **group**, and **others**. 
 
 </details>
 
-**Q182. On a *directory*, what do r, w, and x each mean (they differ from a file)?**
+**Q324. On a *directory*, what do r, w, and x each mean (they differ from a file)?**
 
 <details><summary>Show answer</summary>
 
@@ -2197,7 +4222,7 @@ On a directory: **`r`** = list the names inside it; **`w`** = add/remove/rename 
 
 </details>
 
-**Q183. What is `-rw-r--r--` in numeric form?**
+**Q325. What is `-rw-r--r--` in numeric form?**
 
 - **A)** 644
 - **B)** 755
@@ -2212,7 +4237,7 @@ Owner `rw-` = 4+2 = 6, group `r--` = 4, others `r--` = 4, so **644** (the usual 
 
 </details>
 
-**Q184. `ls -l` shows `drwxr-x---`. What is it, and can *others* list its contents?**
+**Q326. `ls -l` shows `drwxr-x---`. What is it, and can *others* list its contents?**
 
 - **A)** A regular file; yes
 - **B)** A directory; no
@@ -2227,8 +4252,67 @@ The leading `d` means a **directory**. The last triplet (others) is `---`, so ot
 
 </details>
 
-### 30 — chmod  (5 Qs)
-**Q185. What is the difference between `chmod 755 f` and `chmod +x f`?**
+**Q327. The umask is 027. What mode does `touch report.txt` give the new file?**
+
+- **A)** 640 (rw-r-----)
+- **B)** 639
+- **C)** 750 (rwxr-x---)
+- **D)** 666 (rw-rw-rw-)
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**640 (`rw-r-----`).** `touch` asks for 666; the umask clears the bits in 027: 666 & ~027 = 640. The group keeps read, others get nothing.
+
+</details>
+
+**Q328. True or false: a file with mode `----rwxrwx` owned by `sam` can be read by `sam`, because others are allowed to read it.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** `sam` is the owner, so only the owner triplet `---` is checked; the kernel never falls back to the group or others triplet. (`sam` can still `chmod` it, because the owner may always change the mode.)
+
+</details>
+
+**Q329. Which of these need write permission on the **directory** that holds the file? Select all that apply.**
+
+- **A)** Deleting the file
+- **B)** Renaming the file
+- **C)** Creating a new file in it
+- **D)** Appending a line to the file
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, C**
+
+Creating, deleting and renaming change the directory's list of names, so they need `w` (and `x`) on the directory. Changing the file's **contents** needs `w` on the file itself.
+
+</details>
+
+**Q330. What do the setuid bit on an executable and the sticky bit on a directory do? Give one real example of each.**
+
+<details><summary>Show answer</summary>
+
+**setuid**: the program runs with the **file owner's** effective user ID instead of the caller's. Example: `/usr/bin/passwd` (`-rwsr-xr-x`, owned by root) lets any user update `/etc/shadow`. **sticky** on a directory: in a directory everyone can write to, a file can be deleted or renamed only by its owner, the directory's owner or root. Example: `/tmp` (`drwxrwxrwt`).
+
+</details>
+
+**Q331. A script `run.sh` has mode `--x--x--x`. Running `./run.sh` fails with "Permission denied", but a compiled program with the same mode runs. Why?**
+
+<details><summary>Show answer</summary>
+
+For a script, the kernel starts the interpreter named on the `#!` line, and the interpreter must **open and read** the script, which needs `r`. A compiled binary is loaded by the kernel itself, so `x` is enough. Give the script `r-x` (e.g. 755).
+
+</details>
+
+### 30 — chmod  (10 Qs)
+**Q332. What is the difference between `chmod 755 f` and `chmod +x f`?**
 
 <details><summary>Show answer</summary>
 
@@ -2236,7 +4320,7 @@ The leading `d` means a **directory**. The last triplet (others) is `---`, so ot
 
 </details>
 
-**Q186. In symbolic `chmod`, how do you give execute permission to ONLY the owner?**
+**Q333. In symbolic `chmod`, how do you give execute permission to ONLY the owner?**
 
 <details><summary>Show answer</summary>
 
@@ -2244,7 +4328,7 @@ The leading `d` means a **directory**. The last triplet (others) is `---`, so ot
 
 </details>
 
-**Q187. Which permission bit is the usual culprit behind 'Permission denied' when running `./script.sh`?**
+**Q334. Which permission bit is the usual culprit behind 'Permission denied' when running `./script.sh`?**
 
 <details><summary>Show answer</summary>
 
@@ -2252,7 +4336,7 @@ The **execute (`x`)** bit. Without it, the shell won't run the file even if it's
 
 </details>
 
-**Q188. A file is `-rw-r--r--` (644). What does `ls -l` show after `chmod u+x f`?**
+**Q335. A file is `-rw-r--r--` (644). What does `ls -l` show after `chmod u+x f`?**
 
 - **A)** `-rwxr--r--`
 - **B)** `-rwxr-xr-x`
@@ -2267,7 +4351,7 @@ The **execute (`x`)** bit. Without it, the shell won't run the file even if it's
 
 </details>
 
-**Q189. Which command sets a file to exactly `rwxr-xr-x`, whatever its bits were before?**
+**Q336. Which command sets a file to exactly `rwxr-xr-x`, whatever its bits were before?**
 
 - **A)** `chmod +x f`
 - **B)** `chmod 755 f`
@@ -2282,8 +4366,76 @@ The **execute (`x`)** bit. Without it, the shell won't run the file even if it's
 
 </details>
 
-### 31 — chown & Ownership  (6 Qs)
-**Q190. Why can't a normal (non-root) user give their own file to another user with `chown`?**
+**Q337. A file is `-rwxr-xr-x` (755). What is its mode after `chmod g+w,o-rx f`?**
+
+- **A)** -rwxrwx--- (770)
+- **B)** -rwxrw---- (760)
+- **C)** -rwxr-x--- (750)
+- **D)** -rw-rw---- (660)
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+`g+w` adds write for the group (`r-x` becomes `rwx`), `o-rx` removes read and execute from others (`r-x` becomes `---`). The owner is untouched: **`-rwxrwx---` (770)**.
+
+</details>
+
+**Q338. What does this print?**
+
+```cpp
+std::cout << std::oct << 640 << " " << 0640 << "\n";
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+1200 640
+```
+
+`640` without a leading 0 is a **decimal** literal. Printed in octal it is `1200`, which `chmod` would read as sticky + owner write, not `rw-r-----`. `0640` is the octal literal and prints as `640`.
+
+</details>
+
+**Q339. You want every directory under `www/` to be `rwxr-xr-x` and every regular file `rw-r--r--`, keeping scripts that are already executable runnable. Which command does it?**
+
+- **A)** chmod -R u=rwX,go=rX www
+- **B)** chmod -R 644 www
+- **C)** chmod -R 755 www
+- **D)** chmod -R a+x www
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**`chmod -R u=rwX,go=rX www`**. Capital `X` adds execute only to directories and to files that already have an `x`. `chmod -R 644` would strip `x` from the directories (nobody could enter them); `chmod -R 755` would make every file executable.
+
+</details>
+
+**Q340. True or false: running `chmod 755 dir` on a directory whose mode is 2775 leaves the setgid bit set.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**True.** GNU chmod keeps a directory's setuid and setgid bits when given a three-digit mode, so the result is 2755 (`rwxr-sr-x`). Clear it with `chmod g-s dir` or a five-digit mode such as `chmod 00755 dir`.
+
+</details>
+
+**Q341. Which numeric mode do you give a shared upload directory where everyone may create files but nobody may delete other people's files, and how does `ls -ld` show it?**
+
+<details><summary>Show answer</summary>
+
+**1777**: 777 lets everyone create files, and the leading 1 is the **sticky** bit, so only a file's owner (or the directory's owner, or root) may delete or rename it. `ls -ld` shows `drwxrwxrwt`, like `/tmp`.
+
+</details>
+
+### 31 — chown & Ownership  (11 Qs)
+**Q342. Why can't a normal (non-root) user give their own file to another user with `chown`?**
 
 <details><summary>Show answer</summary>
 
@@ -2291,7 +4443,7 @@ Changing a file's **owner** requires **root**. If ordinary users could hand file
 
 </details>
 
-**Q191. Give the chown syntax for: owner+group, owner only, group only, and recursive.**
+**Q343. Give the chown syntax for: owner+group, owner only, group only, and recursive.**
 
 <details><summary>Show answer</summary>
 
@@ -2304,7 +4456,7 @@ chown -R user:group dir # recursive: dir and everything inside
 
 </details>
 
-**Q192. How do ownership and the rwx bits work together to decide access?**
+**Q344. How do ownership and the rwx bits work together to decide access?**
 
 <details><summary>Show answer</summary>
 
@@ -2312,7 +4464,7 @@ They're checked **together** on every open/read/write/execute. The kernel compar
 
 </details>
 
-**Q193. What does `id` show that `whoami` does not?**
+**Q345. What does `id` show that `whoami` does not?**
 
 <details><summary>Show answer</summary>
 
@@ -2320,7 +4472,7 @@ They're checked **together** on every open/read/write/execute. The kernel compar
 
 </details>
 
-**Q194. True or false: a regular (non-root) user can give one of their own files to another user with `chown`.**
+**Q346. True or false: a regular (non-root) user can give one of their own files to another user with `chown`.**
 
 - **A)** True
 - **B)** False
@@ -2333,7 +4485,7 @@ They're checked **together** on every open/read/write/execute. The kernel compar
 
 </details>
 
-**Q195. Which command changes **only** the group of `data.txt` to `devs`?**
+**Q347. Which command changes **only** the group of `data.txt` to `devs`?**
 
 - **A)** `chown devs data.txt`
 - **B)** `chown :devs data.txt`
@@ -2348,10 +4500,69 @@ They're checked **together** on every open/read/write/execute. The kernel compar
 
 </details>
 
+**Q348. `/srv/proj` is `drwxrwsr-x root devs`. User `sam` (primary group `sam`, also in `devs`) runs `touch /srv/proj/a.txt`. Who owns the new file?**
+
+- **A)** sam:devs
+- **B)** sam:sam
+- **C)** root:devs
+- **D)** root:root
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**`sam:devs`.** The owner is always the creating process's UID (`sam`). The group would normally be `sam`'s primary group, but the directory has the **setgid** bit (`s` in the group triplet), so the new file gets the directory's group, `devs`.
+
+</details>
+
+**Q349. True or false: `chown` on a setuid program keeps the setuid bit, as long as root runs it.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** Linux clears the setuid and setgid bits of an executable when its owner or group changes, even for root. Run `chmod u+s` after `chown`.
+
+</details>
+
+**Q350. Which of these can a regular (non-root) user who owns `f.txt` do? Select all that apply.**
+
+- **A)** `chmod 600 f.txt`
+- **B)** `chgrp` to a group they belong to
+- **C)** `chown otheruser f.txt`
+- **D)** `chgrp` to a group they don't belong to
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B**
+
+The owner may change the mode (`chmod`) and may change the group to a group they belong to. Giving the file to another user, or to a group they are not a member of, needs root.
+
+</details>
+
+**Q351. A file shows `-rw-r--r-- 1 1005 staff ...` in `ls -l`: a number instead of an owner name. What happened, and why can it be a risk?**
+
+<details><summary>Show answer</summary>
+
+The owner's UID (1005) no longer has an entry in `/etc/passwd`, usually because the user was deleted. The file still belongs to UID 1005, so a user created later with that UID would own it and could read or change it. Clean up with `find / -nouser` and `chown` such files to the right owner.
+
+</details>
+
+**Q352. Why should a server process run as a dedicated system user instead of root, and how is that set up?**
+
+<details><summary>Show answer</summary>
+
+**Least privilege**: if the process is compromised, the attacker only gets the rights of that user (its own data directory), not the whole machine. Setup: `useradd --system --no-create-home --shell /usr/sbin/nologin webapp`, `chown -R webapp:webapp /var/lib/webapp`, `chmod 750` it, and start the service as that user (systemd `User=webapp`, or `sudo -u webapp`, or the program drops privileges with `setgid()` then `setuid()`).
+
+</details>
+
 ## C++ Core (continued)
 
-### 32 — Member Initializer List  (8 Qs)
-**Q196. What is the difference between initialization (in the list) and assignment (in the body)?**
+### 32 — Member Initializer List  (12 Qs)
+**Q353. What is the difference between initialization (in the list) and assignment (in the body)?**
 
 <details><summary>Show answer</summary>
 
@@ -2359,7 +4570,7 @@ The list **initializes** a member directly, once, as the object is built. In the
 
 </details>
 
-**Q197. Which members MUST be initialized in the list (won't compile otherwise)?**
+**Q354. Which members MUST be initialized in the list (won't compile otherwise)?**
 
 <details><summary>Show answer</summary>
 
@@ -2367,7 +4578,7 @@ The list **initializes** a member directly, once, as the object is built. In the
 
 </details>
 
-**Q198. How do you pass an argument to a base class constructor?**
+**Q355. How do you pass an argument to a base class constructor?**
 
 <details><summary>Show answer</summary>
 
@@ -2375,7 +4586,7 @@ In the derived class's initializer list: `Derived(int x) : Base(x) {}`. It's the
 
 </details>
 
-**Q199. In what order are members initialized?**
+**Q356. In what order are members initialized?**
 
 <details><summary>Show answer</summary>
 
@@ -2383,7 +4594,7 @@ In the order they are **declared** in the class, not the order written in the li
 
 </details>
 
-**Q200. What is a delegating constructor, and its one rule?**
+**Q357. What is a delegating constructor, and its one rule?**
 
 <details><summary>Show answer</summary>
 
@@ -2391,7 +4602,7 @@ One constructor calls another of the same class through the list (`Entity() : En
 
 </details>
 
-**Q201. If C++11 lets you write `int a = 0;` at the declaration, why is the init list still needed?**
+**Q358. If C++11 lets you write `int a = 0;` at the declaration, why is the init list still needed?**
 
 <details><summary>Show answer</summary>
 
@@ -2399,7 +4610,7 @@ A default member initializer is a **fixed** fallback, same for every object, and
 
 </details>
 
-**Q202. What does this print?**
+**Q359. What does this print?**
 
 ```cpp
 struct Log { Log(char c) { std::cout << c; } };
@@ -2423,7 +4634,7 @@ Members are initialized in the order they are **declared** (`x`, then `y`), not 
 
 </details>
 
-**Q203. True or false: if a member has a default initializer (`int a = 0;`) and is also in the member initializer list, the list's value is used.**
+**Q360. True or false: if a member has a default initializer (`int a = 0;`) and is also in the member initializer list, the list's value is used.**
 
 - **A)** True
 - **B)** False
@@ -2436,8 +4647,82 @@ Members are initialized in the order they are **declared** (`x`, then `y`), not 
 
 </details>
 
-### 33 — Ternary Operator  (8 Qs)
-**Q204. Is the ternary a statement or an expression, and why does that matter?**
+**Q361. What does this print?**
+
+```cpp
+struct A {
+    A(int x) { std::cout << "T" << x; }
+    A() : A(5) { std::cout << "D"; }
+};
+
+int main() { A a; }
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+T5D
+```
+
+`A a;` uses `A()`, which delegates to `A(5)`. The target constructor runs completely first (`T5`), then the delegating constructor's body (`D`).
+
+</details>
+
+**Q362. What does this print?**
+
+```cpp
+struct N {
+    N()               { std::cout << "d"; }
+    N(int)            { std::cout << "i"; }
+    N& operator=(int) { std::cout << "="; return *this; }
+};
+struct A { N n; A() { n = 1; } };
+struct B { N n; B() : n(1) {} };
+
+int main() {
+    A a;
+    std::cout << " ";
+    B b;
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+d= i
+```
+
+`A` doesn't list `n`, so `n` is default-constructed (`d`), then assigned in the body (`=`): two steps. `B` initializes `n` directly in the list (`i`): one step.
+
+</details>
+
+**Q363. `class Buffer { int* data; int size; public: Buffer(int n) : size(n), data(new int[size]) {} };` What is wrong?**
+
+- **A)** Nothing: `size` is set first because it is written first
+- **B)** `data` is initialized first, so `size` is read before it is set
+- **C)** It does not compile: `size` must be `const`
+- **D)** `size` is initialized twice
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+`data` is **declared** first, so it is initialized first, whatever the list order. `new int[size]` then reads `size` before it has been set: undefined behaviour. g++ warns (`-Wreorder` and `-Wuninitialized`). Fix: `data(new int[n])`, or declare `size` before `data`.
+
+</details>
+
+**Q364. When should code go in the constructor **body** rather than in the member initializer list?**
+
+<details><summary>Show answer</summary>
+
+When it needs the members to exist already, or is not an initialization: checking the values and throwing if they are invalid, logging, registering the object somewhere, computing a member from several others (in a clear order), or calling functions on the finished members. Setting members themselves belongs in the list (or in default member initializers).
+
+</details>
+
+### 33 — Ternary Operator  (11 Qs)
+**Q365. Is the ternary a statement or an expression, and why does that matter?**
 
 <details><summary>Show answer</summary>
 
@@ -2445,7 +4730,7 @@ An **expression** — it produces a value. That's why it can be used inline wher
 
 </details>
 
-**Q205. Why can a ternary initialize a `const` when if/else can't?**
+**Q366. Why can a ternary initialize a `const` when if/else can't?**
 
 <details><summary>Show answer</summary>
 
@@ -2453,7 +4738,7 @@ A `const` must get its value at the moment of declaration, in one shot. The tern
 
 </details>
 
-**Q206. In `cond ? 1 : 2.5`, what is the result type and why?**
+**Q367. In `cond ? 1 : 2.5`, what is the result type and why?**
 
 <details><summary>Show answer</summary>
 
@@ -2461,7 +4746,7 @@ A `const` must get its value at the moment of declaration, in one shot. The tern
 
 </details>
 
-**Q207. When do the two branches make a ternary fail to compile?**
+**Q368. When do the two branches make a ternary fail to compile?**
 
 <details><summary>Show answer</summary>
 
@@ -2469,7 +4754,7 @@ When they have **no common type** to convert to — e.g. `cond ? 5 : "hi"` (an `
 
 </details>
 
-**Q208. Why does `cout << c ? "a" : "b";` need parentheses?**
+**Q369. Why does `cout << c ? "a" : "b";` need parentheses?**
 
 <details><summary>Show answer</summary>
 
@@ -2477,7 +4762,7 @@ Because `<<` has **higher precedence** than `?:`, so it parses as `(cout << c) ?
 
 </details>
 
-**Q209. Is the branch that isn't chosen evaluated?**
+**Q370. Is the branch that isn't chosen evaluated?**
 
 <details><summary>Show answer</summary>
 
@@ -2485,7 +4770,7 @@ No — only the chosen branch is evaluated. That's what makes `p ? *p : 0` safe:
 
 </details>
 
-**Q210. What does this print?**
+**Q371. What does this print?**
 
 ```cpp
 int x = 7;
@@ -2503,7 +4788,7 @@ odd 14
 
 </details>
 
-**Q211. `auto r = true ? 1 : 2.5;` What is the type of `r`?**
+**Q372. `auto r = true ? 1 : 2.5;` What is the type of `r`?**
 
 - **A)** `int`
 - **B)** `double`
@@ -2518,16 +4803,68 @@ odd 14
 
 </details>
 
-### 34 — Creating / Instantiating Objects  (8 Qs)
-**Q212. What are the two places an object can live, and how does each affect its lifetime?**
+**Q373. What does this print? (`unsigned` is 32 bits.)**
+
+```cpp
+int n = -1;
+unsigned u = 5;
+std::cout << (n < 0 ? n : u);
+```
 
 <details><summary>Show answer</summary>
 
-The **stack** and the **heap**. A stack object (`Entity e;`) has **automatic** lifetime — destroyed when it leaves scope, with its destructor called for you. A heap object (`new Entity`) has **manual** lifetime — it lives until you `delete` it, so it can outlive the scope (but leaks if you forget).
+**Expected output:**
+```
+4294967295
+```
+
+The branches are `int` and `unsigned`, so the whole expression has the common type `unsigned`. The chosen value `-1` is converted to `unsigned`: 2^32 - 1 = 4294967295.
 
 </details>
 
-**Q213. Why do you access a heap object with `->` but a stack object with `.`?**
+**Q374. What does this print?**
+
+```cpp
+int x = 0;
+std::cout << (x > 0 ? "pos" : x < 0 ? "neg" : "zero");
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+zero
+```
+
+The chain is read as `x > 0 ? "pos" : (x < 0 ? "neg" : "zero")`. `x` is 0, so both conditions are false and the last value, `zero`, is chosen.
+
+</details>
+
+**Q375. Which of these is the best use of the ternary operator?**
+
+- **A)** Choosing which of two values initializes a `const`
+- **B)** Running one of two blocks of several statements
+- **C)** Replacing a `switch` with five cases
+- **D)** Calling one of two functions only for their side effects
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+The ternary chooses between **two values** in one expression, which is exactly what initializing a `const` needs. Several statements per branch, many cases, or actions done only for their side effects read better as `if/else` or `switch`.
+
+</details>
+
+### 34 — Creating / Instantiating Objects  (12 Qs)
+**Q376. What are the two places an object can live, and how does each affect its lifetime?**
+
+<details><summary>Show answer</summary>
+
+The **stack** and the **heap** are the two you choose between in everyday code. A stack object (`Entity e;`) has **automatic** lifetime: it is destroyed when it leaves scope, with its destructor called for you. A heap object (`new Entity`) has **manual** lifetime: it lives until you `delete` it, so it can outlive the scope (but leaks if you forget). Strictly there is a third place, **static storage**: globals, `static` locals and static members live there for the whole program.
+
+</details>
+
+**Q377. Why do you access a heap object with `->` but a stack object with `.`?**
 
 <details><summary>Show answer</summary>
 
@@ -2535,7 +4872,7 @@ The **stack** and the **heap**. A stack object (`Entity e;`) has **automatic** l
 
 </details>
 
-**Q214. What is a memory leak and what causes it?**
+**Q378. What is a memory leak and what causes it?**
 
 <details><summary>Show answer</summary>
 
@@ -2543,7 +4880,7 @@ Heap memory that was allocated with `new` but never `delete`d. The program still
 
 </details>
 
-**Q215. What is a dangling pointer? Give two ways to create one.**
+**Q379. What is a dangling pointer? Give two ways to create one.**
 
 <details><summary>Show answer</summary>
 
@@ -2551,7 +4888,7 @@ A pointer holding an address whose object no longer exists — using it is undef
 
 </details>
 
-**Q216. Why set a pointer to `nullptr` after `delete`?**
+**Q380. Why set a pointer to `nullptr` after `delete`?**
 
 <details><summary>Show answer</summary>
 
@@ -2559,7 +4896,7 @@ After `delete` the pointer still holds the freed address (dangling). Setting it 
 
 </details>
 
-**Q217. What does `Entity e();` actually declare?**
+**Q381. What does `Entity e();` actually declare?**
 
 <details><summary>Show answer</summary>
 
@@ -2567,7 +4904,7 @@ A **function** named `e` taking no arguments and returning an `Entity` — not a
 
 </details>
 
-**Q218. `Entity* e = new Entity;` How do you call its `print()` method?**
+**Q382. `Entity* e = new Entity;` How do you call its `print()` method?**
 
 - **A)** `e.print()`
 - **B)** `e->print()`
@@ -2582,7 +4919,7 @@ A **function** named `e` taking no arguments and returning an `Entity` — not a
 
 </details>
 
-**Q219. Which of these leak memory or use a dangling pointer? Select all that apply.**
+**Q383. Which of these leak memory or use a dangling pointer? Select all that apply.**
 
 - **A)** `Entity* p = new Entity; p = nullptr;` (and no `delete`)
 - **B)** `Entity e; Entity* p = &e;` used inside the same scope
@@ -2597,8 +4934,83 @@ Losing the only pointer to a `new` object without `delete` **leaks** it, and cal
 
 </details>
 
-### 35 — The new Keyword  (8 Qs)
-**Q220. What two things does `new` do?**
+**Q384. What does this print?**
+
+```cpp
+std::vector<int> a(3, 7);
+std::vector<int> b{3, 7};
+std::cout << a.size() << b.size() << a[0] << b[0];
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+3273
+```
+
+Parentheses call `vector(count, value)`: `a` holds three 7s. Braces prefer the `initializer_list` constructor: `b` holds the two elements 3 and 7. So the sizes are 3 and 2, `a[0]` is 7 and `b[0]` is 3.
+
+</details>
+
+**Q385. What does this print?**
+
+```cpp
+struct T {
+    int id;
+    T(int i) : id(i) { std::cout << "+" << id; }
+    ~T() { std::cout << "-" << id; }
+};
+void use(const T& t) { std::cout << "u" << t.id; }
+
+int main() {
+    use(T(1));
+    T t(2);
+    std::cout << "|";
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
++1u1-1+2|-2
+```
+
+`T(1)` is a temporary: it is built (`+1`), used inside `use` (`u1`), and destroyed at the end of the full expression (`-1`). `t` is a named local: built (`+2`), alive while `|` prints, and destroyed at the end of `main` (`-2`).
+
+</details>
+
+**Q386. Which of these objects live in **static storage** (alive until the program ends)? Select all that apply.**
+
+- **A)** `Entity g;` at file scope
+- **B)** `static Entity s;` inside a function
+- **C)** `Entity e;` inside `main`
+- **D)** the object created by `new Entity`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B**
+
+A global and a `static` local both have static storage: created once, destroyed after `main` returns. A plain local is on the stack, and `new` creates a heap object that lives until `delete`.
+
+</details>
+
+**Q387. True or false: `Entity a[3];` compiles when `Entity`'s only constructor is `Entity(int id)`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** Each of the three elements must be created with no arguments, so the class needs a default constructor (`error: no matching function for call to 'Entity::Entity()'`). Give each element an argument (`Entity a[3] = {1, 2, 3};`), add `Entity()`, or use a `std::vector<Entity>`.
+
+</details>
+
+### 35 — The new Keyword  (13 Qs)
+**Q388. What two things does `new` do?**
 
 <details><summary>Show answer</summary>
 
@@ -2606,7 +5018,7 @@ It (1) **allocates** memory on the heap (via `operator new`, usually `malloc` un
 
 </details>
 
-**Q221. How does `new` differ from `malloc`? (three ways)**
+**Q389. How does `new` differ from `malloc`? (three ways)**
 
 <details><summary>Show answer</summary>
 
@@ -2614,7 +5026,7 @@ It (1) **allocates** memory on the heap (via `operator new`, usually `malloc` un
 
 </details>
 
-**Q222. Why must `new[]` be paired with `delete[]` and not plain `delete`?**
+**Q390. Why must `new[]` be paired with `delete[]` and not plain `delete`?**
 
 <details><summary>Show answer</summary>
 
@@ -2622,7 +5034,7 @@ It (1) **allocates** memory on the heap (via `operator new`, usually `malloc` un
 
 </details>
 
-**Q223. What is the difference between `delete` and `free`?**
+**Q391. What is the difference between `delete` and `free`?**
 
 <details><summary>Show answer</summary>
 
@@ -2630,7 +5042,7 @@ It (1) **allocates** memory on the heap (via `operator new`, usually `malloc` un
 
 </details>
 
-**Q224. `free`/`delete` are given only `p` — how do they know where the header is and how big the block is?**
+**Q392. `free`/`delete` are given only `p` — how do they know where the header is and how big the block is?**
 
 <details><summary>Show answer</summary>
 
@@ -2638,7 +5050,7 @@ The **header offset** is a fixed constant compiled into the allocator, so it com
 
 </details>
 
-**Q225. What is the difference between `new int;` and `new int();`?**
+**Q393. What is the difference between `new int;` and `new int();`?**
 
 <details><summary>Show answer</summary>
 
@@ -2646,7 +5058,7 @@ The **header offset** is a fixed constant compiled into the allocator, so it com
 
 </details>
 
-**Q226. What does this print?**
+**Q394. What does this print?**
 
 ```cpp
 struct C {
@@ -2671,7 +5083,7 @@ cccddd
 
 </details>
 
-**Q227. Which of these are true of `new` compared with `malloc`? Select all that apply.**
+**Q395. Which of these are true of `new` compared with `malloc`? Select all that apply.**
 
 - **A)** `new` calls the constructor
 - **B)** `new` returns a typed pointer, so no cast is needed
@@ -2686,8 +5098,72 @@ cccddd
 
 </details>
 
-### 36 — Implicit Conversion & explicit  (7 Qs)
-**Q228. What makes a constructor a 'converting constructor'?**
+**Q396. What does this print?**
+
+```cpp
+int* a = new int[3]();
+a[1] = 5;
+std::cout << a[0] << a[1] << a[2];
+delete[] a;
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+050
+```
+
+`new int[3]()` value-initializes every element, so all three start at 0. Only `a[1]` is then set to 5.
+
+</details>
+
+**Q397. A program runs out of memory. What does `int* p = new (std::nothrow) int[1000];` do?**
+
+- **A)** Throws `std::bad_alloc`
+- **B)** Returns `nullptr`
+- **C)** Returns a pointer to uninitialized memory anyway
+- **D)** Aborts the program immediately
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**It returns `nullptr`**, so you can check `if (!p)`. Plain `new int[1000]` would throw `std::bad_alloc` instead and never return `nullptr`.
+
+</details>
+
+**Q398. True or false: after `int* p = new int[1000];`, the check `if (p == nullptr)` is the correct way to detect that the allocation failed.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** Plain `new` never returns `nullptr`: on failure it throws `std::bad_alloc`, so the check never fires. Catch the exception, or use `new (std::nothrow)` if you want a null check.
+
+</details>
+
+**Q399. Why does `new Tracked[3]` (3 objects of 4 bytes, `Tracked` has a destructor) ask `operator new[]` for 20 bytes on x86-64 with g++, while `new int[3]` asks for 12?**
+
+<details><summary>Show answer</summary>
+
+For a type with a non-trivial destructor, `new[]` stores the **element count** (8 bytes) just before the first element. `delete[]` reads it to know how many destructors to run. `int` needs no destructor calls, so no count is stored. This is also why `new[]` must be freed with `delete[]`.
+
+</details>
+
+**Q400. Name two places where a raw `new` is still a reasonable thing to write in modern C++.**
+
+<details><summary>Show answer</summary>
+
+Any two of: **inside an RAII class** that owns the memory (implementing a container, a smart pointer or your own resource wrapper); **placement new** (`new (buffer) T(...)`) to construct an object in memory you already have, as memory pools and containers do; **framework or legacy code** where an owner deletes the object for you (for example Qt widgets with a parent). Everywhere else, prefer `std::vector`, `std::make_unique` or `std::make_shared`.
+
+</details>
+
+### 36 — Implicit Conversion & explicit  (12 Qs)
+**Q401. What makes a constructor a 'converting constructor'?**
 
 <details><summary>Show answer</summary>
 
@@ -2695,7 +5171,7 @@ A constructor callable with a **single argument** (and not marked `explicit`). T
 
 </details>
 
-**Q229. Exactly why does `Entity e = "Anup";` fail?**
+**Q402. Exactly why does `Entity e = "Anup";` fail?**
 
 <details><summary>Show answer</summary>
 
@@ -2703,7 +5179,7 @@ Because it would need **two** user-defined conversions: `const char*` -> `std::s
 
 </details>
 
-**Q230. What does the `explicit` keyword do?**
+**Q403. What does the `explicit` keyword do?**
 
 <details><summary>Show answer</summary>
 
@@ -2711,7 +5187,7 @@ It marks a constructor (or conversion operator) as usable only for **direct/expl
 
 </details>
 
-**Q231. With an `explicit` constructor, which works: `Entity e = 22;` or `Entity e(22);`? Why?**
+**Q404. With an `explicit` constructor, which works: `Entity e = 22;` or `Entity e(22);`? Why?**
 
 <details><summary>Show answer</summary>
 
@@ -2719,7 +5195,7 @@ It marks a constructor (or conversion operator) as usable only for **direct/expl
 
 </details>
 
-**Q232. Why is marking single-argument constructors `explicit` often a good idea?**
+**Q405. Why is marking single-argument constructors `explicit` often a good idea?**
 
 <details><summary>Show answer</summary>
 
@@ -2727,7 +5203,7 @@ To stop **accidental/surprising** implicit conversions that hide bugs (e.g. `Str
 
 </details>
 
-**Q233. Given `struct Entity { explicit Entity(int a); };` and `void f(Entity);`, which lines compile? Select all that apply.**
+**Q406. Given `struct Entity { explicit Entity(int a); };` and `void f(Entity);`, which lines compile? Select all that apply.**
 
 - **A)** `Entity e(22);`
 - **B)** `Entity e = 22;`
@@ -2742,7 +5218,7 @@ To stop **accidental/surprising** implicit conversions that hide bugs (e.g. `Str
 
 </details>
 
-**Q234. What does this print?**
+**Q407. What does this print?**
 
 ```cpp
 struct Meters {
@@ -2766,8 +5242,91 @@ int main() { std::cout << twice(3.5); }
 
 </details>
 
-### 37 — Operators & Operator Overloading  (7 Qs)
-**Q235. What is operator overloading, and why is it called compile-time polymorphism?**
+**Q408. What does this print?**
+
+```cpp
+struct Meters {
+    double v;
+    explicit Meters(double x) : v(x) {}
+    operator double() const { return v; }
+};
+
+int main() {
+    Meters m(2.5);
+    double d = m * 2;
+    std::cout << d;
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+5
+```
+
+`m * 2` has no `operator*` for `Meters`, but `operator double()` is not `explicit`, so `m` is converted to the `double` 2.5 and multiplied: 5.
+
+</details>
+
+**Q409. Class `C` has `explicit operator bool() const`, and `C c;` exists. Which line does **not** compile?**
+
+- **A)** `if (c) {}`
+- **B)** `bool ok = !c;`
+- **C)** `int n = c;`
+- **D)** `while (c && false) {}`
+
+<details><summary>Show answer</summary>
+
+**Correct: C**
+
+An `explicit operator bool` is used only where a condition is expected: `if`, `while`, `!`, `&&`, `||`. `int n = c;` is a plain initialization, so the conversion isn't allowed (g++: `cannot convert 'C' to 'int' in initialization`).
+
+</details>
+
+**Q410. What does this print? (`unsigned` is 32 bits.)**
+
+```cpp
+double p = 9.99;
+int i = p;
+unsigned u = -2;
+std::cout << i << " " << u;
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+9 4294967294
+```
+
+`int i = p;` drops the fraction (it doesn't round), so `i` is 9. `-2` converted to a 32-bit `unsigned` wraps around to 2^32 - 2 = 4294967294.
+
+</details>
+
+**Q411. True or false: a constructor `Entity(int a, int b = 0)` can be used for an implicit conversion from `int`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**True.** It can be called with one argument, so it is a converting constructor: `void f(Entity); f(7);` compiles. Mark it `explicit` if that is not wanted.
+
+</details>
+
+**Q412. Why does `int x{3.7};` fail to compile while `int x = 3.7;` compiles?**
+
+<details><summary>Show answer</summary>
+
+Brace initialization forbids **narrowing** conversions (ones that can lose data), so `double` -> `int` inside `{}` is an error. The `=` form performs the implicit conversion silently and truncates to 3. That is one reason to prefer braces: they turn a silent data loss into a compile error.
+
+</details>
+
+### 37 — Operators & Operator Overloading  (12 Qs)
+**Q413. What is operator overloading, and why is it called compile-time polymorphism?**
 
 <details><summary>Show answer</summary>
 
@@ -2775,7 +5334,7 @@ It defines what an operator (`+`, `==`, `<<`...) does for your own type — an o
 
 </details>
 
-**Q236. When must you use a free (non-member) operator instead of a member?**
+**Q414. When must you use a free (non-member) operator instead of a member?**
 
 <details><summary>Show answer</summary>
 
@@ -2783,7 +5342,7 @@ When the **left operand is not your class**. A member operator's left operand is
 
 </details>
 
-**Q237. Why must `operator<<` be a free function and return `std::ostream&`?**
+**Q415. Why must `operator<<` be a free function and return `std::ostream&`?**
 
 <details><summary>Show answer</summary>
 
@@ -2791,7 +5350,7 @@ When the **left operand is not your class**. A member operator's left operand is
 
 </details>
 
-**Q238. Why does `operator+` return by value but `operator=` returns `*this` by reference?**
+**Q416. Why does `operator+` return by value but `operator=` returns `*this` by reference?**
 
 <details><summary>Show answer</summary>
 
@@ -2799,7 +5358,7 @@ When the **left operand is not your class**. A member operator's left operand is
 
 </details>
 
-**Q239. Give two limits on operator overloading.**
+**Q417. Give two limits on operator overloading.**
 
 <details><summary>Show answer</summary>
 
@@ -2807,7 +5366,7 @@ Any two of: you can't invent new operators or change their precedence/arity; at 
 
 </details>
 
-**Q240. What does this print?**
+**Q418. What does this print?**
 
 ```cpp
 struct V {
@@ -2839,7 +5398,7 @@ int main() {
 
 </details>
 
-**Q241. Which of these operators can **not** be overloaded?**
+**Q419. Which of these operators can **not** be overloaded?**
 
 - **A)** `+`
 - **B)** `<<`
@@ -2854,8 +5413,80 @@ int main() {
 
 </details>
 
-### 38 — The this Keyword  (7 Qs)
-**Q242. What is `this`, and where is it available?**
+**Q420. What does this print?**
+
+```cpp
+struct Counter {
+    int n = 0;
+    Counter& operator++() { ++n; return *this; }
+    Counter operator++(int) { Counter old = *this; ++n; return old; }
+};
+
+int main() {
+    Counter c;
+    Counter a = c++;
+    Counter b = ++c;
+    std::cout << a.n << b.n << c.n;
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+022
+```
+
+`c++` returns a copy of the old value (0) and then `c` is 1. `++c` makes `c` 2 and returns `c` itself, so `b` is 2. So `a.n`, `b.n`, `c.n` are 0, 2, 2.
+
+</details>
+
+**Q421. Which declaration is the **postfix** increment (`x++`) for a class `T`?**
+
+- **A)** `T& operator++();`
+- **B)** `T operator++(int);`
+- **C)** `T& operator++(T&);`
+- **D)** `void operator++(int, int);`
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+The postfix form takes a dummy `int` parameter to tell it apart from prefix, and returns the old value **by value**: `T operator++(int);`. Prefix is `T& operator++();`.
+
+</details>
+
+**Q422. True or false: an overloaded `operator&&` still short-circuits, so the right operand is evaluated only when needed.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** An overloaded `&&` is an ordinary function call, so both operands are evaluated before the call. That is why overloading `&&`, `||` and `,` is discouraged.
+
+</details>
+
+**Q423. Why does `operator[]` usually come in a `const` and a non-const version?**
+
+<details><summary>Show answer</summary>
+
+The non-const version returns `T&`, so elements of a modifiable object can be assigned (`v[i] = 5`). The `const` version returns `const T&` (or a value) and is the only one callable on a const object or through a `const&` parameter, so reading still works there while writing is prevented.
+
+</details>
+
+**Q424. What is a friend function, and why is `operator<<` often declared as a friend?**
+
+<details><summary>Show answer</summary>
+
+A **friend** is a non-member function that a class declares inside itself with `friend`, giving it access to the class's private members. It has no `this` and is called like any free function. `operator<<` must be a free function because its left operand is the stream, not your object; it is made a friend when printing needs private data members.
+
+</details>
+
+### 38 — The this Keyword  (10 Qs)
+**Q425. What is `this`, and where is it available?**
 
 <details><summary>Show answer</summary>
 
@@ -2863,15 +5494,15 @@ int main() {
 
 </details>
 
-**Q243. What is the type of `this` in a non-const vs a const member function?**
+**Q426. What is the type of `this` in a non-const vs a const member function?**
 
 <details><summary>Show answer</summary>
 
-Non-const method: `Entity* const` — a const pointer to a non-const object (you can modify the object, not reseat the pointer). Const method: `const Entity* const` — you can't modify the object either. The trailing `const` after the parameter list makes it a const member function.
+Non-const member function: `Entity*`, so the object can be changed through it. Const member function: `const Entity*`, so the object can't be changed. In both, `this` itself can't be reassigned (it is a value, not a variable), which is why it is often described as `Entity* const` / `const Entity* const`. The trailing `const` after the parameter list is what makes a member function const.
 
 </details>
 
-**Q244. What is the difference between `this` and `*this`?**
+**Q427. What is the difference between `this` and `*this`?**
 
 <details><summary>Show answer</summary>
 
@@ -2879,7 +5510,7 @@ Non-const method: `Entity* const` — a const pointer to a non-const object (you
 
 </details>
 
-**Q245. When do you actually need to write `this->`?**
+**Q428. When do you actually need to write `this->`?**
 
 <details><summary>Show answer</summary>
 
@@ -2887,7 +5518,7 @@ Only to **disambiguate** a member from a **same-named parameter** (e.g. `this->a
 
 </details>
 
-**Q246. Why does a `static` member function have no `this`?**
+**Q429. Why does a `static` member function have no `this`?**
 
 <details><summary>Show answer</summary>
 
@@ -2895,7 +5526,7 @@ Because it isn't tied to any particular object — you call it as `Class::fn()` 
 
 </details>
 
-**Q247. What does this print?**
+**Q430. What does this print?**
 
 ```cpp
 struct Counter {
@@ -2921,7 +5552,7 @@ int main() {
 
 </details>
 
-**Q248. This version returns `Counter` by value instead of by reference. What does it print now?**
+**Q431. This version returns `Counter` by value instead of by reference. What does it print now?**
 
 ```cpp
 struct Counter {
@@ -2947,16 +5578,86 @@ Returning `*this` **by value** hands back a copy. Only the first `add(1)` change
 
 </details>
 
-### 39 — Object Lifetime  (7 Qs)
-**Q249. Name the three storage durations and what determines each object's lifetime.**
+**Q432. What does this print?**
+
+```cpp
+struct P {
+    int x = 0;
+    void set(int x) { x = x; }
+};
+
+int main() {
+    P p;
+    p.set(5);
+    std::cout << p.x;
+}
+```
 
 <details><summary>Show answer</summary>
 
-**Automatic** (stack): local variables, alive until the end of their scope. **Dynamic** (heap): created with `new`, alive until you `delete` it. **Static/global**: `static` locals, globals, static members — alive for the whole program.
+**Expected output:**
+```
+0
+```
+
+Inside `set`, the parameter `x` hides the member `x`, so `x = x;` assigns the parameter to itself. The member keeps its value 0. Fix: `this->x = x;`. (g++ with `-Wall -Wextra` gives no warning for this.)
 
 </details>
 
-**Q250. Why is returning the address of a local variable a bug?**
+**Q433. What does this print?**
+
+```cpp
+struct Box;
+void show(const Box& b);
+
+struct Box {
+    int id;
+    void print() const { show(*this); }
+};
+
+void show(const Box& b) { std::cout << "box " << b.id << " "; }
+
+int main() {
+    Box a{1}, b{2};
+    b.print();
+    a.print();
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+box 2 box 1
+```
+
+`print` passes `*this`, the object it was called on, to `show`. `b.print()` shows box 2, then `a.print()` shows box 1.
+
+</details>
+
+**Q434. True or false: inside a non-const member function, `this = nullptr;` compiles.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** `this` is a value (a prvalue), not a variable, so it can't be assigned: g++ says `lvalue required as left operand of assignment`. That is why it behaves like `Entity* const`.
+
+</details>
+
+### 39 — Object Lifetime  (11 Qs)
+**Q435. Name the three storage durations and what determines each object's lifetime.**
+
+<details><summary>Show answer</summary>
+
+**Automatic** (stack): local variables, alive until the end of their scope. **Dynamic** (heap): created with `new`, alive until you `delete` it. **Static**: globals, `static` locals, static members, alive for the whole program. (There is also a fourth, **thread** storage duration: a `thread_local` variable has one copy per thread, alive as long as its thread.)
+
+</details>
+
+**Q436. Why is returning the address of a local variable a bug?**
 
 <details><summary>Show answer</summary>
 
@@ -2964,7 +5665,7 @@ The local lives in the function's stack frame, which is reclaimed when the funct
 
 </details>
 
-**Q251. Give two correct ways to return data that outlives a function.**
+**Q437. Give two correct ways to return data that outlives a function.**
 
 <details><summary>Show answer</summary>
 
@@ -2972,7 +5673,7 @@ Any two of: **return by value** (the caller gets its own copy); allocate on the 
 
 </details>
 
-**Q252. What is RAII, and why is it exception-safe?**
+**Q438. What is RAII, and why is it exception-safe?**
 
 <details><summary>Show answer</summary>
 
@@ -2980,7 +5681,7 @@ RAII (Resource Acquisition Is Initialization): acquire a resource in the constru
 
 </details>
 
-**Q253. Why does a `static` local variable keep its value between calls?**
+**Q439. Why does a `static` local variable keep its value between calls?**
 
 <details><summary>Show answer</summary>
 
@@ -2988,7 +5689,7 @@ Because it has **static storage duration** (program lifetime) rather than automa
 
 </details>
 
-**Q254. What does this print? (Each destructor prints its `id`.)**
+**Q440. What does this print? (Each destructor prints its `id`.)**
 
 ```cpp
 struct T {
@@ -3018,7 +5719,7 @@ int main() {
 
 </details>
 
-**Q255. Which function returns a dangling reference?**
+**Q441. Which function returns a dangling reference?**
 
 - **A)** `int f() { int x = 5; return x; }`
 - **B)** `int& f() { int x = 5; return x; }`
@@ -3033,8 +5734,71 @@ int main() {
 
 </details>
 
-### 40 — Smart Pointers  (8 Qs)
-**Q256. What problem do smart pointers solve, and which mechanism makes them work?**
+**Q442. What does this print?**
+
+```cpp
+struct T {
+    int id;
+    T(int i) : id(i) { std::cout << "+" << id; }
+    ~T() { std::cout << "-" << id; }
+};
+
+int main() {
+    T(1);
+    const T& r = T(2);
+    std::cout << "|" << r.id;
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
++1-1+2|2-2
+```
+
+`T(1)` is a temporary not bound to anything, so it dies at the end of its statement (`+1-1`). `T(2)` is bound directly to the `const T&` `r`, so its lifetime is extended to `r`'s: it is still alive when `|` prints and dies at the end of `main` (`-2`).
+
+</details>
+
+**Q443. `const T& pass(const T& t) { return t; }` and then `const T& bad = pass(T(4));`. Is `bad` safe to use on the next line?**
+
+- **A)** Yes: binding to a `const T&` always extends the temporary
+- **B)** No: the temporary dies at the end of the statement, so `bad` dangles
+- **C)** Yes, but only in C++17 and later
+- **D)** It does not compile
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**No, it dangles.** Lifetime extension applies only when the temporary is bound **directly** to the declared reference. Here `T(4)` is bound to the parameter `t`, so it dies at the end of the full expression; `bad` refers to a destroyed object (g++ 13 warns with `-Wdangling-reference`). Store a copy instead: `T copy = pass(T(4));`.
+
+</details>
+
+**Q444. True or false: a `thread_local` variable has one copy shared by all threads, created when the program starts.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** `thread_local` gives **thread storage duration**: every thread has its own copy, created for that thread and destroyed when the thread ends. Changing it in one thread doesn't affect the others.
+
+</details>
+
+**Q445. Why is `const char* p = (std::string("abc") + "def").c_str();` a bug, and how do you fix it?**
+
+<details><summary>Show answer</summary>
+
+The `+` creates a temporary `std::string`. `c_str()` returns a pointer into that temporary's buffer, but the temporary is destroyed at the end of the full expression (the `;`). `p` dangles from the next line on; g++ gives no warning. Lifetime extension doesn't help because the temporary isn't bound to a reference, only a pointer into it is kept. Fix: keep the string itself, `std::string s = std::string("abc") + "def";`, and call `s.c_str()` when needed.
+
+</details>
+
+### 40 — Smart Pointers  (13 Qs)
+**Q446. What problem do smart pointers solve, and which mechanism makes them work?**
 
 <details><summary>Show answer</summary>
 
@@ -3042,7 +5806,7 @@ They remove manual `new`/`delete` — no leaks, double-frees, or dangling. They 
 
 </details>
 
-**Q257. What is the difference between `unique_ptr` and `shared_ptr`, and how does `shared_ptr` know when to delete?**
+**Q447. What is the difference between `unique_ptr` and `shared_ptr`, and how does `shared_ptr` know when to delete?**
 
 <details><summary>Show answer</summary>
 
@@ -3050,7 +5814,7 @@ They remove manual `new`/`delete` — no leaks, double-frees, or dangling. They 
 
 </details>
 
-**Q258. What is `weak_ptr` for, and why doesn't it affect the reference count?**
+**Q448. What is `weak_ptr` for, and why doesn't it affect the reference count?**
 
 <details><summary>Show answer</summary>
 
@@ -3058,15 +5822,15 @@ It's a **non-owning** observer of a `shared_ptr`, used to **break circular refer
 
 </details>
 
-**Q259. Why prefer `make_unique`/`make_shared` over raw `new`?**
+**Q449. Why prefer `make_unique`/`make_shared` over raw `new`?**
 
 <details><summary>Show answer</summary>
 
-They're **exception-safe** and keep raw `new` out of your code. `make_shared` also does a **single allocation** for the object and its control block (vs two with `shared_ptr<T>(new T)`).
+They keep raw `new` out of your code (so there is no `delete` to forget), you write the type only once (`auto p = std::make_unique<Entity>(1, 2);`), and `make_shared` makes **one** allocation for the object and its control block instead of two. (Before C++17 they also prevented a leak in calls like `f(std::unique_ptr<T>(new T), g())` when `g()` threw; C++17's rules for evaluating function arguments removed that case.)
 
 </details>
 
-**Q260. What's the difference between `release()`, `reset()`, and `std::move` on a `unique_ptr`?**
+**Q450. What's the difference between `release()`, `reset()`, and `std::move` on a `unique_ptr`?**
 
 <details><summary>Show answer</summary>
 
@@ -3074,7 +5838,7 @@ They're **exception-safe** and keep raw `new` out of your code. `make_shared` al
 
 </details>
 
-**Q261. When is a raw pointer the right choice over a smart pointer?**
+**Q451. When is a raw pointer the right choice over a smart pointer?**
 
 <details><summary>Show answer</summary>
 
@@ -3082,7 +5846,7 @@ For **non-owning** references — 'borrowing' an object whose lifetime is manage
 
 </details>
 
-**Q262. What does this print?**
+**Q452. What does this print?**
 
 ```cpp
 auto a = std::make_shared<int>(5);
@@ -3106,7 +5870,7 @@ One owner: count 1. Inside the block `b` shares ownership: 2. `b` dies at the cl
 
 </details>
 
-**Q263. `auto p = std::make_unique<int>(1); auto q = p;` What happens?**
+**Q453. `auto p = std::make_unique<int>(1); auto q = p;` What happens?**
 
 - **A)** `q` shares ownership with `p`
 - **B)** Compile error: `unique_ptr` can't be copied; use `std::move`
@@ -3121,8 +5885,88 @@ One owner: count 1. Inside the block `b` shares ownership: 2. `b` dies at the cl
 
 </details>
 
-### 41 — Copying & Copy Constructors  (7 Qs)
-**Q264. Name two situations where the copy constructor is called.**
+**Q454. What does this print?**
+
+```cpp
+void take(std::unique_ptr<int> e) { std::cout << *e << " "; }
+
+int main() {
+    auto p = std::make_unique<int>(5);
+    take(std::move(p));
+    std::cout << (p ? "full" : "empty");
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+5 empty
+```
+
+`take(std::move(p))` moves ownership into the parameter `e`. When `take` returns, `e` is destroyed and deletes the `int`; `p` was left empty by the move, so the test prints `empty`.
+
+</details>
+
+**Q455. A function only reads an `Entity` and never stores or deletes it. Callers keep their objects in `std::unique_ptr<Entity>`. Which parameter type is best?**
+
+- **A)** `std::unique_ptr<Entity>`
+- **B)** `std::unique_ptr<Entity>&`
+- **C)** `const Entity&`
+- **D)** `std::shared_ptr<Entity>`
+
+<details><summary>Show answer</summary>
+
+**Correct: C**
+
+`const Entity&`: the function doesn't take part in ownership, so it shouldn't mention a smart pointer at all. Callers write `f(*p)`, and the same function works for objects owned any other way. By-value `unique_ptr` would steal ownership; a `shared_ptr` would force shared ownership on everyone.
+
+</details>
+
+**Q456. What does this print?**
+
+```cpp
+auto s = std::make_shared<int>(1);
+std::weak_ptr<int> w = s;
+std::cout << w.expired();
+s.reset();
+std::cout << w.expired() << (w.lock() == nullptr);
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+011
+```
+
+While `s` owns the `int`, the `weak_ptr` is not expired: `0`. After `s.reset()` the count drops to 0 and the `int` is deleted, so `w.expired()` is `1` and `lock()` returns an empty `shared_ptr` (`1` for `== nullptr`).
+
+</details>
+
+**Q457. True or false: on x86-64 with g++, `sizeof(std::unique_ptr<int>)` equals `sizeof(int*)`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**True.** Both are 8 bytes: a `unique_ptr` with the default deleter stores only the pointer, so it costs nothing over a raw pointer. A `shared_ptr` is 16 bytes (object pointer + control-block pointer).
+
+</details>
+
+**Q458. Why must you never create two `unique_ptr`s (or two independent `shared_ptr`s) from the same raw pointer?**
+
+<details><summary>Show answer</summary>
+
+Each one believes it is the owner (each `shared_ptr` built from a raw pointer gets its own control block and count). When the second one is destroyed it deletes memory that the first already deleted: a **double delete**, undefined behaviour. Create the object with `make_unique`/`make_shared` and then move or copy the smart pointer, never the raw pointer.
+
+</details>
+
+### 41 — Copying & Copy Constructors  (13 Qs)
+**Q459. Name two situations where the copy constructor is called.**
 
 <details><summary>Show answer</summary>
 
@@ -3130,7 +5974,7 @@ Any two of: initializing a new object from another (`T b = a;` or `T b(a);`), pa
 
 </details>
 
-**Q265. What does the default copy constructor do, and why is that dangerous for a class with a pointer member?**
+**Q460. What does the default copy constructor do, and why is that dangerous for a class with a pointer member?**
 
 <details><summary>Show answer</summary>
 
@@ -3138,7 +5982,7 @@ It does a **shallow, member-wise copy** — copying each member's value. For a p
 
 </details>
 
-**Q266. What is a deep copy and how does it fix the double-free?**
+**Q461. What is a deep copy and how does it fix the double-free?**
 
 <details><summary>Show answer</summary>
 
@@ -3146,7 +5990,7 @@ A deep copy allocates a **separate** buffer for the new object and copies the **
 
 </details>
 
-**Q267. What is the Rule of Three (and Five)?**
+**Q462. What is the Rule of Three (and Five)?**
 
 <details><summary>Show answer</summary>
 
@@ -3154,7 +5998,7 @@ Rule of Three: if a class needs a custom **destructor**, it almost certainly als
 
 </details>
 
-**Q268. What is the difference between the copy constructor and copy assignment?**
+**Q463. What is the difference between the copy constructor and copy assignment?**
 
 <details><summary>Show answer</summary>
 
@@ -3162,7 +6006,7 @@ The copy **constructor** builds a **brand-new** object from an existing one (`T 
 
 </details>
 
-**Q269. What does this print? (`D` = default constructor, `C` = copy constructor, `A` = copy assignment.)**
+**Q464. What does this print? (`D` = default constructor, `C` = copy constructor, `A` = copy assignment.)**
 
 ```cpp
 struct S {
@@ -3194,7 +6038,7 @@ DCDAC
 
 </details>
 
-**Q270. True or false: the compiler-generated copy constructor copies the data that a pointer member points to.**
+**Q465. True or false: the compiler-generated copy constructor copies the data that a pointer member points to.**
 
 - **A)** True
 - **B)** False
@@ -3207,8 +6051,96 @@ DCDAC
 
 </details>
 
-### 42 — The Arrow Operator  (6 Qs)
-**Q271. What is `e->a` equivalent to, written the long way?**
+**Q466. What does this print? (`D` = default constructor, `C` = copy constructor, `M` = move constructor.)**
+
+```cpp
+struct S {
+    S()            { std::cout << "D"; }
+    S(const S&)    { std::cout << "C"; }
+    S(S&&) noexcept { std::cout << "M"; }
+};
+
+int main() {
+    S a;
+    S b = a;
+    S c = std::move(a);
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+DCM
+```
+
+`S a;` prints D. `S b = a;` copies, because `a` is a named object still in use: C. `S c = std::move(a);` turns `a` into an rvalue, so the move constructor is chosen: M.
+
+</details>
+
+**Q467. Which special member functions make up the Rule of Five? Select all that apply.**
+
+- **A)** Destructor
+- **B)** Copy constructor
+- **C)** Copy assignment operator
+- **D)** Move constructor
+- **E)** Move assignment operator
+- **F)** Default constructor
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, C, D, E**
+
+Destructor, copy constructor, copy assignment, move constructor and move assignment: the five functions that manage how a resource is freed, copied and moved. The default constructor is not part of it.
+
+</details>
+
+**Q468. Which class follows the Rule of Zero safely, with no destructor, copy constructor or copy assignment written by you?**
+
+- **A)** A class with a `char*` from `new char[n]`
+- **B)** A class with `std::string` and `std::vector<int>` members
+- **C)** A class holding a `FILE*` from `fopen`
+- **D)** A class with an `int*` array from `new int[n]`
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+A class whose members are `std::string` and `std::vector<int>`: both copy, move and free themselves, so the compiler-generated versions are already correct. The other three own raw resources (`new[]` memory, a `FILE*`), so the generated shallow copy would share and double-free them.
+
+</details>
+
+**Q469. True or false: if a class's copy constructor is `= delete`, then `T x; f(x);` does not compile for `void f(T t)`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**True.** Passing `x` by value has to copy it into the parameter, and the copy constructor is deleted (g++: `use of deleted function`). Take `const T&` instead, or pass ownership explicitly if the class can be moved.
+
+</details>
+
+**Q470. Why does copy assignment in a class that owns a buffer need a self-assignment check (or an allocate-first order)?**
+
+<details><summary>Show answer</summary>
+
+Copy assignment frees the object's old buffer. In `a = a`, the source and target are the same object: if it deletes its buffer first and then copies from `other`, it reads memory it just freed (undefined behaviour). Checking `if (this == &other) return *this;`, or allocating and copying into a new buffer before deleting the old one, avoids that. Allocating first also leaves the object unchanged if `new` throws.
+
+</details>
+
+**Q471. What does a move constructor do for a class that owns a heap buffer, and why should it be `noexcept`?**
+
+<details><summary>Show answer</summary>
+
+It takes the source's pointer (and size) instead of allocating and copying, then sets the source's pointer to `nullptr` so its destructor doesn't free the buffer. That makes the move cost a few assignments instead of an allocation. It should be `noexcept` because containers such as `std::vector` move elements during reallocation only if the move can't throw; otherwise they fall back to copying.
+
+</details>
+
+### 42 — The Arrow Operator  (10 Qs)
+**Q472. What is `e->a` equivalent to, written the long way?**
 
 <details><summary>Show answer</summary>
 
@@ -3216,7 +6148,7 @@ DCDAC
 
 </details>
 
-**Q272. For a raw pointer, is `->` built-in or overloaded — and when does overloading come in?**
+**Q473. For a raw pointer, is `->` built-in or overloaded — and when does overloading come in?**
 
 <details><summary>Show answer</summary>
 
@@ -3224,7 +6156,7 @@ For a **raw pointer** it's **built-in**. Overloading `operator->` comes in for y
 
 </details>
 
-**Q273. What does an overloaded `operator->` return, and what does the compiler do with it?**
+**Q474. What does an overloaded `operator->` return, and what does the compiler do with it?**
 
 <details><summary>Show answer</summary>
 
@@ -3232,7 +6164,7 @@ It returns a **pointer**. The compiler then applies the real `->` to that return
 
 </details>
 
-**Q274. Why can you use `->` on a smart pointer even though it's an object, not a raw pointer?**
+**Q475. Why can you use `->` on a smart pointer even though it's an object, not a raw pointer?**
 
 <details><summary>Show answer</summary>
 
@@ -3240,7 +6172,7 @@ Because the smart pointer **overloads `operator->`** (and `operator*`). So `p->m
 
 </details>
 
-**Q275. What does this print?**
+**Q476. What does this print?**
 
 ```cpp
 struct P { int x = 3; };
@@ -3266,7 +6198,7 @@ int main() {
 
 </details>
 
-**Q276. True or false: an overloaded `operator->` must return a pointer, or an object that itself has `operator->`.**
+**Q477. True or false: an overloaded `operator->` must return a pointer, or an object that itself has `operator->`.**
 
 - **A)** True
 - **B)** False
@@ -3279,8 +6211,86 @@ int main() {
 
 </details>
 
-### 43 — std::vector (Dynamic Array)  (8 Qs)
-**Q277. What is the difference between `size()` and `capacity()`?**
+**Q478. What does this print?**
+
+```cpp
+std::map<std::string, int> m = {{"b", 2}, {"a", 1}};
+for (auto it = m.begin(); it != m.end(); ++it)
+    std::cout << it->first << it->second << " ";
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+a1 b2
+```
+
+A `std::map` keeps its keys sorted, so iteration visits `a` then `b`. A map iterator points at a `std::pair`: `it->first` is the key and `it->second` the value, the same as `(*it).first` and `(*it).second`.
+
+</details>
+
+**Q479. `p` is an `Entity*`. How does the compiler read `*p.x`?**
+
+- **A)** `(*p).x`
+- **B)** `*(p.x)`
+- **C)** `p->x`
+- **D)** `&(p->x)`
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+`.` binds tighter than unary `*`, so `*p.x` is `*(p.x)`: it asks for member `x` of the pointer itself, which doesn't compile (g++ suggests `->`). Write `(*p).x` or `p->x`.
+
+</details>
+
+**Q480. What does this print?**
+
+```cpp
+struct E { int x = 7; };
+struct Inner {
+    E* p;
+    E* operator->() const { std::cout << "inner "; return p; }
+};
+struct Outer {
+    Inner in;
+    Inner operator->() const { std::cout << "outer "; return in; }
+};
+
+int main() {
+    E e;
+    Outer o{Inner{&e}};
+    std::cout << o->x;
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+outer inner 7
+```
+
+`o` is an object, so `o->x` calls `o.operator->()`, which prints `outer` and returns an `Inner` object. That is not a raw pointer, so the compiler calls `operator->` again on it: `inner`, which returns an `E*`. The built-in `->` then reads `x` (7).
+
+</details>
+
+**Q481. True or false: with `Entity& r = obj;`, you can write `r->x`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** A reference is another name for the object, not a pointer, so it uses the dot: `r.x`. `r->x` fails with `base operand of '->' has non-pointer type 'Entity'` (unless `Entity` itself overloads `operator->`).
+
+</details>
+
+### 43 — std::vector (Dynamic Array)  (14 Qs)
+**Q482. What is the difference between `size()` and `capacity()`?**
 
 <details><summary>Show answer</summary>
 
@@ -3288,7 +6298,7 @@ int main() {
 
 </details>
 
-**Q278. What happens when `push_back` exceeds capacity, and why is it still amortized O(1)?**
+**Q483. What happens when `push_back` exceeds capacity, and why is it still amortized O(1)?**
 
 <details><summary>Show answer</summary>
 
@@ -3296,7 +6306,7 @@ It allocates a **new, larger** block (~1.5-2x), **moves/copies** all existing el
 
 </details>
 
-**Q279. What does `reserve()` optimize?**
+**Q484. What does `reserve()` optimize?**
 
 <details><summary>Show answer</summary>
 
@@ -3304,7 +6314,7 @@ It **pre-allocates** capacity up front (to your expected final size), so a run o
 
 </details>
 
-**Q280. What is the difference between `push_back` and `emplace_back`?**
+**Q485. What is the difference between `push_back` and `emplace_back`?**
 
 <details><summary>Show answer</summary>
 
@@ -3312,7 +6322,7 @@ It **pre-allocates** capacity up front (to your expected final size), so a run o
 
 </details>
 
-**Q281. What is the difference between `v[i]` and `v.at(i)`?**
+**Q486. What is the difference between `v[i]` and `v.at(i)`?**
 
 <details><summary>Show answer</summary>
 
@@ -3320,7 +6330,7 @@ It **pre-allocates** capacity up front (to your expected final size), so a run o
 
 </details>
 
-**Q282. Why are existing iterators/pointers/references invalidated after a vector grows?**
+**Q487. Why are existing iterators/pointers/references invalidated after a vector grows?**
 
 <details><summary>Show answer</summary>
 
@@ -3328,7 +6338,7 @@ Because growth moves the elements to a **new memory block** and frees the old on
 
 </details>
 
-**Q283. What does this print?**
+**Q488. What does this print?**
 
 ```cpp
 std::vector<int> v = {10, 20, 30};
@@ -3348,7 +6358,7 @@ Three elements, then `push_back(40)` and `emplace_back(50)` make five. `v[4]` is
 
 </details>
 
-**Q284. You saved `int* p = &v[0];`, then a `push_back` made the vector reallocate. What is `p` now?**
+**Q489. You saved `int* p = &v[0];`, then a `push_back` made the vector reallocate. What is `p` now?**
 
 - **A)** Still valid: elements never move
 - **B)** Dangling: the elements moved to a new block
@@ -3363,8 +6373,105 @@ Three elements, then `push_back(40)` and `emplace_back(50)` make five. `v[4]` is
 
 </details>
 
-### 44 — Local Static Variables  (9 Qs)
-**Q285. What changes when you put `static` on a local variable, and what stays the same?**
+**Q490. What does this print (g++/libstdc++)?**
+
+```cpp
+std::vector<int> v;
+v.reserve(10);
+std::cout << v.size() << " ";
+v.resize(3);
+std::cout << v.size() << " " << v.capacity() << " ";
+v.clear();
+std::cout << v.size() << " " << v.capacity();
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+0 3 10 0 10
+```
+
+`reserve(10)` sets the capacity to 10 but creates no elements, so the size is 0. `resize(3)` creates three zeros: size 3, capacity still 10. `clear()` destroys them: size 0, capacity unchanged.
+
+</details>
+
+**Q491. What does this print?**
+
+```cpp
+std::vector<int> v = {1, 2, 4, 3, 6, 5};
+for (auto it = v.begin(); it != v.end(); ) {
+    if (*it % 2 == 0) it = v.erase(it);
+    else ++it;
+}
+for (int x : v) std::cout << x << " ";
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+1 3 5
+```
+
+The loop removes every even number. `erase` returns an iterator to the element after the erased one, so the loop continues from there and advances with `++it` only when nothing was erased. Left: 1 3 5.
+
+</details>
+
+**Q492. What is the time cost of `v.insert(v.begin(), x)` on a vector of n elements?**
+
+- **A)** O(1)
+- **B)** O(log n)
+- **C)** O(n)
+- **D)** Amortized O(1)
+
+<details><summary>Show answer</summary>
+
+**Correct: C**
+
+**O(n).** The elements are contiguous, so all n of them shift one place right to make room at the front (and a reallocation may be needed too). Inserting at the end is amortized O(1).
+
+</details>
+
+**Q493. Which of these can invalidate a pointer to `v[0]`? Select all that apply.**
+
+- **A)** `v.push_back(1)` when `size() == capacity()`
+- **B)** `v.reserve(v.capacity() * 2)`
+- **C)** `v.size()`
+- **D)** `v.insert(v.begin(), 1)`
+- **E)** `v.shrink_to_fit()`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, B, D, E**
+
+Anything that may reallocate moves every element to a new block: `push_back` on a full vector, `reserve` with a larger capacity, `shrink_to_fit`. `insert` at the front invalidates it even without a reallocation: the old first element shifts to `v[1]`. Reading `v.size()` changes nothing.
+
+</details>
+
+**Q494. True or false: returning a local `std::vector<int>` by value from a function copies all of its elements.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** The return value is either built directly in the caller (copy elision) or moved, and a move just hands the heap block over. Returning by value is the normal, cheap way to produce a vector.
+
+</details>
+
+**Q495. How do you remove every element equal to 0 from a `std::vector<int> v` in one pass, in C++17 and in C++20?**
+
+<details><summary>Show answer</summary>
+
+C++17: the **erase-remove idiom**, `v.erase(std::remove(v.begin(), v.end(), 0), v.end());`. `std::remove` moves the elements to keep to the front and returns the new logical end; `erase` cuts off the leftovers. One O(n) pass. C++20: `std::erase(v, 0);` (or `std::erase_if(v, pred)` for a condition), which returns the number removed. Erasing one element at a time in a loop is O(n^2) when many match.
+
+</details>
+
+### 44 — Local Static Variables  (13 Qs)
+**Q496. What changes when you put `static` on a local variable, and what stays the same?**
 
 <details><summary>Show answer</summary>
 
@@ -3372,7 +6479,7 @@ The **lifetime** changes: it now lives for the whole program and keeps its value
 
 </details>
 
-**Q286. Why does `static Logger L;` need a hidden flag but `static int n = 0;` does not?**
+**Q497. Why does `static Logger L;` need a hidden flag but `static int n = 0;` does not?**
 
 <details><summary>Show answer</summary>
 
@@ -3380,7 +6487,7 @@ The **lifetime** changes: it now lives for the whole program and keeps its value
 
 </details>
 
-**Q287. What does this code print, and why?**
+**Q498. What does this code print, and why?**
 
 ```cpp
 int counter() { static int n = 0; return ++n; }
@@ -3396,7 +6503,7 @@ It prints `1 2 3`. `n` is created once with value 0 and is **not** re-initialize
 
 </details>
 
-**Q288. Why is returning `arr` safe with `static int arr[3]` but not with `int arr[3]`?**
+**Q499. Why is returning `arr` safe with `static int arr[3]` but not with `int arr[3]`?**
 
 <details><summary>Show answer</summary>
 
@@ -3404,7 +6511,7 @@ A plain local array lives in the stack frame, which is destroyed when the functi
 
 </details>
 
-**Q289. A function with `static Logger L;` is never called. Is the constructor ever run? Is the destructor?**
+**Q500. A function with `static Logger L;` is never called. Is the constructor ever run? Is the destructor?**
 
 <details><summary>Show answer</summary>
 
@@ -3412,7 +6519,7 @@ Neither. The compiler decides from the initializer alone that a flag is needed. 
 
 </details>
 
-**Q290. Two threads call a function containing `static Logger L;` at the same time. What is safe and what is not?**
+**Q501. Two threads call a function containing `static Logger L;` at the same time. What is safe and what is not?**
 
 <details><summary>Show answer</summary>
 
@@ -3420,7 +6527,7 @@ Since C++11 the **construction** is thread-safe: one thread builds it and the ot
 
 </details>
 
-**Q291. What is the difference between `static Logger L;` and `static Logger* P = new Logger();` at program exit?**
+**Q502. What is the difference between `static Logger L;` and `static Logger* P = new Logger();` at program exit?**
 
 <details><summary>Show answer</summary>
 
@@ -3428,7 +6535,7 @@ Since C++11 the **construction** is thread-safe: one thread builds it and the ot
 
 </details>
 
-**Q292. What does this print?**
+**Q503. What does this print?**
 
 ```cpp
 int next() { static int n = 10; n += 5; return n; }
@@ -3451,7 +6558,7 @@ int main() {
 
 </details>
 
-**Q293. True or false: other functions in the same file can use a `static` local variable by name.**
+**Q504. True or false: other functions in the same file can use a `static` local variable by name.**
 
 - **A)** True
 - **B)** False
@@ -3461,5 +6568,278 @@ int main() {
 **Correct: B**
 
 **False.** `static` changes the variable's **lifetime**, not its **scope**. The name is still visible only inside its function.
+
+</details>
+
+**Q505. What does this print?**
+
+```cpp
+struct Button {
+    int clicks = 0;
+    void click() {
+        static int total = 0;
+        ++clicks;
+        ++total;
+        std::cout << clicks << "/" << total << " ";
+    }
+};
+
+int main() {
+    Button a, b;
+    a.click();
+    a.click();
+    b.click();
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
+1/1 2/2 1/3
+```
+
+`total` is a static local, so there is **one** for the function, shared by both objects. `clicks` is a member, one per object. `a` clicks twice (1/1, 2/2), then `b`'s first click is its own 1 but the shared total's 3.
+
+</details>
+
+**Q506. What does this print?**
+
+```cpp
+struct T {
+    char c;
+    T(char ch) : c(ch) { std::cout << "+" << c; }
+    ~T() { std::cout << "-" << c; }
+};
+T& first()  { static T t('A'); return t; }
+T& second() { static T t('B'); return t; }
+
+int main() {
+    second();
+    first();
+    second();
+    std::cout << "|";
+}
+```
+
+<details><summary>Show answer</summary>
+
+**Expected output:**
+```
++B+A|-A-B
+```
+
+Static locals with a constructor are built on the **first call** of their function, so `second()` builds `B` before `first()` builds `A`. At program exit they are destroyed in **reverse** order of construction: `A` (built last) first, then `B`.
+
+</details>
+
+**Q507. Which of these does the compiler protect with a hidden guard flag? Select all that apply.**
+
+- **A)** `static Logger L;` (Logger has a constructor that prints)
+- **B)** `static int n = 0;`
+- **C)** `static int x = compute();` (a normal function)
+- **D)** `static const char* s = "hi";`
+
+<details><summary>Show answer</summary>
+
+**Correct: A, C**
+
+Only initializers that need **run-time** work get a guard: a constructor call (`static Logger L;`) and a function call (`static int x = compute();`). Constant initializers such as `static int n = 0;` and `static const char* s = "hi";` are written into the program file and are ready before `main`, so no flag is needed. (`nm -C` shows a `guard variable for ...` symbol for each guarded one.)
+
+</details>
+
+**Q508. Give one advantage and one disadvantage of keeping state in a static local variable.**
+
+<details><summary>Show answer</summary>
+
+Advantages (any one): it is built lazily and exactly once, only if the function is used; it is hidden from the rest of the program; it avoids the cross-file initialization order problem. Disadvantages (any one): hidden state makes the function harder to test and reason about (the same call gives different results); handing out a pointer to a static buffer makes the function non-reentrant; changes from several threads need a mutex or `std::atomic`; destruction order at exit can bite other statics.
+
+</details>
+
+## Linux (continued)
+
+### 45 — Libraries: Static and Shared  (16 Qs)
+**Q509. What is a library, and what does someone need from you to use yours?**
+
+<details><summary>Show answer</summary>
+
+A library is ready-made **compiled code** (`.o` files packed together). They need the **library file** and the **header**. The header lets their code compile against your functions; the library gives the linker the code. They never see your `.cpp`.
+
+</details>
+
+**Q510. Why does `g++ -L. -lcalc main.cpp` fail with `undefined reference`, while `g++ main.cpp -L. -lcalc` works? (static library)**
+
+<details><summary>Show answer</summary>
+
+GNU `ld` reads its arguments **left to right** and only takes code from a static library to satisfy symbols it **already needs**. With the library first, nothing needs `addition` yet, so nothing is taken. When `main.cpp` comes later and asks for it, the library has already been passed. The library must come **after** the files that use it.
+
+</details>
+
+**Q511. A program is linked with a **static** library, then you delete the `.a` file. What happens when you run the program?**
+
+- **A)** It still runs: the code was copied into the program
+- **B)** It fails with `cannot open shared object file`
+- **C)** It starts, but the library calls crash
+- **D)** It reloads the `.a` from the folder it was built in
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**It still runs.** The linker copied the code it needed into the program, so the `.a` file is not needed any more.
+
+</details>
+
+**Q512. True or false: a shared library is only needed when the program runs, not when you link it.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** The linker needs the `.so` (and the header) to check the symbols and to record the library's name in the program. Without it the link fails with `ld: cannot find -lcalc`. The library is needed **again** when the program runs.
+
+</details>
+
+**Q513. `readelf -d app` prints `NEEDED  Shared library: [libfoo.so]`. What does that tell you?**
+
+- **A)** libfoo.so is in the current folder
+- **B)** The program asks for libfoo.so, but it does not say whether the file can be found
+- **C)** The program was linked statically
+- **D)** libfoo.so is loaded and running
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+Only that the program **asks for** `libfoo.so`. `readelf` reads the program file and never looks at the disk, so it can't say whether the file exists. Use `ldd app` to see whether it is found (`=> path` or `not found`).
+
+</details>
+
+**Q514. Which statements about libraries are true? Select all that apply.**
+
+- **A)** The linker copies the needed code from a static library into the program
+- **B)** A program linked with a static library still needs the `.a` file to run
+- **C)** Two programs that use the same `.so` can share its code in memory
+- **D)** With a library, nobody can read how your function works
+
+<details><summary>Show answer</summary>
+
+**Correct: A, C**
+
+The linker **copies** needed code from a static library, and two programs that use the same `.so` **share its code pages** in memory (the same file is mapped into both). A finished static program does **not** need the `.a` any more. And a library only hides the **source**: `objdump -d` shows the machine code.
+
+</details>
+
+**Q515. A program has `RUNPATH=/opt/v1` and you run it with `LD_LIBRARY_PATH=/opt/v2`. Both folders hold a `libx.so`. Which one is loaded?**
+
+- **A)** `/opt/v1`, the path stored in the program
+- **B)** `/opt/v2`, from `LD_LIBRARY_PATH`
+- **C)** Neither: it is an error
+- **D)** Whichever file is newer
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**`/opt/v2`.** `LD_LIBRARY_PATH` is searched **before** `RUNPATH`, so the user can override it. With the old `RPATH` tag the program's own path would win and `/opt/v1` would load.
+
+</details>
+
+**Q516. A program runs on your machine but on the server it prints `cannot open shared object file`. Give two ways to find out what is wrong and two ways to fix it.**
+
+<details><summary>Show answer</summary>
+
+**Find out:** `ldd app` and look for `not found`; `readelf -d app | grep -E 'NEEDED|RUNPATH|RPATH'` to see what it asks for and where it looks; `LD_DEBUG=libs ./app` to see every folder the loader tried. **Fix:** copy the `.so` to the server and set `LD_LIBRARY_PATH`; link with `-Wl,-rpath,'$ORIGIN/lib'` and ship the `.so` next to the program; or install it in a system folder such as `/usr/local/lib` and run `ldconfig`.
+
+</details>
+
+**Q517. What are the two main differences between `RPATH` and `RUNPATH`?**
+
+<details><summary>Show answer</summary>
+
+**Order:** `RPATH` is searched **before** `LD_LIBRARY_PATH` (the user can't override it); `RUNPATH` is searched **after** it. **Reach:** `RPATH` is also used for the libraries your libraries need; `RUNPATH` only applies to the program's **direct** `NEEDED` libraries, so each library in a chain needs its own `RUNPATH`. Tested: with `RUNPATH` on `app`, `app -> libb.so -> liba.so` found `libb.so` but `liba.so` was `not found`.
+
+</details>
+
+**Q518. Your CMake project (`target_link_libraries(Main Calculator)`) built `bin/Main`, and `readelf -d bin/Main` shows `RUNPATH: .../shared_libraries/lib`. You never wrote that. Where did it come from, and what is the catch?**
+
+<details><summary>Show answer</summary>
+
+**CMake adds it** when it links in the build tree, so you can run `bin/Main` straight from the build folder with no setup. The catch: it is an **absolute path**. Move the library folder, or copy `bin/Main` to another machine, and the loader can't find the `.so` (`not found`). For something you ship, use a relative `RUNPATH` such as `$ORIGIN/../lib`. The static project's `Main` has no `RUNPATH` and no `NEEDED` for the library, because the code is inside.
+
+</details>
+
+**Q519. True or false: `ldd` is always safe to run on any binary.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+**False.** `man ldd` warns that it may **execute the program** it inspects. For a binary you don't trust, `readelf -d` gives the same `NEEDED` list without running anything.
+
+</details>
+
+**Q520. `libcalc.a` and `libcalc.so` are in the same folder and you link with `-lcalc`. Which one is used?**
+
+- **A)** The `.so`
+- **B)** The `.a`
+- **C)** Whichever file is newer
+- **D)** Neither: it is an ambiguity error
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**The `.so`.** The linker prefers the shared library when both exist; the program then lists `libcalc.so` as `NEEDED`. `-l:libcalc.a` forces the static one.
+
+</details>
+
+**Q521. When would you choose a static library, and when a shared one? Give one real reason for each.**
+
+<details><summary>Show answer</summary>
+
+**Static:** you want **one self-contained file** to deploy, with no "missing library" problem on the target machine. **Shared:** many programs use the same code, so it is **loaded once and shared**, and you can fix a bug by replacing the `.so` without relinking every program (as long as the interface hasn't changed).
+
+</details>
+
+**Q522. A program needs `libb.so`, which needs `liba.so`. Both are in `/opt/libs`. The program was linked with `-Wl,-rpath,/opt/libs` (stored as `RUNPATH`); `libb.so` has no path of its own. What does the loader do?**
+
+- **A)** It finds both libraries
+- **B)** It finds `libb.so`, but `liba.so` is not found
+- **C)** It finds neither: RUNPATH is ignored for programs
+- **D)** It loads `liba.so` from `LD_LIBRARY_PATH` only if RPATH is also set
+
+<details><summary>Show answer</summary>
+
+**Correct: B**
+
+It finds `libb.so` through the program's `RUNPATH`, but **`liba.so` is not found**: a `RUNPATH` applies only to the program's own direct libraries, not to the libraries those libraries need. (The old `RPATH` would have been used for the whole chain.) Fix: give `libb.so` its own `RUNPATH` (e.g. `$ORIGIN`), or install the libraries where the loader looks by default.
+
+</details>
+
+**Q523. Why must code that goes into a shared library be compiled with `-fPIC`?**
+
+<details><summary>Show answer</summary>
+
+A shared library is mapped at a **different address** in each program, chosen by the loader. Position-independent code reaches its functions and global data through relative addresses and tables filled in at load time, so it works wherever it is placed. Code compiled without it may contain absolute addresses, and the linker refuses to put it in a `.so`: `relocation R_X86_64_PC32 against symbol ... can not be used when making a shared object; recompile with -fPIC`.
+
+</details>
+
+**Q524. True or false: `LD_LIBRARY_PATH` can make a program load a different copy of a library than the folder stored in its `RUNPATH`.**
+
+- **A)** True
+- **B)** False
+
+<details><summary>Show answer</summary>
+
+**Correct: A**
+
+**True.** The loader searches `LD_LIBRARY_PATH` **before** `RUNPATH`, so a library found there wins. (With the older `RPATH` tag it would not: `RPATH` is searched first.)
 
 </details>

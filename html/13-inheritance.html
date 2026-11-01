@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="is-a reuse; base subobject first; watch object slicing."><title>13 Inheritance — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=8f762b8c8a"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
+<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="A derived class reuses and extends a base class. Use it for a true is-a relationship; use composition (has-a) for everything else."><title>13 Inheritance — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=c3e831d229"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
 <a class="sb-home" href="../index.html">Course home</a>
 <details class="sb-group" open><summary><span>C++ Core</span><span class="sb-count" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static">0/28</span></summary><ul>
 <li><a class="sb-link" data-slug="control-flow" href="../html/01-control-flow.html"><span class="sb-num">01</span><span class="sb-title-text">Control Flow</span><span class="sb-check" aria-hidden="true"></span></a></li>
@@ -47,25 +47,265 @@
 <li><a class="sb-link" data-slug="memory-allocation-and-fragmentation" href="../html/26-memory-allocation-and-fragmentation.html"><span class="sb-num">26</span><span class="sb-title-text">Allocation Methods &amp; Fragmentation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="demand-paging-and-swapping" href="../html/27-demand-paging-and-swapping.html"><span class="sb-num">27</span><span class="sb-title-text">Demand Paging, Page Faults &amp; Swapping</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership">0/4</span></summary><ul>
+<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership libraries">0/5</span></summary><ul>
 <li><a class="sb-link" data-slug="linux-filesystem-navigation" href="../html/28-linux-filesystem-navigation.html"><span class="sb-num">28</span><span class="sb-title-text">Filesystem &amp; Navigation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="linux-permissions" href="../html/29-linux-permissions.html"><span class="sb-num">29</span><span class="sb-title-text">Permissions (rwx)</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chmod" href="../html/30-chmod.html"><span class="sb-num">30</span><span class="sb-title-text">chmod</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chown-ownership" href="../html/31-chown-ownership.html"><span class="sb-num">31</span><span class="sb-title-text">chown &amp; Ownership</span><span class="sb-check" aria-hidden="true"></span></a></li>
+<li><a class="sb-link" data-slug="libraries" href="../html/45-libraries.html"><span class="sb-num">45</span><span class="sb-title-text">Libraries: Static and Shared</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">293</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
+<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">524</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
 <div class="sb-section"><div class="sb-label">Deep dives</div>
 <a class="sb-plain" href="../extras/heap-layout-new-malloc.html">Heap layout — new / delete / malloc / free</a>
 <a class="sb-plain" href="../extras/shared-ptr-cycle.html">shared_ptr circular reference — why it leaks</a>
 <a class="sb-plain" href="../extras/code-to-execution-road.html">From written code to execution</a>
 </div></nav><div class="scrim" id="scrim" hidden></div><main id="main" tabindex="-1"><div class="lesson-wrap"><article class="page lesson" data-slug="inheritance" data-order="13">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Course</a><span aria-hidden="true">&rsaquo;</span><a href="../index.html#module-c-core">C++ Core</a><span aria-hidden="true">&rsaquo;</span><span aria-current="page">Inheritance</span></nav>
-<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Core</span><span class="meta-item">Lesson 13 of 44</span><span class="meta-item">1 min read</span><span class="meta-item">6 questions</span></div><h1>Inheritance</h1><p class="lead">is-a reuse; base subobject first; watch object slicing.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
+<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Core</span><span class="meta-item">Lesson 13 of 45</span><span class="meta-item">14 min read</span><span class="meta-item">13 questions</span></div><h1>Inheritance</h1><p class="lead">A derived class reuses and extends a base class. Use it for a true is-a relationship; use composition (has-a) for everything else.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
 <p class="legend-inline"><span class="chip chip-concept"><span aria-hidden="true">&#9670;</span> Concept</span> core idea<span class="chip chip-watch"><span aria-hidden="true">&#9650;</span> Watch out</span> easy to get wrong</p>
-<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li>Derived class takes on base members; <strong>code reuse</strong> + models <strong>is-a</strong> (Audi is-a Car). Contrast <strong>has-a</strong> = composition.</li><li>A derived object contains a base subobject (<strong>base part laid out first</strong>); construction base→derived, destruction derived→base.</li><li>Modes: <code>public</code> (true is-a), <code>protected</code>, <code>private</code> (default for <code>class</code>).</li><li><code>protected</code> member = accessible to the class's own methods AND derived classes, not outside.</li><li><strong>Object slicing</strong>: assigning derived → base <strong>by value</strong> copies only the base part → use base pointers/references for polymorphism.</li></ol></section>
-<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
-<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">is-a vs has-a</div><div class="d">is-a = inheritance (Car is-a Vehicle). has-a = composition (Car has-an Engine as a member). Prefer composition unless it's truly is-a.</div></div><div class="pair"><div class="vs">protected vs private</div><div class="d"><code>private</code> = only this class. <code>protected</code> = this class and its derived classes ('family').</div></div><div class="pair"><div class="vs">slicing vs polymorphism</div><div class="d">Copy a derived into a base BY VALUE → derived part sliced off. Use a base POINTER/REFERENCE to keep the full object and get polymorphism.</div></div></div></section>
-<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>6 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#inheritance">Start the 6 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
+<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li><strong>Inheritance</strong>: <code>class Car : public Vehicle</code> gives <code>Car</code> all of <code>Vehicle</code>'s members, and <code>Car</code> adds its own. Use it only when the derived class truly <strong>is a</strong> kind of the base.</li><li>A derived object <strong>contains a base part</strong>. Construction runs <strong>base first, then derived</strong>; destruction runs in reverse. Pass arguments to the base constructor in the <strong>initializer list</strong>: <code>Car(...) : Vehicle(brand)</code>.</li><li><strong>Not inherited</strong>: constructors, destructor, assignment operators. <code>using Vehicle::Vehicle;</code> opts in to the base constructors.</li><li><code>public</code> inheritance keeps the base's public members public: the normal <strong>is-a</strong>. <code>protected</code>/<code>private</code> inheritance hide them (rare: reuse of implementation).</li><li><code>protected</code> member = usable by the class <strong>and its derived classes</strong>, not by outside code.</li><li><strong>has-a = composition</strong>: keep the other object as a <strong>member</strong> (<code>Car</code> has an <code>Engine</code>). Prefer it when you only want to reuse code or the relationship is "contains / uses".</li><li><strong>Substitution test (Liskov)</strong>: anything that works with a base object must still work with a derived one. If not (Square/Rectangle), don't inherit.</li><li>A derived object can be passed where a base is expected (<strong>upcast</strong>, via pointer or reference). Copying it into a base <strong>by value slices</strong> it, and a derived function <strong>hides</strong> every base overload with the same name.</li></ol></section>
+<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#what-inheritance-is">What inheritance is</a><a href="#constructors-and-destruction-order">Constructors and destruction order</a><a href="#access-public-protected-and-private-inheritance">Access: public, protected and private inheritance</a><a href="#is-a-vs-has-a-inheritance-vs-composition">is-a vs has-a: inheritance vs composition</a><a href="#the-substitution-test-liskov">The substitution test (Liskov)</a><a href="#upcasting-slicing-and-name-hiding">Upcasting, slicing and name hiding</a><a href="#multiple-inheritance-and-the-diamond">Multiple inheritance and the diamond</a><a href="#common-mistakes">Common mistakes</a><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
+<section class="section" aria-labelledby="what-inheritance-is"><h2 id="what-inheritance-is">What inheritance is</h2><p><strong>Meaning:</strong> a new class (the <strong>derived</strong> class) is built on an existing one (the <strong>base</strong> class). The derived class automatically has the base's data and functions, and adds what is special about it. The relationship it models is <strong>is-a</strong>: a <code>Car</code> <strong>is a</strong> <code>Vehicle</code>.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-kw">class</span> Vehicle {                       <span class="tk-com">// base class: what every vehicle has</span>
+<span class="tk-kw">public</span>:
+    <span class="tk-std">std::string</span> brand;
+    <span class="tk-kw">void</span> <span class="tk-fn">honk</span>() <span class="tk-kw">const</span> { <span class="tk-std">std::cout</span> &lt;&lt; brand &lt;&lt; <span class="tk-str">": beep\n"</span>; }
+};
+
+<span class="tk-kw">class</span> Car : <span class="tk-kw">public</span> Vehicle {          <span class="tk-com">// derived class: a Car IS A Vehicle</span>
+<span class="tk-kw">public</span>:
+    <span class="tk-kw">int</span> doors = <span class="tk-num">4</span>;                    <span class="tk-com">// added by Car</span>
+    <span class="tk-kw">void</span> <span class="tk-fn">openTrunk</span>() <span class="tk-kw">const</span> { <span class="tk-std">std::cout</span> &lt;&lt; brand &lt;&lt; <span class="tk-str">": trunk open\n"</span>; }
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    Car c;
+    c.brand = <span class="tk-str">"Audi"</span>;                 <span class="tk-com">// inherited from Vehicle</span>
+    c.<span class="tk-fn">honk</span>();                         <span class="tk-com">// inherited from Vehicle</span>
+    c.<span class="tk-fn">openTrunk</span>();                    <span class="tk-com">// Car's own function</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; c.doors &lt;&lt; <span class="tk-str">" doors\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>Audi: beep
+Audi: trunk open
+4 doors</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>class Car : public Vehicle</code> says: start from everything in <code>Vehicle</code>, then add the members listed here.</li><li><code>c.brand</code> and <code>c.honk()</code> are found in the <code>Vehicle</code> part of <code>c</code>. <code>doors</code> and <code>openTrunk()</code> are in the <code>Car</code> part.</li><li>Inside <code>openTrunk()</code>, <code>Car</code> can use <code>brand</code> directly because it is a public member of its base.</li></ol>
+<p><strong>Advantages:</strong></p>
+<ul><li>Shared code is written once in the base and reused by every derived class.</li><li>Code written for <code>Vehicle&amp;</code> works for every kind of vehicle (polymorphism, lesson 14).</li></ul>
+<p><strong>Disadvantages:</strong></p>
+<ul><li>The derived class depends on the base's details: a change in the base can break every derived class.</li><li>Deep hierarchies (A -&gt; B -&gt; C -&gt; D) are hard to follow: to understand <code>D</code> you must read all four classes.</li></ul></section>
+<section class="section" aria-labelledby="constructors-and-destruction-order"><h2 id="constructors-and-destruction-order">Constructors and destruction order</h2><p><strong>Meaning:</strong> a derived object is built in layers. The base part is built first, because the derived part may use it. The derived class chooses which base constructor runs, in its <strong>member initializer list</strong>. Destruction peels the layers off in reverse.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-kw">class</span> Vehicle {
+<span class="tk-kw">public</span>:
+    <span class="tk-std">std::string</span> brand;
+    <span class="tk-fn">Vehicle</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; b) : <span class="tk-fn">brand</span>(b) { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Vehicle("</span> &lt;&lt; brand &lt;&lt; <span class="tk-str">") "</span>; }
+    ~<span class="tk-fn">Vehicle</span>() { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"~Vehicle "</span>; }
+};
+
+<span class="tk-kw">class</span> Car : <span class="tk-kw">public</span> Vehicle {
+<span class="tk-kw">public</span>:
+    <span class="tk-kw">int</span> doors;
+    <span class="tk-fn">Car</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; b, <span class="tk-kw">int</span> d) : <span class="tk-fn">Vehicle</span>(b), <span class="tk-fn">doors</span>(d) {   <span class="tk-com">// base constructor chosen here</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"Car("</span> &lt;&lt; doors &lt;&lt; <span class="tk-str">") "</span>;
+    }
+    ~<span class="tk-fn">Car</span>() { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"~Car "</span>; }
+};
+
+<span class="tk-kw">class</span> Truck : <span class="tk-kw">public</span> Vehicle {
+<span class="tk-kw">public</span>:
+    <span class="tk-kw">using</span> Vehicle::Vehicle;            <span class="tk-com">// inherit Vehicle(const std::string&amp;) as Truck's constructor</span>
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    {
+        Car <span class="tk-fn">c</span>(<span class="tk-str">"Audi"</span>, <span class="tk-num">2</span>);
+        <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"| "</span>;
+    }                                  <span class="tk-com">// c is destroyed here</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"\n"</span>;
+    Truck <span class="tk-fn">t</span>(<span class="tk-str">"Volvo"</span>);
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"| "</span> &lt;&lt; t.brand &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>Vehicle(Audi) Car(2) | ~Car ~Vehicle
+Vehicle(Volvo) | Volvo
+~Vehicle</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>Car c("Audi", 2)</code> first runs <code>Vehicle("Audi")</code> (named in Car's initializer list), then Car's own members and body.</li><li>At the closing brace, <code>~Car</code> runs first, then <code>~Vehicle</code>: the exact reverse.</li><li><code>Vehicle</code> has no default constructor, so <code>Car</code> <strong>must</strong> name it in the initializer list, or it doesn't compile.</li><li>Constructors are <strong>not inherited</strong> automatically. <code>using Vehicle::Vehicle;</code> lets <code>Truck</code> be created with the same arguments as <code>Vehicle</code>. The last <code>~Vehicle</code> is <code>t</code> being destroyed at the end of <code>main</code>.</li></ol></section>
+<section class="section" aria-labelledby="access-public-protected-and-private-inheritance"><h2 id="access-public-protected-and-private-inheritance">Access: public, protected and private inheritance</h2><p><strong>Meaning:</strong> two separate things control access. The <strong>member's own label</strong> (<code>public</code>, <code>protected</code>, <code>private</code>) in the base, and the <strong>inheritance mode</strong> you write after the colon. The mode decides what the base's members become inside the derived class. <code>private</code> members of the base are never accessible in the derived class, whatever the mode.</p>
+<div class="table-wrap"><table class="md-table"><thead><tr><th scope="col">Base member is...</th><th scope="col"><code>: public Base</code></th><th scope="col"><code>: protected Base</code></th><th scope="col"><code>: private Base</code></th></tr></thead><tbody><tr><td><code>public</code></td><td>stays <code>public</code></td><td>becomes <code>protected</code></td><td>becomes <code>private</code></td></tr><tr><td><code>protected</code></td><td>stays <code>protected</code></td><td>stays <code>protected</code></td><td>becomes <code>private</code></td></tr><tr><td><code>private</code></td><td>not accessible</td><td>not accessible</td><td>not accessible</td></tr></tbody></table></div>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">class</span> Account {
+<span class="tk-kw">public</span>:
+    <span class="tk-kw">int</span> id = <span class="tk-num">7</span>;
+<span class="tk-kw">protected</span>:
+    <span class="tk-kw">int</span> balance = <span class="tk-num">100</span>;                <span class="tk-com">// derived classes may use it</span>
+<span class="tk-kw">private</span>:
+    <span class="tk-kw">int</span> pin = <span class="tk-num">1234</span>;                   <span class="tk-com">// only Account itself</span>
+};
+
+<span class="tk-kw">class</span> Savings : <span class="tk-kw">public</span> Account {
+<span class="tk-kw">public</span>:
+    <span class="tk-kw">void</span> <span class="tk-fn">addInterest</span>() {
+        balance += <span class="tk-num">5</span>;                 <span class="tk-com">// OK: protected is visible to derived classes</span>
+        <span class="tk-com">// pin = 0;                   // would not compile: private to Account</span>
+    }
+    <span class="tk-kw">int</span> <span class="tk-fn">getBalance</span>() <span class="tk-kw">const</span> { <span class="tk-kw">return</span> balance; }
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    Savings s;
+    s.<span class="tk-fn">addInterest</span>();
+    <span class="tk-std">std::cout</span> &lt;&lt; s.id &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; s.<span class="tk-fn">getBalance</span>() &lt;&lt; <span class="tk-str">"\n"</span>;   <span class="tk-com">// id is public, so main can read it</span>
+    <span class="tk-com">// std::cout &lt;&lt; s.balance;        // would not compile: protected, main is outside code</span>
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>7 105</code></pre></figure>
+<p><strong>When to use which:</strong></p>
+<ul><li><code>public</code>: almost always. It is the only mode that means <strong>is-a</strong> to the outside world.</li><li><code>private</code> / <code>protected</code>: "implemented in terms of". The outside can't treat <code>Derived</code> as a <code>Base</code>. Composition (next section) usually says this more clearly.</li><li>Remember the default: <code>class D : B</code> is <strong>private</strong> inheritance, <code>struct D : B</code> is public (lesson 6).</li></ul></section>
+<section class="section" aria-labelledby="is-a-vs-has-a-inheritance-vs-composition"><h2 id="is-a-vs-has-a-inheritance-vs-composition">is-a vs has-a: inheritance vs composition</h2><p><strong>Meaning:</strong></p>
+<ul><li><strong>is-a (inheritance)</strong>: <code>B</code> is a kind of <code>A</code>. A <code>Car</code> is a <code>Vehicle</code>. <code>Car</code> inherits from <code>Vehicle</code>.</li><li><strong>has-a (composition)</strong>: <code>B</code> contains an <code>A</code> as a part. A <code>Car</code> has an <code>Engine</code>. <code>Car</code> keeps an <code>Engine</code> as a member and uses it.</li></ul>
+<p>Most real classes use both: a <code>Car</code> is a <code>Vehicle</code> <strong>and</strong> has an <code>Engine</code>.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-kw">class</span> Engine {                         <span class="tk-com">// a part</span>
+<span class="tk-kw">public</span>:
+    <span class="tk-kw">int</span> horsepower;
+    <span class="tk-kw">explicit</span> <span class="tk-fn">Engine</span>(<span class="tk-kw">int</span> hp) : <span class="tk-fn">horsepower</span>(hp) {}
+    <span class="tk-kw">void</span> <span class="tk-fn">start</span>() <span class="tk-kw">const</span> { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"engine "</span> &lt;&lt; horsepower &lt;&lt; <span class="tk-str">"hp started\n"</span>; }
+};
+
+<span class="tk-kw">class</span> Vehicle {                        <span class="tk-com">// a general kind</span>
+<span class="tk-kw">public</span>:
+    <span class="tk-std">std::string</span> brand;
+    <span class="tk-kw">explicit</span> <span class="tk-fn">Vehicle</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; b) : <span class="tk-fn">brand</span>(b) {}
+};
+
+<span class="tk-kw">class</span> Car : <span class="tk-kw">public</span> Vehicle {           <span class="tk-com">// is-a: Car is a Vehicle</span>
+    Engine engine;                     <span class="tk-com">// has-a: Car has an Engine (a member)</span>
+<span class="tk-kw">public</span>:
+    <span class="tk-fn">Car</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; b, <span class="tk-kw">int</span> hp) : <span class="tk-fn">Vehicle</span>(b), <span class="tk-fn">engine</span>(hp) {}
+    <span class="tk-kw">void</span> <span class="tk-fn">drive</span>() <span class="tk-kw">const</span> {
+        engine.<span class="tk-fn">start</span>();                <span class="tk-com">// Car USES its engine; it is not an engine</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; brand &lt;&lt; <span class="tk-str">" is driving\n"</span>;
+    }
+};
+
+<span class="tk-kw">void</span> <span class="tk-fn">wash</span>(<span class="tk-kw">const</span> Vehicle&amp; v) { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"washing "</span> &lt;&lt; v.brand &lt;&lt; <span class="tk-str">"\n"</span>; }
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    Car <span class="tk-fn">c</span>(<span class="tk-str">"Audi"</span>, <span class="tk-num">190</span>);
+    c.<span class="tk-fn">drive</span>();
+    <span class="tk-fn">wash</span>(c);                           <span class="tk-com">// works: a Car can be used as a Vehicle</span>
+    <span class="tk-com">// c.start();                      // would not compile: Car is not an Engine</span>
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>engine 190hp started
+Audi is driving
+washing Audi</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>wash</code> takes a <code>const Vehicle&amp;</code>. A <code>Car</code> can be passed because a <code>Car</code> <strong>is</strong> a <code>Vehicle</code>. That's what inheritance buys.</li><li><code>Car</code> doesn't inherit from <code>Engine</code>. If it did, <code>c.start()</code> would compile and a <code>Car</code> could be passed to any function expecting an <code>Engine</code>. That makes no sense, so the engine is a <strong>member</strong>.</li><li>The engine stays an internal detail. <code>Car</code> decides what to expose (<code>drive()</code>), and could switch to a different engine type without changing its users.</li></ol>
+<div class="table-wrap"><table class="md-table"><thead><tr><th scope="col"></th><th scope="col">Inheritance (is-a)</th><th scope="col">Composition (has-a)</th></tr></thead><tbody><tr><td>Syntax</td><td><code>class Car : public Vehicle</code></td><td><code>class Car { Engine engine; };</code></td></tr><tr><td>Relationship</td><td>Car <strong>is a</strong> Vehicle</td><td>Car <strong>has an</strong> Engine</td></tr><tr><td>Use as the other type</td><td>Yes: pass a Car where a Vehicle is expected</td><td>No: a Car is not an Engine</td></tr><tr><td>Coupling</td><td>Tight: sees the base's public and protected parts</td><td>Loose: uses only the part's public interface</td></tr><tr><td>Change later</td><td>Hard: the base is fixed at compile time</td><td>Easy: swap the member type, or hold a pointer to an interface</td></tr><tr><td>Typical use</td><td>A family of types used through one interface</td><td>Building a class from parts; reusing code</td></tr></tbody></table></div>
+<p><strong>How to decide:</strong></p>
+<ol><li>Can you say "a <code>B</code> <strong>is a</strong> <code>A</code>" and mean it in every situation? If you can only say "a <code>B</code> <strong>has</strong>/<strong>uses</strong> an <code>A</code>", use composition.</li><li>Would every function that works on an <code>A</code> make sense on a <code>B</code>? (The substitution test, next section.)</li><li>Do you need to treat <code>B</code> as an <code>A</code> through a pointer or reference (a list of <code>Vehicle*</code>, a function taking <code>Vehicle&amp;</code>)? That's the real reason to inherit.</li></ol>
+<p>If the only goal is to reuse code, choose <strong>composition</strong>: the classes stay independent, and you expose only what you choose. This is the meaning of the guideline "prefer composition over inheritance".</p></section>
+<section class="section" aria-labelledby="the-substitution-test-liskov"><h2 id="the-substitution-test-liskov">The substitution test (Liskov)</h2><p><strong>Meaning:</strong> if <code>B</code> inherits from <code>A</code>, a <code>B</code> must be usable <strong>anywhere</strong> an <code>A</code> is expected, without surprises. This is the <strong>Liskov substitution principle</strong>. A relationship that sounds like is-a in everyday language can still fail it.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">class</span> Rectangle {
+<span class="tk-kw">protected</span>:
+    <span class="tk-kw">int</span> w = <span class="tk-num">0</span>, h = <span class="tk-num">0</span>;
+<span class="tk-kw">public</span>:
+    <span class="tk-kw">void</span> <span class="tk-fn">setWidth</span>(<span class="tk-kw">int</span> x)  { w = x; }
+    <span class="tk-kw">void</span> <span class="tk-fn">setHeight</span>(<span class="tk-kw">int</span> y) { h = y; }
+    <span class="tk-kw">int</span> <span class="tk-fn">area</span>() <span class="tk-kw">const</span> { <span class="tk-kw">return</span> w * h; }
+};
+
+<span class="tk-kw">class</span> Square : <span class="tk-kw">public</span> Rectangle {      <span class="tk-com">// "a square is a rectangle"... is it?</span>
+<span class="tk-kw">public</span>:
+    <span class="tk-kw">void</span> <span class="tk-fn">setSide</span>(<span class="tk-kw">int</span> s) { w = h = s; }
+};
+
+<span class="tk-com">// written for rectangles: width and height can be set independently</span>
+<span class="tk-kw">void</span> <span class="tk-fn">makeBanner</span>(Rectangle&amp; r) {
+    r.<span class="tk-fn">setWidth</span>(<span class="tk-num">10</span>);
+    r.<span class="tk-fn">setHeight</span>(<span class="tk-num">5</span>);
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"area "</span> &lt;&lt; r.<span class="tk-fn">area</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    Square sq;
+    sq.<span class="tk-fn">setSide</span>(<span class="tk-num">3</span>);
+    <span class="tk-fn">makeBanner</span>(sq);                    <span class="tk-com">// compiles: a Square is a Rectangle</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"this square now has area "</span> &lt;&lt; sq.<span class="tk-fn">area</span>() &lt;&lt; <span class="tk-str">", so its sides are 10 and 5\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>area 50
+this square now has area 50, so its sides are 10 and 5</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>makeBanner</code> relies on a promise of <code>Rectangle</code>: width and height are independent.</li><li>A square can't keep that promise. Through the <code>Rectangle&amp;</code>, the function sets 10 and 5, and the "square" is no longer square.</li><li>Overriding <code>setWidth</code> in <code>Square</code> to change both sides doesn't fix it: then <code>makeBanner</code> would print area 25 instead of 50, and still be surprised.</li></ol>
+<p><strong>Fix:</strong> don't make <code>Square</code> inherit from <code>Rectangle</code>. Make both separate classes (both can derive from a general <code>Shape</code>, lesson 15). The test to apply: <strong>behaviour</strong>, not everyday language, decides is-a.</p></section>
+<section class="section" aria-labelledby="upcasting-slicing-and-name-hiding"><h2 id="upcasting-slicing-and-name-hiding">Upcasting, slicing and name hiding</h2><p><strong>Meaning:</strong></p>
+<ul><li><strong>Upcasting</strong>: a <code>Derived*</code> converts to a <code>Base*</code> (and a <code>Derived&amp;</code> to a <code>Base&amp;</code>) automatically. The object stays whole; you just see it as its base.</li><li><strong>Downcasting</strong>: going back from <code>Base*</code> to <code>Derived*</code> is not automatic. It needs <code>dynamic_cast</code> (lesson on casting) and is a sign the design may be wrong.</li><li><strong>Slicing</strong>: copying a derived object into a base object <strong>by value</strong> copies only the base part.</li><li><strong>Name hiding</strong>: if the derived class declares a function with the same name as a base function, it <strong>hides all</strong> base functions with that name, even with different parameters.</li></ul>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-kw">class</span> Vehicle {
+<span class="tk-kw">public</span>:
+    <span class="tk-std">std::string</span> brand = <span class="tk-str">"generic"</span>;
+    <span class="tk-kw">void</span> <span class="tk-fn">print</span>() <span class="tk-kw">const</span>         { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"vehicle "</span> &lt;&lt; brand &lt;&lt; <span class="tk-str">"\n"</span>; }
+    <span class="tk-kw">void</span> <span class="tk-fn">print</span>(<span class="tk-kw">int</span> times) <span class="tk-kw">const</span> { <span class="tk-kw">for</span> (<span class="tk-kw">int</span> i = <span class="tk-num">0</span>; i &lt; times; i++) <span class="tk-fn">print</span>(); }
+};
+
+<span class="tk-kw">class</span> Car : <span class="tk-kw">public</span> Vehicle {
+<span class="tk-kw">public</span>:
+    <span class="tk-kw">int</span> doors = <span class="tk-num">4</span>;
+    <span class="tk-kw">using</span> Vehicle::print;              <span class="tk-com">// without this line, print(int) below would not compile</span>
+    <span class="tk-kw">void</span> <span class="tk-fn">print</span>() <span class="tk-kw">const</span> { <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"car "</span> &lt;&lt; brand &lt;&lt; <span class="tk-str">" with "</span> &lt;&lt; doors &lt;&lt; <span class="tk-str">" doors\n"</span>; }
+};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    Car c;
+    c.brand = <span class="tk-str">"Audi"</span>;
+
+    Vehicle&amp; ref = c;                  <span class="tk-com">// upcast: no copy, ref IS c</span>
+    Vehicle* ptr = &amp;c;                 <span class="tk-com">// upcast through a pointer</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; ref.brand &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; ptr-&gt;brand &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    Vehicle copy = c;                  <span class="tk-com">// SLICED: only the Vehicle part is copied, doors is gone</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"copy is a "</span> &lt;&lt; <span class="tk-kw">sizeof</span>(copy) &lt;&lt; <span class="tk-str">"-byte Vehicle, c is a "</span> &lt;&lt; <span class="tk-kw">sizeof</span>(c) &lt;&lt; <span class="tk-str">"-byte Car\n"</span>;
+
+    c.<span class="tk-fn">print</span>();                         <span class="tk-com">// Car::print()</span>
+    c.<span class="tk-fn">print</span>(<span class="tk-num">2</span>);                        <span class="tk-com">// Vehicle::print(int), visible thanks to the using-declaration</span>
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>Audi Audi
+copy is a 32-byte Vehicle, c is a 40-byte Car
+car Audi with 4 doors
+vehicle Audi
+vehicle Audi</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>ref</code> and <code>ptr</code> see the same object <code>c</code>, through its <code>Vehicle</code> part.</li><li><code>copy</code> is a separate <code>Vehicle</code> object, smaller than <code>c</code> (sizes are for g++ on x86-64), because the <code>Car</code> part was sliced off.</li><li>Without <code>using Vehicle::print;</code>, <code>c.print(2)</code> would not compile: <code>Car::print()</code> hides <strong>both</strong> base <code>print</code> functions.</li><li><code>Vehicle::print(int)</code> calls <code>print()</code>. That call goes to <code>Vehicle::print()</code>, not <code>Car</code>'s: without <code>virtual</code> (lesson 14) the choice is made from the type the code sits in.</li></ol></section>
+<section class="section" aria-labelledby="multiple-inheritance-and-the-diamond"><h2 id="multiple-inheritance-and-the-diamond">Multiple inheritance and the diamond</h2><p><strong>Meaning:</strong> a class may inherit from several bases: <code>class Smartphone : public Phone, public Camera</code>. It gets the members of both. Trouble starts in the <strong>diamond</strong>: two bases that share a common base. Then the derived object holds <strong>two copies</strong> of that common base, and using its members is ambiguous. <code>virtual</code> inheritance keeps a single shared copy.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">class</span> Device { <span class="tk-kw">public</span>: <span class="tk-kw">int</span> serial = <span class="tk-num">42</span>; };
+<span class="tk-kw">class</span> Phone  : <span class="tk-kw">virtual</span> <span class="tk-kw">public</span> Device {};    <span class="tk-com">// virtual: share one Device</span>
+<span class="tk-kw">class</span> Camera : <span class="tk-kw">virtual</span> <span class="tk-kw">public</span> Device {};
+<span class="tk-kw">class</span> Smartphone : <span class="tk-kw">public</span> Phone, <span class="tk-kw">public</span> Camera {};
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    Smartphone s;
+    <span class="tk-std">std::cout</span> &lt;&lt; s.serial &lt;&lt; <span class="tk-str">"\n"</span>;          <span class="tk-com">// one Device part, so no ambiguity</span>
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>42</code></pre></figure>
+<p>Without the two <code>virtual</code> keywords, <code>Smartphone</code> would contain two <code>Device</code> parts and <code>s.serial</code> would not compile ("request for member 'serial' is ambiguous").</p>
+<p><strong>Use it for:</strong> combining <strong>interfaces</strong> (classes with only pure virtual functions, lesson 15), which carry no data and no diamond trouble. <strong>Avoid it for:</strong> combining classes that hold data. Composition is simpler.</p></section>
+<section class="callout watch" aria-labelledby="common-mistakes"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="common-mistakes">Common mistakes</h2><ul><li><strong>Inheriting only to reuse code.</strong> <code>class Stack : public std::vector&lt;int&gt;</code> lets users call <code>insert()</code> in the middle of your stack. Keep a <code>std::vector&lt;int&gt;</code> as a private member instead (composition).</li><li><strong>Forgetting <code>public</code>.</strong> <code>class Car : Vehicle</code> is private inheritance, so <code>wash(c)</code> (expecting <code>const Vehicle&amp;</code>) no longer compiles from outside.</li><li><strong>Passing by value.</strong> <code>void f(Vehicle v)</code> slices every <code>Car</code> passed to it. Take <code>const Vehicle&amp;</code> or <code>Vehicle*</code>.</li><li><strong>Hiding instead of overloading.</strong> A derived <code>print()</code> hides the base's <code>print(int)</code>. Add <code>using Base::print;</code> or rename.</li><li><strong>Deleting through a base pointer.</strong> If objects are deleted through a <code>Base*</code>, the base needs a <code>virtual</code> destructor (lessons 12 and 14).</li><li><strong>Stopping inheritance on purpose:</strong> <code>class Car final : public Vehicle</code> forbids any class from deriving from <code>Car</code>.</li></ul></section>
+<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">is-a vs has-a</div><div class="d"><strong>is-a</strong> = inheritance: a Car is a Vehicle, so a Car can be passed where a Vehicle is expected. <strong>has-a</strong> = composition: a Car has an Engine as a member and uses it; a Car is not an Engine.</div></div><div class="pair"><div class="vs">public vs private inheritance</div><div class="d"><code>public</code>: the base's public members stay public, so the outside world can treat Derived as a Base. <code>private</code> (the default for <code>class</code>): they become private; the outside can't use Derived as a Base.</div></div><div class="pair"><div class="vs">protected vs private member</div><div class="d"><code>private</code> = only this class. <code>protected</code> = this class and its derived classes. Outside code can use neither.</div></div><div class="pair"><div class="vs">hiding vs overriding</div><div class="d">Hiding: a derived function with the same name hides all base functions of that name (any parameters), chosen at compile time. Overriding: replacing a <code>virtual</code> function with the same signature, chosen at run time (lesson 14).</div></div><div class="pair"><div class="vs">upcast vs downcast</div><div class="d">Upcast (Derived* -&gt; Base*) is automatic and always safe. Downcast (Base* -&gt; Derived*) needs <code>dynamic_cast</code>, which checks at run time.</div></div><div class="pair"><div class="vs">slicing vs polymorphism</div><div class="d">Copy a derived object into a base <strong>by value</strong> and the derived part is cut off. Use a base <strong>pointer or reference</strong> to keep the whole object.</div></div></div></section>
+<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>13 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#inheritance">Start the 13 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
 <div class="pager pager-bottom" aria-label="Lesson navigation"><a href="12-destructors.html" rel="prev"><span class="pg-dir">&larr; Previous</span><span class="pg-title">12. Destructors &amp; RAII</span></a><a href="14-virtual-functions.html" rel="next" class="pg-next"><span class="pg-dir">Next &rarr;</span><span class="pg-title">14. Virtual Functions</span></a></div>
 </article>
-<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=8f762b8c8a"></script><script src="../assets/app.js?v=8f762b8c8a" defer></script></body></html>
+<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-plain" href="#what-inheritance-is">What inheritance is</a></li><li><a class="otp-plain" href="#constructors-and-destruction-order">Constructors and destruction order</a></li><li><a class="otp-plain" href="#access-public-protected-and-private-inheritance">Access: public, protected and private inheritance</a></li><li><a class="otp-plain" href="#is-a-vs-has-a-inheritance-vs-composition">is-a vs has-a: inheritance vs composition</a></li><li><a class="otp-plain" href="#the-substitution-test-liskov">The substitution test (Liskov)</a></li><li><a class="otp-plain" href="#upcasting-slicing-and-name-hiding">Upcasting, slicing and name hiding</a></li><li><a class="otp-plain" href="#multiple-inheritance-and-the-diamond">Multiple inheritance and the diamond</a></li><li><a class="otp-watch" href="#common-mistakes">Common mistakes</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=c3e831d229"></script><script src="../assets/app.js?v=c3e831d229" defer></script></body></html>

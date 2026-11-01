@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="An alias to an existing variable, fixed at declaration."><title>04 References — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=8f762b8c8a"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
+<html lang="en" data-root="../" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="dark light"><meta name="description" content="A reference is another name for an existing object, bound once at declaration: pass big objects by const reference, and never return one to a local."><title>04 References — C++ / Linux Systems Programming</title><script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('course.theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();</script><link rel="stylesheet" href="../assets/style.css?v=c3e831d229"></head><body class="lesson"><a class="skip" href="#main">Skip to content</a><header class="topbar"><button type="button" class="iconbtn menu-btn" id="menu-btn" aria-label="Open course menu" aria-controls="sidebar" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">C++</span><span class="brand-text">Systems Course<small>C/C++ &middot; Linux &middot; Memory</small></span></a><span class="spacer"></span><button type="button" class="searchbtn" id="open-search" aria-label="Search the course"><span aria-hidden="true">&#128269;</span><span class="searchbtn-text">Search topics, concepts, questions&hellip;</span><kbd>/</kbd></button><div class="theme-switch" role="group" aria-label="Colour theme"><button type="button" data-theme-set="dark" aria-pressed="true"><span aria-hidden="true">&#127769;</span><span class="ts-label"> Dark</span></button><button type="button" data-theme-set="light" aria-pressed="false"><span aria-hidden="true">&#9728;</span><span class="ts-label"> Light</span></button></div><div class="readbar" aria-hidden="true"><span id="readbar"></span></div></header><div class="layout"><nav class="sidebar" id="sidebar" aria-label="Course navigation">
 <a class="sb-home" href="../index.html">Course home</a>
 <details class="sb-group" open><summary><span>C++ Core</span><span class="sb-count" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static">0/28</span></summary><ul>
 <li><a class="sb-link" data-slug="control-flow" href="../html/01-control-flow.html"><span class="sb-num">01</span><span class="sb-title-text">Control Flow</span><span class="sb-check" aria-hidden="true"></span></a></li>
@@ -47,28 +47,217 @@
 <li><a class="sb-link" data-slug="memory-allocation-and-fragmentation" href="../html/26-memory-allocation-and-fragmentation.html"><span class="sb-num">26</span><span class="sb-title-text">Allocation Methods &amp; Fragmentation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="demand-paging-and-swapping" href="../html/27-demand-paging-and-swapping.html"><span class="sb-num">27</span><span class="sb-title-text">Demand Paging, Page Faults &amp; Swapping</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership">0/4</span></summary><ul>
+<details class="sb-group"><summary><span>Linux</span><span class="sb-count" data-cat-slugs="linux-filesystem-navigation linux-permissions chmod chown-ownership libraries">0/5</span></summary><ul>
 <li><a class="sb-link" data-slug="linux-filesystem-navigation" href="../html/28-linux-filesystem-navigation.html"><span class="sb-num">28</span><span class="sb-title-text">Filesystem &amp; Navigation</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="linux-permissions" href="../html/29-linux-permissions.html"><span class="sb-num">29</span><span class="sb-title-text">Permissions (rwx)</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chmod" href="../html/30-chmod.html"><span class="sb-num">30</span><span class="sb-title-text">chmod</span><span class="sb-check" aria-hidden="true"></span></a></li>
 <li><a class="sb-link" data-slug="chown-ownership" href="../html/31-chown-ownership.html"><span class="sb-num">31</span><span class="sb-title-text">chown &amp; Ownership</span><span class="sb-check" aria-hidden="true"></span></a></li>
+<li><a class="sb-link" data-slug="libraries" href="../html/45-libraries.html"><span class="sb-num">45</span><span class="sb-title-text">Libraries: Static and Shared</span><span class="sb-check" aria-hidden="true"></span></a></li>
 </ul></details>
-<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">293</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
+<div class="sb-section"><div class="sb-label">Practice</div><a class="sb-plain" href="../questions/master-question-sheet.html">Question bank <span class="sb-badge">524</span></a><a class="sb-plain" href="../questions/exam-sheet.html">Exam sheet</a><a class="sb-plain" href="../questions/progress.html">Progress</a><a class="sb-plain" href="../questions/practice.html">Practice weak spots</a><a class="sb-plain" href="../questions/mocks.html">Mock exams <span class="sb-badge">5</span></a></div>
 <div class="sb-section"><div class="sb-label">Deep dives</div>
 <a class="sb-plain" href="../extras/heap-layout-new-malloc.html">Heap layout — new / delete / malloc / free</a>
 <a class="sb-plain" href="../extras/shared-ptr-cycle.html">shared_ptr circular reference — why it leaks</a>
 <a class="sb-plain" href="../extras/code-to-execution-road.html">From written code to execution</a>
 </div></nav><div class="scrim" id="scrim" hidden></div><main id="main" tabindex="-1"><div class="lesson-wrap"><article class="page lesson" data-slug="references" data-order="4">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Course</a><span aria-hidden="true">&rsaquo;</span><a href="../index.html#module-c-core">C++ Core</a><span aria-hidden="true">&rsaquo;</span><span aria-current="page">References</span></nav>
-<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Core</span><span class="meta-item">Lesson 04 of 44</span><span class="meta-item">1 min read</span><span class="meta-item">6 questions</span></div><h1>References</h1><p class="lead">An alias to an existing variable, fixed at declaration.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
+<header class="lesson-head"><div class="eyebrow"><span class="cat-tag">C++ Core</span><span class="meta-item">Lesson 04 of 45</span><span class="meta-item">11 min read</span><span class="meta-item">12 questions</span></div><h1>References</h1><p class="lead">A reference is another name for an existing object, bound once at declaration: pass big objects by const reference, and never return one to a local.</p><div class="lesson-actions"><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button><a class="btn btn-ghost" href="#test">Test yourself &darr;</a></div></header>
 <p class="legend-inline"><span class="chip chip-concept"><span aria-hidden="true">&#9670;</span> Concept</span> core idea<span class="chip chip-watch"><span aria-hidden="true">&#9650;</span> Watch out</span> easy to get wrong</p>
-<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li>A reference is an <strong>alias</strong> to an existing variable's address, <strong>fixed at declaration</strong> — cannot be reseated.</li><li>Must be initialized when declared; <strong>cannot be null</strong> (in well-formed code); no reference arithmetic.</li><li>Pass-by-value = copy (changes don't escape); pass-by-reference (<code>int&amp;</code>) = writes go straight to the caller's variable.</li></ol></section>
-<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#why-pass-by-reference">Why pass by reference</a><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
-<section class="section" aria-labelledby="why-pass-by-reference"><h2 id="why-pass-by-reference">Why pass by reference</h2><p>Passing a big object by value copies it. A reference (or <code>const</code> reference) avoids the copy and can modify the caller's object.</p>
-<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-kw">void</span> <span class="tk-fn">addTip</span>(<span class="tk-kw">int</span>&amp; bill){ bill += <span class="tk-num">10</span>; }
-<span class="tk-kw">void</span> <span class="tk-fn">look</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; s);  <span class="tk-com">// no copy, read-only</span></code></pre></figure></section>
-<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">reference vs pointer</div><div class="d">A reference is a fixed alias (no null, no reseating, no <code>*</code>/<code>&amp;</code>). A pointer can be null, reseated, and needs dereferencing.</div></div><div class="pair"><div class="vs">pass-by-value vs pass-by-reference</div><div class="d">By value copies the argument (changes stay local). By reference operates on the caller's actual variable.</div></div></div></section>
-<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>6 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#references">Start the 6 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
+<section class="callout concept keypoints" aria-labelledby="kp"><div class="callout-label"><span aria-hidden="true">&#9670;</span> Concept</div><h2 id="kp">Key concepts</h2><ol class="kp-list"><li>A reference is an <strong>alias</strong> (another name) for an existing object: after <code>int&amp; r = x;</code>, using <code>r</code> <strong>is</strong> using <code>x</code>, and <code>&amp;r == &amp;x</code>.</li><li>It must be initialized when declared and is <strong>fixed</strong> from then on: <code>r = y;</code> copies <code>y</code>'s value into <code>x</code>, it does not rebind <code>r</code>. It <strong>cannot be null</strong> (in well-formed code) and has no arithmetic.</li><li>Pass-by-value = copy (changes don't escape); pass-by-reference (<code>int&amp;</code>) = writes go straight to the caller's variable.</li><li><code>const T&amp;</code> = read-only alias with <strong>no copy</strong>: the usual way to pass big objects (<code>std::string</code>, <code>std::vector</code>). It can also bind to a temporary (<code>const int&amp; r = 5;</code>); a plain <code>int&amp;</code> can't.</li><li>Range-for: <code>auto x</code> <strong>copies</strong> each element, <code>auto&amp; x</code> lets you <strong>modify</strong> them, <code>const auto&amp; x</code> <strong>reads</strong> without copying.</li><li>Return a reference only to something that outlives the call: a member, a static, an element of a container the caller owns. A reference to a local <strong>dangles</strong> (UB).</li><li>Under the hood a reference is usually an <strong>address</strong>, but <code>sizeof(r)</code> and <code>&amp;r</code> give the size and address of the object it refers to.</li><li>Use a reference when there must be an object; use a pointer when "no object" (<code>nullptr</code>) or re-pointing is needed.</li></ol></section>
+<nav class="toc" aria-label="On this page (compact)"><span class="toc-label">On this page</span><a href="#a-reference-is-another-name">A reference is another name</a><a href="#passing-by-reference">Passing by reference</a><a href="#const-references">const references</a><a href="#references-in-range-for-loops">References in range-for loops</a><a href="#returning-a-reference">Returning a reference</a><a href="#how-references-work-underneath">How references work underneath</a><a href="#pointer-vs-reference">Pointer vs reference</a><a href="#common-mistakes">Common mistakes</a><a href="#confused">Easily confused</a><a href="#test">Test yourself</a></nav>
+<section class="section" aria-labelledby="a-reference-is-another-name"><h2 id="a-reference-is-another-name">A reference is another name</h2><p><strong>Meaning:</strong> <code>int&amp; r = x;</code> makes <code>r</code> a second name for the variable <code>x</code>. It is not a copy and not a new object: reading <code>r</code> reads <code>x</code>, assigning to <code>r</code> changes <code>x</code>, and <code>&amp;r</code> is the address of <code>x</code>. The binding happens once, at the declaration, and can never be changed.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">int</span> x = <span class="tk-num">10</span>;
+    <span class="tk-kw">int</span>&amp; r = x;                     <span class="tk-com">// r is another name for x</span>
+    r = <span class="tk-num">20</span>;                         <span class="tk-com">// changes x</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; x &lt;&lt; <span class="tk-str">"\n"</span>;
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-std">std::boolalpha</span> &lt;&lt; (&amp;r == &amp;x) &lt;&lt; <span class="tk-str">"\n"</span>;   <span class="tk-com">// same object, same address</span>
+
+    <span class="tk-kw">int</span> y = <span class="tk-num">99</span>;
+    r = y;                          <span class="tk-com">// NOT a rebind: copies y's value into x</span>
+    y = <span class="tk-num">0</span>;
+    <span class="tk-std">std::cout</span> &lt;&lt; x &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; y &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>20
+true
+99 0</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>r = 20</code> writes into <code>x</code>, because <code>r</code> and <code>x</code> are the same object.</li><li><code>r = y</code> looks like "make <code>r</code> refer to <code>y</code>", but a reference can't be rebound. It assigns <code>y</code>'s value (99) to <code>x</code>.</li><li>Changing <code>y</code> afterwards doesn't touch <code>x</code>: they are separate variables.</li><li><code>int&amp; r;</code> with no initializer does not compile (<code>'r' declared as reference but not initialized</code>).</li></ol></section>
+<section class="section" aria-labelledby="passing-by-reference"><h2 id="passing-by-reference">Passing by reference</h2><p><strong>Meaning:</strong> a by-value parameter is a copy, so the function can't change the caller's variable. A reference parameter is an alias for the caller's variable, so every change goes straight to it. Unlike a pointer parameter (lesson 2), the call looks like an ordinary call: no <code>&amp;</code> at the call site and no <code>*</code> inside the function.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">void</span> <span class="tk-fn">swapValues</span>(<span class="tk-kw">int</span>&amp; a, <span class="tk-kw">int</span>&amp; b) {   <span class="tk-com">// a and b are the caller's variables</span>
+    <span class="tk-kw">int</span> tmp = a;
+    a = b;
+    b = tmp;
+}
+
+<span class="tk-kw">void</span> <span class="tk-fn">noSwap</span>(<span class="tk-kw">int</span> a, <span class="tk-kw">int</span> b) {         <span class="tk-com">// a and b are copies</span>
+    <span class="tk-kw">int</span> tmp = a;
+    a = b;
+    b = tmp;
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">int</span> x = <span class="tk-num">1</span>, y = <span class="tk-num">2</span>;
+    <span class="tk-fn">noSwap</span>(x, y);
+    <span class="tk-std">std::cout</span> &lt;&lt; x &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; y &lt;&lt; <span class="tk-str">"\n"</span>;
+    <span class="tk-fn">swapValues</span>(x, y);               <span class="tk-com">// called like a by-value function: no &amp;</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; x &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; y &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>1 2
+2 1</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>noSwap</code> swaps its own copies; <code>x</code> and <code>y</code> are untouched.</li><li>Inside <code>swapValues</code>, <code>a</code> <strong>is</strong> <code>x</code> and <code>b</code> <strong>is</strong> <code>y</code>, so the swap is visible in <code>main</code>.</li><li>The cost: at the call site <code>swapValues(x, y)</code> doesn't show that <code>x</code> and <code>y</code> may change. Clear function names help.</li></ol></section>
+<section class="section" aria-labelledby="const-references"><h2 id="const-references">const references</h2><p><strong>Meaning:</strong> <code>const T&amp;</code> is an alias you can only read through. Passing a big object this way avoids the copy, and the <code>const</code> promises (and the compiler enforces) that the function won't change it. A <code>const</code> reference can also bind to a <strong>temporary</strong> value, such as a literal or the result of an expression; the temporary then lives as long as the reference (lesson 39). A plain <code>T&amp;</code> refuses temporaries, because changing a temporary would be pointless.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+
+<span class="tk-kw">void</span> <span class="tk-fn">greet</span>(<span class="tk-kw">const</span> <span class="tk-std">std::string</span>&amp; name) {   <span class="tk-com">// no copy, and greet can't change name</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-str">"hello "</span> &lt;&lt; name &lt;&lt; <span class="tk-str">"\n"</span>;
+}
+
+<span class="tk-kw">void</span> <span class="tk-fn">addOne</span>(<span class="tk-kw">int</span>&amp; n) { n++; }
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-std">std::string</span> user = <span class="tk-str">"anna"</span>;
+    <span class="tk-fn">greet</span>(user);                    <span class="tk-com">// binds to user: no copy</span>
+    <span class="tk-fn">greet</span>(<span class="tk-str">"bob"</span>);                   <span class="tk-com">// binds to a temporary std::string built from "bob"</span>
+
+    <span class="tk-kw">const</span> <span class="tk-kw">int</span>&amp; five = <span class="tk-num">5</span>;            <span class="tk-com">// OK: a const reference can bind to a temporary</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; five &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    <span class="tk-kw">int</span> x = <span class="tk-num">1</span>;
+    <span class="tk-fn">addOne</span>(x);
+    <span class="tk-com">// addOne(5);                   // error: cannot bind non-const lvalue reference...</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; x &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>hello anna
+hello bob
+5
+2</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>greet(user)</code> binds <code>name</code> directly to <code>user</code>: no characters are copied.</li><li><code>greet("bob")</code> works because <code>"bob"</code> can be turned into a temporary <code>std::string</code>, and a <code>const</code> reference accepts it.</li><li><code>addOne(5)</code> fails with <code>cannot bind non-const lvalue reference of type 'int&amp;' to an rvalue of type 'int'</code>: there is no variable for <code>n</code> to refer to. <code>addOne(x + 1)</code> fails the same way.</li><li>Writing through a <code>const</code> reference fails too: <code>n = 3;</code> inside <code>void show(const int&amp; n)</code> gives <code>assignment of read-only reference 'n'</code>.</li></ol>
+<p><strong>When to use it:</strong> <code>const T&amp;</code> for parameters of class types you only read (<code>std::string</code>, <code>std::vector</code>, your own classes). Pass small built-in types (<code>int</code>, <code>double</code>, <code>char</code>) by value: a copy of an <code>int</code> is as cheap as passing an address.</p></section>
+<section class="section" aria-labelledby="references-in-range-for-loops"><h2 id="references-in-range-for-loops">References in range-for loops</h2><p><strong>Meaning:</strong> the loop variable of a range-for is declared like any other variable. Declared as a value (<code>auto x</code>), it is a <strong>copy</strong> of each element. Declared as a reference (<code>auto&amp; x</code>), it <strong>is</strong> each element, so changes stick. <code>const auto&amp; x</code> is the element, read-only, without a copy.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;string&gt;</span>
+<span class="tk-pre">#include &lt;vector&gt;</span>
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-std">std::vector</span>&lt;<span class="tk-kw">int</span>&gt; nums = {<span class="tk-num">1</span>, <span class="tk-num">2</span>, <span class="tk-num">3</span>};
+
+    <span class="tk-kw">for</span> (<span class="tk-kw">auto</span> n : nums) n *= <span class="tk-num">10</span>;           <span class="tk-com">// n is a copy: nums is unchanged</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; nums[<span class="tk-num">0</span>] &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; nums[<span class="tk-num">1</span>] &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; nums[<span class="tk-num">2</span>] &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    <span class="tk-kw">for</span> (<span class="tk-kw">auto</span>&amp; n : nums) n *= <span class="tk-num">10</span>;          <span class="tk-com">// n is each element itself</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; nums[<span class="tk-num">0</span>] &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; nums[<span class="tk-num">1</span>] &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; nums[<span class="tk-num">2</span>] &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    <span class="tk-std">std::vector</span>&lt;<span class="tk-std">std::string</span>&gt; names = {<span class="tk-str">"ada"</span>, <span class="tk-str">"linus"</span>};
+    <span class="tk-kw">for</span> (<span class="tk-kw">const</span> <span class="tk-kw">auto</span>&amp; s : names)            <span class="tk-com">// read-only, and no string is copied</span>
+        <span class="tk-std">std::cout</span> &lt;&lt; s &lt;&lt; <span class="tk-str">" has "</span> &lt;&lt; s.<span class="tk-fn">size</span>() &lt;&lt; <span class="tk-str">" letters\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>1 2 3
+10 20 30
+ada has 3 letters
+linus has 5 letters</code></pre></figure>
+<div class="table-wrap"><table class="md-table"><thead><tr><th scope="col">Loop variable</th><th scope="col">What it is</th><th scope="col">Use it when</th></tr></thead><tbody><tr><td><code>auto x</code></td><td>a copy of each element</td><td>elements are small (<code>int</code>, <code>double</code>) and you only read them</td></tr><tr><td><code>auto&amp; x</code></td><td>the element itself</td><td>you change the elements</td></tr><tr><td><code>const auto&amp; x</code></td><td>the element, read-only</td><td>you only read, and elements are big (strings, objects)</td></tr></tbody></table></div></section>
+<section class="section" aria-labelledby="returning-a-reference"><h2 id="returning-a-reference">Returning a reference</h2><p><strong>Meaning:</strong> a function can return a reference, so the caller gets the object itself instead of a copy, and can even assign to it. This is only safe if the object <strong>outlives the call</strong>: a data member of an object that still exists, a <code>static</code> variable, or an element of a container the caller passed in.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+<span class="tk-pre">#include &lt;vector&gt;</span>
+
+<span class="tk-kw">class</span> Scores {
+    <span class="tk-std">std::vector</span>&lt;<span class="tk-kw">int</span>&gt; values = {<span class="tk-num">50</span>, <span class="tk-num">70</span>, <span class="tk-num">90</span>};
+<span class="tk-kw">public</span>:
+    <span class="tk-kw">int</span>&amp; <span class="tk-fn">at</span>(<span class="tk-kw">int</span> i) { <span class="tk-kw">return</span> values[i]; }        <span class="tk-com">// refers to a member: lives as long as the object</span>
+};
+
+<span class="tk-kw">int</span>&amp; <span class="tk-fn">callCount</span>() {
+    <span class="tk-kw">static</span> <span class="tk-kw">int</span> count = <span class="tk-num">0</span>;                        <span class="tk-com">// a static lives for the whole program</span>
+    <span class="tk-kw">return</span> count;
+}
+
+<span class="tk-kw">int</span>&amp; <span class="tk-fn">largest</span>(<span class="tk-std">std::vector</span>&lt;<span class="tk-kw">int</span>&gt;&amp; v) {              <span class="tk-com">// refers into the caller's vector</span>
+    <span class="tk-kw">int</span> best = <span class="tk-num">0</span>;
+    <span class="tk-kw">for</span> (<span class="tk-kw">int</span> i = <span class="tk-num">1</span>; i &lt; <span class="tk-kw">static_cast</span>&lt;<span class="tk-kw">int</span>&gt;(v.<span class="tk-fn">size</span>()); i++)
+        <span class="tk-kw">if</span> (v[i] &gt; v[best]) best = i;
+    <span class="tk-kw">return</span> v[best];
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    Scores s;
+    s.<span class="tk-fn">at</span>(<span class="tk-num">1</span>) = <span class="tk-num">75</span>;                   <span class="tk-com">// assign through the returned reference</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; s.<span class="tk-fn">at</span>(<span class="tk-num">1</span>) &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    <span class="tk-fn">callCount</span>()++;
+    <span class="tk-fn">callCount</span>()++;
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-fn">callCount</span>() &lt;&lt; <span class="tk-str">"\n"</span>;
+
+    <span class="tk-std">std::vector</span>&lt;<span class="tk-kw">int</span>&gt; v = {<span class="tk-num">4</span>, <span class="tk-num">9</span>, <span class="tk-num">2</span>};
+    <span class="tk-fn">largest</span>(v) = <span class="tk-num">0</span>;                 <span class="tk-com">// sets the biggest element to 0</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; v[<span class="tk-num">0</span>] &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; v[<span class="tk-num">1</span>] &lt;&lt; <span class="tk-str">" "</span> &lt;&lt; v[<span class="tk-num">2</span>] &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>75
+2
+4 0 2</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>s.at(1)</code> returns the vector element itself, so <code>= 75</code> changes it inside <code>s</code>. This is how <code>std::vector::operator[]</code> works.</li><li><code>callCount()</code> returns the same <code>static int</code> every time, so both increments land on it.</li><li><code>largest(v)</code> returns a reference into <code>v</code>, which belongs to <code>main</code> and is still alive.</li></ol>
+<p>Returning a reference to a local is wrong, because the local dies when the function returns:</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">int</span>&amp; <span class="tk-fn">bad</span>() {
+    <span class="tk-kw">int</span> local = <span class="tk-num">42</span>;
+    <span class="tk-kw">return</span> local;          <span class="tk-com">// undefined behaviour: local is destroyed when bad() returns</span>
+}
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    <span class="tk-kw">int</span>&amp; r = <span class="tk-fn">bad</span>();        <span class="tk-com">// r refers to a variable that no longer exists</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; r &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<p>g++ warns <code>reference to local variable 'local' returned</code>. Return by value instead (lesson 39 covers dangling references).</p></section>
+<section class="section" aria-labelledby="how-references-work-underneath"><h2 id="how-references-work-underneath">How references work underneath</h2><p><strong>Meaning:</strong> the language has no way to get at the reference itself: <code>sizeof(r)</code> is the size of the referred object and <code>&amp;r</code> is its address. Underneath, when a reference has to be stored or passed, the compiler uses the object's <strong>address</strong>, exactly as for a pointer. When it is only a local alias, it usually disappears entirely.</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">#include &lt;iostream&gt;</span>
+
+<span class="tk-kw">struct</span> Big { <span class="tk-kw">int</span> data[<span class="tk-num">100</span>]; };          <span class="tk-com">// 400 bytes</span>
+<span class="tk-kw">struct</span> Holder { Big&amp; ref; };            <span class="tk-com">// a struct holding only a reference</span>
+
+<span class="tk-kw">int</span> <span class="tk-fn">main</span>() {
+    Big big{};
+    Big&amp; r = big;
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-kw">sizeof</span>(r) &lt;&lt; <span class="tk-str">"\n"</span>;                       <span class="tk-com">// the size of Big</span>
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-std">std::boolalpha</span> &lt;&lt; (&amp;r == &amp;big) &lt;&lt; <span class="tk-str">"\n"</span>;  <span class="tk-com">// the address of big</span>
+    Holder h{big};
+    <span class="tk-std">std::cout</span> &lt;&lt; <span class="tk-kw">sizeof</span>(h) &lt;&lt; <span class="tk-str">"\n"</span>;                       <span class="tk-com">// the reference is stored as an address</span>
+    h.ref.data[<span class="tk-num">0</span>] = <span class="tk-num">7</span>;
+    <span class="tk-std">std::cout</span> &lt;&lt; big.data[<span class="tk-num">0</span>] &lt;&lt; <span class="tk-str">"\n"</span>;
+}</code></pre></figure>
+<figure class="code code-output"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Output</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code>400
+true
+8
+7</code></pre></figure>
+<p>Passing by reference and by pointer produce the same machine code:</p>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">C++</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-kw">struct</span> Big { <span class="tk-kw">int</span> data[<span class="tk-num">100</span>]; };
+<span class="tk-kw">void</span> <span class="tk-fn">byRef</span>(Big&amp; b) { b.data[<span class="tk-num">0</span>] = <span class="tk-num">1</span>; }
+<span class="tk-kw">void</span> <span class="tk-fn">byPtr</span>(Big* b) { b-&gt;data[<span class="tk-num">0</span>] = <span class="tk-num">1</span>; }</code></pre></figure>
+<figure class="code"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lang">Bash</span><button type="button" class="copy" aria-label="Copy code">Copy</button></figcaption><pre><code><span class="tk-pre">$</span> <span class="tk-fn">g</span>++ -O2 -S -o - ref.cpp | <span class="tk-fn">grep</span> -E <span class="tk-str">'^_Z|movl|ret'</span>
+<span class="tk-fn">_Z5byRefR3Big</span>:
+	movl	$1, (%rdi)
+	ret
+<span class="tk-fn">_Z5byPtrP3Big</span>:
+	movl	$1, (%rdi)
+	ret</code></pre></figure>
+<p><strong>How it works:</strong></p>
+<ol><li><code>sizeof(r)</code> is 400 and <code>&amp;r</code> equals <code>&amp;big</code>: every use of <code>r</code> is a use of <code>big</code>.</li><li><code>Holder</code> is 8 bytes on x86-64 with g++: the stored reference is an address.</li><li>Both functions receive the address of the <code>Big</code> in register <code>rdi</code> and write <code>1</code> at that address. Only the rules differ: the reference can't be null or rebound.</li></ol></section>
+<section class="section" aria-labelledby="pointer-vs-reference"><h2 id="pointer-vs-reference">Pointer vs reference</h2><div class="table-wrap"><table class="md-table"><thead><tr><th scope="col"></th><th scope="col">Reference <code>int&amp; r</code></th><th scope="col">Pointer <code>int* p</code></th></tr></thead><tbody><tr><td>Must be initialized</td><td>yes</td><td>no (but should be)</td></tr><tr><td>Can be null</td><td>no</td><td>yes (<code>nullptr</code>)</td></tr><tr><td>Can be changed to refer elsewhere</td><td>no</td><td>yes</td></tr><tr><td>How you use it</td><td>like the object: <code>r = 5</code>, <code>r.member</code></td><td><code>*p = 5</code>, <code>p-&gt;member</code></td></tr><tr><td>Arithmetic</td><td>no</td><td>yes (<code>p + 1</code>)</td></tr><tr><td><code>sizeof</code> and <code>&amp;</code> give</td><td>the referred object's</td><td>the pointer's own</td></tr><tr><td>Can be stored in a <code>std::vector</code></td><td>no (<code>std::vector&lt;int&amp;&gt;</code> doesn't compile)</td><td>yes</td></tr></tbody></table></div>
+<p><strong>When to use a reference:</strong></p>
+<ul><li>Function parameters that must refer to an existing object: <code>const T&amp;</code> to read, <code>T&amp;</code> to change it.</li><li>Range-for loops, and returning an element or member to the caller (<code>operator[]</code>).</li></ul>
+<p><strong>When to use a pointer:</strong></p>
+<ul><li>"No object" is a valid answer (an optional argument, "not found").</li><li>It must point to different objects over time (walking a linked list, an array).</li><li>C APIs and low-level code, and heap objects (through smart pointers, lesson 40).</li></ul></section>
+<section class="callout watch" aria-labelledby="common-mistakes"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="common-mistakes">Common mistakes</h2><ul><li><strong>Expecting <code>r = y</code> to rebind.</strong> It copies <code>y</code>'s value into the original object.</li><li><strong>Returning a reference (or pointer) to a local.</strong> It dangles as soon as the function returns. Return by value.</li><li><strong><code>for (auto x : v)</code> when you meant to change <code>v</code>.</strong> You change copies. Write <code>auto&amp;</code>.</li><li><strong>Copying big objects by accident.</strong> <code>void f(std::string s)</code> and <code>for (auto s : names)</code> copy every string. Use <code>const std::string&amp;</code> / <code>const auto&amp;</code> when you only read.</li><li><strong>Keeping a reference to a vector element, then growing the vector.</strong> <code>push_back</code> may move all elements to a new block, and the old reference dangles (lesson 43).</li></ul></section>
+<section class="callout watch" aria-labelledby="confused"><div class="callout-label"><span aria-hidden="true">&#9650;</span> Watch out</div><h2 id="confused">Easily confused</h2><div class="pairs"><div class="pair"><div class="vs">reference vs pointer</div><div class="d">A reference is a fixed alias (no null, no rebinding, used like the object itself). A pointer can be null, re-pointed, and needs <code>*</code> / <code>-&gt;</code> to reach the object.</div></div><div class="pair"><div class="vs">pass-by-value vs pass-by-reference</div><div class="d">By value copies the argument (changes stay local). By reference operates on the caller's actual variable.</div></div><div class="pair"><div class="vs"><code>T&amp;</code> vs <code>const T&amp;</code></div><div class="d"><code>T&amp;</code> can change the object and accepts only a real (non-const) variable. <code>const T&amp;</code> is read-only and also accepts temporaries and literals.</div></div><div class="pair"><div class="vs"><code>auto</code> vs <code>auto&amp;</code> vs <code>const auto&amp;</code> in range-for</div><div class="d"><code>auto</code>: a copy of each element. <code>auto&amp;</code>: the element itself, changes stick. <code>const auto&amp;</code>: the element, read-only, no copy.</div></div><div class="pair"><div class="vs"><code>r = y</code> vs rebinding</div><div class="d"><code>r = y</code> assigns <code>y</code>'s value to the object <code>r</code> refers to. A reference can never be made to refer to a different object.</div></div></div></section>
+<section class="test-card" id="test" aria-labelledby="test-h"><div class="test-icon" aria-hidden="true">?</div><div class="test-body"><h2 id="test-h">Test yourself</h2><p>12 questions on this lesson. Write your answers from memory, then compare them with the model answers side by side.</p><div class="test-actions"><a class="btn btn-primary" href="../questions/master-question-sheet.html#references">Start the 12 questions &rarr;</a><button type="button" class="btn btn-ghost mark-done" aria-pressed="false"><span class="md-box" aria-hidden="true"></span><span class="md-text">Mark complete</span></button></div></div></section>
 <div class="pager pager-bottom" aria-label="Lesson navigation"><a href="03-stack-and-heap.html" rel="prev"><span class="pg-dir">&larr; Previous</span><span class="pg-title">03. Stack &amp; Heap Memory</span></a><a href="05-classes-encapsulation.html" rel="next" class="pg-next"><span class="pg-dir">Next &rarr;</span><span class="pg-title">05. Classes &amp; Encapsulation</span></a></div>
 </article>
-<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-plain" href="#why-pass-by-reference">Why pass by reference</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=8f762b8c8a"></script><script src="../assets/app.js?v=8f762b8c8a" defer></script></body></html>
+<aside class="otp" aria-label="On this page"><div class="otp-inner"><div class="otp-label">On this page</div><ol><li><a class="otp-concept" href="#kp">Key concepts</a></li><li><a class="otp-plain" href="#a-reference-is-another-name">A reference is another name</a></li><li><a class="otp-plain" href="#passing-by-reference">Passing by reference</a></li><li><a class="otp-plain" href="#const-references">const references</a></li><li><a class="otp-plain" href="#references-in-range-for-loops">References in range-for loops</a></li><li><a class="otp-plain" href="#returning-a-reference">Returning a reference</a></li><li><a class="otp-plain" href="#how-references-work-underneath">How references work underneath</a></li><li><a class="otp-plain" href="#pointer-vs-reference">Pointer vs reference</a></li><li><a class="otp-watch" href="#common-mistakes">Common mistakes</a></li><li><a class="otp-watch" href="#confused">Easily confused</a></li><li><a class="otp-plain" href="#test">Test yourself</a></li></ol><div class="otp-progress"><div class="otp-label">Module progress</div><div class="bar"><span id="otp-bar"></span></div><span class="otp-progress-text" id="otp-text" data-cat-slugs="control-flow pointers stack-and-heap references classes-encapsulation classes-vs-structs writing-a-class static-outside-classes static-in-classes enums constructors destructors inheritance virtual-functions interfaces-abstract-classes member-initializer-list ternary-operator creating-objects new-keyword implicit-conversion-explicit operator-overloading this-keyword object-lifetime smart-pointers copy-constructors arrow-operator std-vector local-static"></span></div></div></aside></div></main></div><script src="../assets/search-index.js?v=c3e831d229"></script><script src="../assets/app.js?v=c3e831d229" defer></script></body></html>

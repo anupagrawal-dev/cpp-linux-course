@@ -181,6 +181,8 @@ strong { font-weight: 650; color: var(--text); }
 
 /* ---------- lesson layout + side TOC ---------- */
 .lesson-wrap { display: grid; grid-template-columns: minmax(0, 1fr); }
+/* without an explicit width, the auto margins size the page to its widest code line, which overflows a phone screen */
+.lesson-wrap > .page { width: 100%; min-width: 0; }
 .otp { display: none; }
 @media (min-width: 1320px) {
   .lesson-wrap { grid-template-columns: minmax(0, 1fr) 240px; gap: 8px; max-width: 1100px; margin: 0 auto; padding-right: 24px; }
@@ -256,6 +258,19 @@ figure.code pre { margin: 0; padding: 16px 18px; overflow-x: auto; font: 13.5px/
 figure.code pre code { background: none; color: inherit; padding: 0; font: inherit; overflow-wrap: normal; }
 .tk-kw { color: var(--tk-kw); } .tk-str { color: var(--tk-str); } .tk-num { color: var(--tk-num); }
 .tk-com { color: var(--tk-com); font-style: italic; } .tk-pre { color: var(--tk-pre); } .tk-fn { color: var(--tk-fn); } .tk-std { color: var(--tk-std); }
+/* program output: same frame as code, a quieter header so it reads as the result of the block above */
+figure.code.code-output { margin-top: -8px; box-shadow: none; }
+figure.code.code-output .lang { color: var(--success); }
+figure.code.code-output pre { padding-top: 12px; padding-bottom: 12px; }
+
+/* ---------- tables in lessons (comparisons) ---------- */
+.table-wrap { margin: 18px 0; overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+table.md-table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 14.5px; line-height: 1.5; }
+table.md-table th, table.md-table td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--border); }
+table.md-table thead th { background: var(--sunken); color: var(--text-2); font-size: 12.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+table.md-table tbody tr:last-child td { border-bottom: 0; }
+table.md-table td:first-child { font-weight: 600; }
+.callout .table-wrap { background: transparent; }
 
 /* ---------- home ---------- */
 .hero { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 28px; align-items: center; padding: 34px 34px 32px; margin: -6px 0 0;
